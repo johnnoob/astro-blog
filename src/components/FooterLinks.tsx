@@ -9,7 +9,7 @@ const FooterLinks = () => {
           <a
             href={link.url}
             target="_blank"
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 hover:text-primary"
           >
             {link.icon}
             <span>{link.platform.toUpperCase()}</span>

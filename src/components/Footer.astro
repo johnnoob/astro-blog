@@ -1,8 +1,121 @@
 ---
-import { socialLinks } from "@/constants/links";
 import FooterLinks from "@/components/FooterLinks.tsx";
+import { Icon } from "astro-icon/components";
 ---
 
-<footer>
-  <FooterLinks />
+<footer class="w-full absolute py-7 border-t-[1px]">
+  <div class="w-fit mx-auto flex-col space-y-5">
+    <FooterLinks />
+    <div class="text-sm text-center flex-col space-y-1">
+      <p>
+        Made with <Icon
+          id="astro-light"
+          name="astro-light"
+          width={20}
+          height={20}
+          class="inline-block"
+        />
+        <Icon
+          id="astro-dark"
+          name="astro-dark"
+          width={20}
+          height={20}
+          class="hidden"
+        /> in Taiwan
+      </p>
+
+      <!-- <SiAstro className="inline-block" size={20} /> -->
+      <p>&copy {new Date().getFullYear()} John's Script</p>
+    </div>
+  </div>
 </footer>
+
+<script>
+  interface LocalStorageChangeEventDetail {
+    key: string | null;
+    oldValue: string | null;
+    newValue: string | null;
+  }
+
+  type LocalStorageChangeEvent = CustomEvent<LocalStorageChangeEventDetail>;
+
+  (function () {
+    const originalSetItem = localStorage.setItem;
+    const originalRemoveItem = localStorage.removeItem;
+    const originalClear = localStorage.clear;
+
+    localStorage.setItem = function (key: string, value: string): void {
+      const event: LocalStorageChangeEvent = new CustomEvent(
+        "localStorageChange",
+        {
+          detail: {
+            key,
+            oldValue: localStorage.getItem(key),
+            newValue: value,
+          },
+        }
+      );
+      window.dispatchEvent(event);
+      originalSetItem.apply(localStorage, [key, value]);
+    };
+
+    localStorage.removeItem = function (key: string): void {
+      const event: LocalStorageChangeEvent = new CustomEvent(
+        "localStorageChange",
+        {
+          detail: {
+            key,
+            oldValue: localStorage.getItem(key),
+            newValue: null,
+          },
+        }
+      );
+      window.dispatchEvent(event);
+      originalRemoveItem.apply(localStorage, [key]);
+    };
+
+    localStorage.clear = function (): void {
+      const event: LocalStorageChangeEvent = new CustomEvent(
+        "localStorageChange",
+        {
+          detail: {
+            key: null,
+            oldValue: null,
+            newValue: null,
+          },
+        }
+      );
+      window.dispatchEvent(event);
+      originalClear.apply(localStorage);
+    };
+  })();
+
+  window.addEventListener("localStorageChange", (event: Event) => {
+    console.log("haha");
+    const customEvent = event as LocalStorageChangeEvent;
+    const key = customEvent.detail.key;
+    const astroLightIcon = document.getElementById("astro-light");
+    const astroDarkIcon = document.getElementById("astro-dark");
+    if (key === "theme") {
+      const newTheme = customEvent.detail.newValue;
+      switch (newTheme) {
+        case "light":
+          if (astroLightIcon !== null) {
+            astroLightIcon.style.display = "inline-block";
+          }
+          if (astroDarkIcon !== null) {
+            astroDarkIcon.style.display = "none";
+          }
+          return;
+        case "dark":
+          if (astroLightIcon !== null) {
+            astroLightIcon.style.display = "none";
+          }
+          if (astroDarkIcon !== null) {
+            astroDarkIcon.style.display = "inline-block";
+          }
+          return;
+      }
+    }
+  });
+</script>

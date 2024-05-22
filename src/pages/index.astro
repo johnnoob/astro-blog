@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { AiFillAlert } from "react-icons/ai";
 import { ModeToggle } from "@/components/ModeToggle";
 import Test from "@/components/Test";
-import Layout from "@/layouts/Layout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { CardWithForm } from "@/components/Card";
 ---
 
-<Layout title="index">
+<BaseLayout pageTitle="index">
   <main class="max-container mx-auto">
     <p class="text-primary">haha</p>
     <ModeToggle client:load />
@@ -17,4 +17,4 @@ import { CardWithForm } from "@/components/Card";
     >
     <CardWithForm client:load />
   </main>
-</Layout>
+</BaseLayout>
