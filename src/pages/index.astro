@@ -4,14 +4,17 @@ import { AiFillAlert } from "react-icons/ai";
 import { ModeToggle } from "@/components/ModeToggle";
 import Test from "@/components/Test";
 import Layout from "@/layouts/Layout.astro";
+import { CardWithForm } from "@/components/Card";
 ---
 
 <Layout title="index">
-  <main>
+  <main class="max-container mx-auto">
+    <p class="text-primary">haha</p>
     <ModeToggle client:load />
     <Test client:load />
     <Button className="flex gap-1"
       ><p>歡迎光臨</p><AiFillAlert size={30} /></Button
     >
+    <CardWithForm client:load />
   </main>
 </Layout>
