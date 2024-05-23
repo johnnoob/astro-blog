@@ -20,7 +20,6 @@ type Props = {
   post: CollectionEntry<"posts">;
 };
 const { post } = Astro.props;
-const { Content } = await post.render();
 ---
 
 <BaseLayout pageTitle={post.data.title}>
