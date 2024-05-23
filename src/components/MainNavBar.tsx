@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { FaRss, FaBars } from "react-icons/fa6";
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
+import JSIcon from "@/icons/JSIcon.tsx";
 
 type Theme = "light" | "dark" | "system";
 const MainNavNar = () => {
@@ -36,13 +37,14 @@ const MainNavNar = () => {
         <div>
           <a
             href="/"
-            className="flex items-center space-x-1 text-primary font-bold"
+            className="flex items-center space-x-2 text-primary font-bold"
           >
+            <JSIcon size={35} color="#F97316"></JSIcon>
             <span>John's Script</span>
           </a>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center space-x-3 max-md:hidden">
+          <div className="flex items-center space-x-3 max-lg:hidden">
             {navLinks.map((link) => (
               <div className="h-6 flex space-x-3" key={link.label}>
                 <a
@@ -55,7 +57,7 @@ const MainNavNar = () => {
               </div>
             ))}
           </div>
-          <Button className="max-md:hidden">
+          <Button className="max-lg:hidden">
             <FaRss size={20} className="mr-1" />
             <span>訂閱RSS</span>
           </Button>
@@ -64,7 +66,7 @@ const MainNavNar = () => {
             handleThemeChange={handleThemeChange}
           />
           <Button variant={"ghost"}>
-            <FaBars className="md:hidden" size={20} />
+            <FaBars className="lg:hidden" size={20} />
           </Button>
         </div>
       </div>
