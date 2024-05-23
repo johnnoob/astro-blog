@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { navLinks } from "@/constants/links";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
