@@ -1,4 +1,3 @@
-localStorage.setItem("haha", "test");
 const getThemePreference = () => {
   if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
     return localStorage.getItem("theme");

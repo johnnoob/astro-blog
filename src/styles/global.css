@@ -61,7 +61,7 @@
 
 @layer components {
   .max-container {
-    @apply max-w-[1180px]
+    @apply max-w-[1280px] w-full mx-auto px-4 sm:px-16 
   }
 }
 

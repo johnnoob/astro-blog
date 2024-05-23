@@ -2,7 +2,7 @@ import { Moon, Sun } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 type ThemeSwitchProps = {
-  theme: "light" | "dark" | "system";
+  theme: "light" | "dark";
   handleThemeChange: (e: boolean) => void;
 };
 

@@ -1,0 +1,14 @@
+<script>
+  const navbar = document.getElementById("main-navbar");
+  if (navbar) {
+    const main = document.querySelector("main");
+    if (main) {
+      const navbarHeight = navbar.getBoundingClientRect().height;
+      main.style.paddingTop = `${navbarHeight}px`;
+    }
+  }
+</script>
+
+<main class="max-container">
+  <slot />
+</main>
