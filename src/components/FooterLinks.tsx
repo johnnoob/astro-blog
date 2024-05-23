@@ -12,7 +12,7 @@ const FooterLinks = () => {
             className="flex items-center space-x-2 hover:text-primary"
           >
             {link.icon}
-            <span>{link.platform.toUpperCase()}</span>
+            <span className="max-sm:hidden">{link.platform.toUpperCase()}</span>
           </a>
         </li>
       ))}

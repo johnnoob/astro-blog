@@ -33,3 +33,14 @@ export const socialLinks: SocialLink[] = [
     iconAlt: "linkedIn",
   },
 ];
+
+type NavLink = {
+  label: string;
+  url: string;
+};
+
+export const navLinks: NavLink[] = [
+  { label: "首頁", url: "/" },
+  { label: "文章列表", url: "/blog" },
+  { label: "關於筆者", url: "/about" },
+];

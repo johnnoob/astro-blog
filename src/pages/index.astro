@@ -1,20 +1,24 @@
 ---
 import { Button } from "@/components/ui/button";
 import { AiFillAlert } from "react-icons/ai";
-import { ModeToggle } from "@/components/ModeToggle";
-import Test from "@/components/Test";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { CardWithForm } from "@/components/Card";
+import { Icon } from "astro-icon/components";
 ---
 
-<BaseLayout pageTitle="index">
+<BaseLayout pageTitle="Home">
   <main class="max-container mx-auto">
+    <Icon name="js" class="text-primary" />
     <p class="text-primary">haha</p>
-    <ModeToggle client:load />
-    <Test client:load />
     <Button className="flex gap-1"
       ><p>歡迎光臨</p><AiFillAlert size={30} /></Button
     >
+    <CardWithForm client:load />
+    <CardWithForm client:load />
+    <CardWithForm client:load />
+    <CardWithForm client:load />
+    <CardWithForm client:load />
+    <CardWithForm client:load />
     <CardWithForm client:load />
   </main>
 </BaseLayout>

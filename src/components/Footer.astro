@@ -3,10 +3,10 @@ import FooterLinks from "@/components/FooterLinks.tsx";
 import { Icon } from "astro-icon/components";
 ---
 
-<footer class="w-full absolute py-7 border-t-[1px]">
+<footer class="py-7 border-t-[1px]">
   <div class="w-fit mx-auto flex-col space-y-5">
     <FooterLinks />
-    <div class="text-sm text-center flex-col space-y-1">
+    <div class="flex-col space-y-1 text-sm text-center">
       <p>
         Made with <Icon
           id="astro-light"
@@ -23,8 +23,6 @@ import { Icon } from "astro-icon/components";
           class="hidden"
         /> in Taiwan
       </p>
-
-      <!-- <SiAstro className="inline-block" size={20} /> -->
       <p>&copy {new Date().getFullYear()} John's Script</p>
     </div>
   </div>
@@ -90,30 +88,27 @@ import { Icon } from "astro-icon/components";
     };
   })();
 
+  const astroLightIcon = document.getElementById("astro-light");
+  const astroDarkIcon = document.getElementById("astro-dark");
   window.addEventListener("localStorageChange", (event: Event) => {
-    console.log("haha");
     const customEvent = event as LocalStorageChangeEvent;
     const key = customEvent.detail.key;
-    const astroLightIcon = document.getElementById("astro-light");
-    const astroDarkIcon = document.getElementById("astro-dark");
     if (key === "theme") {
       const newTheme = customEvent.detail.newValue;
       switch (newTheme) {
         case "light":
-          if (astroLightIcon !== null) {
+          if (astroLightIcon !== null && astroDarkIcon !== null) {
             astroLightIcon.style.display = "inline-block";
-          }
-          if (astroDarkIcon !== null) {
             astroDarkIcon.style.display = "none";
           }
           return;
         case "dark":
-          if (astroLightIcon !== null) {
+          if (astroLightIcon !== null && astroDarkIcon !== null) {
             astroLightIcon.style.display = "none";
-          }
-          if (astroDarkIcon !== null) {
             astroDarkIcon.style.display = "inline-block";
           }
+          return;
+        default:
           return;
       }
     }
