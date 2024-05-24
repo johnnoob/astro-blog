@@ -20,7 +20,7 @@ const { pageTitle } = Astro.props;
     <title>{pageTitle} | John's Script</title>
   </head>
   <body>
-    <MainNavBar client:load />
+    <MainNavBar client:only="react" />
     <slot />
     <Footer />
   </body>
