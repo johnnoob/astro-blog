@@ -1,5 +1,4 @@
 ---
-import Main from "@/components/Main.astro";
 import { Button } from "@/components/ui/button";
 import { AiFillAlert } from "react-icons/ai";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -8,13 +7,11 @@ import { Icon } from "astro-icon/components";
 ---
 
 <BaseLayout pageTitle="Home">
-  <Main>
-    <CardWithForm client:load />
-    <CardWithForm client:load />
-    <CardWithForm client:load />
-    <CardWithForm client:load />
-    <CardWithForm client:load />
-    <CardWithForm client:load />
-    <CardWithForm client:load />
-  </Main>
+  <CardWithForm client:load />
+  <CardWithForm client:load />
+  <CardWithForm client:load />
+  <CardWithForm client:load />
+  <CardWithForm client:load />
+  <CardWithForm client:load />
+  <CardWithForm client:load />
 </BaseLayout>

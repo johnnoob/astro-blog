@@ -1,0 +1,65 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { LuCalendarDays } from "react-icons/lu";
+import { Separator } from "@/components/ui/separator";
+import { BreadcrumbCustom } from "@/components/PostPage/BreadCrumb";
+import { getCollection, type CollectionEntry } from "astro:content";
+export const getStaticPaths = async () => {
+  const posts = await getCollection("posts");
+  const paths = posts.map((post) => {
+    return {
+      params: {
+        slug: post.slug,
+      },
+      props: {
+        post,
+      },
+    };
+  });
+  return paths;
+};
+type Props = {
+  post: CollectionEntry<"posts">;
+};
+const {
+  post,
+  post: {
+    data: { title, category, subcategory, date, heroImage, tags, author },
+  },
+} = Astro.props;
+console.log(post);
+
+const { Content } = await post.render();
+---
+
+<BaseLayout pageTitle={title}>
+  <div class="pt-8">
+    <BreadcrumbCustom postTitle={title} />
+  </div>
+  <section class="py-6 flex flex-col items-center gap-4">
+    <div>
+      <h1 class="text-3xl text-center font-bold leading-normal">{title}</h1>
+    </div>
+    <div class="flex items-center space-x-3 text-muted-foreground">
+      <div>by {author}</div>
+      <Separator orientation="vertical" className="h-7" />
+      <div class="flex items-center space-x-1">
+        <LuCalendarDays size={20} /><span>{date}</span>
+      </div>
+    </div>
+    <div
+      class="text-foreground flex items-center flex-wrap justify-center gap-2"
+    >
+      {
+        tags.map((tag) => (
+          <button class="bg-muted rounded-2xl px-2 py-1 hover:bg-primary hover:text-white">
+            {tag}
+          </button>
+        ))
+      }
+    </div>
+  </section>
+  <div class="post-content">
+    <Content />
+  </div>
+</BaseLayout>

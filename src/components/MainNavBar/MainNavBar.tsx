@@ -13,6 +13,7 @@ type Theme = "light" | "dark";
 const MainNavNar = () => {
   const storedTheme = localStorage.getItem("theme");
   const initialTheme: Theme = storedTheme === null ? "light" : "dark";
+
   const [theme, setThemeState] = useState<Theme>(initialTheme);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const MainNavNar = () => {
   return (
     <nav
       id="main-navbar"
-      className={`fixed w-full py-3 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-50 ${
+      className={`fixed w-full py-3 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-50 h-[65px] ${
         theme === "light" ? "bg-white" : "bg-black"
       }`}
     >
