@@ -17,7 +17,7 @@ author: "David Vanguard"
 # 為何傳統編解碼生成方式會不敵擴散迭代模型
 許多人很納悶，為何傳統編解碼生成方式會不敵擴散迭代模型，MAGVIT用一系列架構設計，與後續的改良，得到能夠打敗所有擴散模型的生成結果，證明了先前的Tokenizer的Encoder Model理解影像的程度不到位，導致生成結果無法與擴散模型匹敵，於是，論文作者設計了獨特的Mask-LM流程，在改善生成結果的同時，還能多用途使用。
 如下圖所示，可以做Frame Prediction (FP)，Frame Interpolation (FI，生成動畫或是遊戲補幀)；Central Outpainting (OPC) / Vertical Outpainting (OPV), Horizontal Outpainting (OPH), Dynamic Outpainting (OPD)可以用於相機防手震，影片後製；Central Inpainting (IPC), Dynamic In painting (IPD) 可以用於影片後製；Class-conditional Generation (CG), Class conditional Frame Prediction (CFP)，可以根據分鏡圖/文字Prompt來生成各種新的動畫。
-
+## 可以根據分鏡圖
 **有了這些工具，一個影片工作者就能搞定原本需要一整個特效/動畫團隊才能做的事情，只要能好好的Leverage這些工具，要成立一人影業/電影/動畫公司，不再是遙不可及的夢想**
 **MAGVIT一推出便驚艷世人，兼具多種生成模式彈性與達成極高的生成效率，火爆整個AI生成圈。**
 MASK-LM首先會產生一組固定的MASK框架，根據想要生成的任務(初始條件)把輸入影像填入，然後經由COMMIT Masking的步驟，一步一步將原本遮罩中的影像逐漸生成，經過多次迭代，便能完成上述所有應用目標的作業。訓練的時候，會有Scheduler來逐漸放開Mask，這種過程會被Model利用Lmask (Objective loss)學起來，這樣一來在Inference的時候就能夠自動逐步地把影像生成出來，這種手法值得我們的學習。

@@ -8,6 +8,21 @@ tags: ["天氣預測模型", "人工智慧預測天氣", "GraphCast", "GoogleRes
 author: "John Hu"
 ---
 
+```python
+def greet(name):
+    print("Hello, " + name)
+
+greet("World")
+```
+
+hahaha
+```javascript
+type Person = {
+    name:String;
+
+}
+```
+`code`
 在三國演義中，赤壁之戰，諸葛亮憑藉對湖陸風向的預測，火燒連環船，使得孫劉聯軍得以大敗曹操，奠定三國鼎立的基礎。由此可見，對於天氣的精密掌握，不僅得以改善各種生存條件，還能藉此訂定各種軍事策略，對於各種地緣政治紛爭的此刻，有其重大意義，於是各國對於快速準確的天氣預測技術，皆十分有興趣。
 Google Research於2023年11月，在自然(Nature)雜誌上，發表了能夠快速且準確預測全球天氣的人工智慧模型，採用自回歸(self-Regression)，如同GPT那樣進行逐步推演，可以預測到10天後，比歐洲中期天氣預報中心(ECMWF)用超級計算機計算的高解析HRES方法，預測的還要準確。預測的項目包含溫度，風速，壓力，濕度，等等。[開源程式碼](https://github.com/google-deepmind/graphcast)用[python Jax](https://github.com/google/jax)寫成，Jax套件由Google開發，可對神經網路運算進行加速優化。
 # 論文主要架構:

@@ -94,3 +94,35 @@
       @apply sm:pb-24 pb-12;
     }
 }
+
+/* PO文內容的style */
+.post-content-content h1,
+.post-content h2,
+.post-content p {
+  @apply tracking-wider mb-3
+}
+
+.post-content h1 {
+  @apply relative pl-4 text-2xl text-primary font-semibold
+}
+.post-content h1::before {
+  content: "";
+  @apply absolute top-0 left-0 h-full w-2 bg-primary
+}
+.post-content h2 {
+  @apply text-xl text-primary font-semibold
+}
+
+.post-content p {
+  @apply text-lg text-foreground leading-loose
+}
+
+
+.post-content pre {
+  @apply relative p-4 mb-2
+}
+
+.post-content pre::before {
+  content: attr(data-language);
+  @apply absolute top-0 right-0 capitalize text-white bg-primary px-2 py-1
+}

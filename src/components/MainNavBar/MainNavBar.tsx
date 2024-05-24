@@ -26,7 +26,7 @@ const MainNavNar = () => {
   return (
     <nav
       id="main-navbar"
-      className={`fixed w-full py-3 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 ${
+      className={`fixed w-full py-3 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-50 ${
         theme === "light" ? "bg-white" : "bg-black"
       }`}
     >
@@ -46,7 +46,7 @@ const MainNavNar = () => {
               {navLinks.map((link) => (
                 <div className="h-6 flex space-x-3" key={link.label}>
                   <a
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-foreground hover:text-muted-foreground"
                     href={link.url}
                   >
                     {link.label}
