@@ -1,9 +1,11 @@
+import { useEffect } from "react";
+
 type Icon = {
   size: number;
   theme: "light" | "dark";
 };
 
-const JSIcon = ({ size, theme }: Icon) => {
+const Logo = ({ size, theme }: Icon) => {
   const fillColor =
     theme === "dark" ? "hsl(20.5 90.2% 48.2%)" : "hsl(24.6 95% 53.1%)";
   return (
@@ -25,4 +27,4 @@ const JSIcon = ({ size, theme }: Icon) => {
   );
 };
 
-export default JSIcon;
+export default Logo;

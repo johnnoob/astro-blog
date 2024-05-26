@@ -117,7 +117,7 @@
   @apply text-lg text-foreground leading-loose
 }
 
-
+/* code block的style */
 .post-content pre {
   @apply relative p-4 mb-2
 }
@@ -125,4 +125,14 @@
 .post-content pre::before {
   content: attr(data-language);
   @apply absolute top-0 right-0 capitalize text-white bg-primary px-2 py-1
+}
+
+.post-content pre .line.diff.remove {
+  @apply bg-red-100 w-full
+}
+.post-content pre .line.diff.add {
+  @apply bg-green-200
+}
+.post-content pre .line.highlighted {
+  @apply bg-gray-200
 }

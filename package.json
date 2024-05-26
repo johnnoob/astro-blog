@@ -39,5 +39,8 @@
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@shikijs/transformers": "^1.6.0"
   }
 }

@@ -27,7 +27,6 @@ const {
     data: { title, category, subcategory, date, heroImage, tags, author },
   },
 } = Astro.props;
-console.log(post);
 
 const { Content } = await post.render();
 ---
@@ -52,9 +51,12 @@ const { Content } = await post.render();
     >
       {
         tags.map((tag) => (
-          <button class="bg-muted rounded-2xl px-2 py-1 hover:bg-primary hover:text-white">
+          <a
+            href={`/tags/${tag}`}
+            class="bg-muted rounded-2xl px-2 py-1 hover:bg-primary hover:text-white"
+          >
             {tag}
-          </button>
+          </a>
         ))
       }
     </div>

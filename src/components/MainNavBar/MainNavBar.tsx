@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-// shadCN
 import { navLinks } from "@/constants/links";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { FaRss, FaBars } from "react-icons/fa6";
-// components
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
-import JSIcon from "@/icons/JSIcon.tsx";
+import Logo from "./Logo.tsx";
 
 type Theme = "light" | "dark";
 
@@ -43,7 +41,7 @@ const MainNavNar = () => {
               href="/"
               className="flex items-center space-x-2 text-primary font-bold"
             >
-              <JSIcon size={35} theme={theme}></JSIcon>
+              <Logo size={35} theme={theme} />
               <span>John's Script</span>
             </a>
           </div>

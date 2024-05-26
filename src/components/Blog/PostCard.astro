@@ -1,0 +1,64 @@
+---
+import { Card, CardTitle, CardHeader } from "../ui/card";
+import { LuCalendarDays } from "react-icons/lu";
+import { Picture } from "astro:assets";
+import { type ImageMetadata } from "astro";
+
+type HeroImage = {
+  src: ImageMetadata;
+  alt: string;
+};
+
+type Props = {
+  title: string;
+  category: string;
+  subcategory: string;
+  tags: string[];
+  date: string;
+  author: string;
+  image: HeroImage;
+  slug: string;
+  body: string;
+};
+const { title, category, subcategory, tags, date, author, image, slug, body } =
+  Astro.props;
+const excerpt = body.replace(/[\r\n]/g, "");
+---
+
+<Card
+  className=" rounded-2xl border shadow-[0.4rem_0.4rem_0_0_hsl(var(--muted))]"
+>
+  <CardHeader className="space-y-2">
+    <a href={`/blog/${slug}`}>
+      <Picture
+        src={image.src}
+        alt={image.alt}
+        class="rounded-xl aspect-[16/10]"
+        style={{ objectFit: "cover" }}
+      />
+    </a>
+    <div class="flex items-center gap-3 text-[.8rem] font-semibold">
+      <a
+        href=`/categories/${category}`
+        class="rounded bg-primary text-white px-2 py-1">{category}</a
+      >
+      <a
+        href=`/subcategories/${subcategory}`
+        class="rounded bg-muted-foreground text-white px-2 py-1"
+        >{subcategory}</a
+      >
+    </div>
+    <div class="flex gap-1 items-center text-[.7rem] text-muted-foreground">
+      <LuCalendarDays size={15} />
+      <span>{date}</span>
+    </div>
+    <a href={`/blog/${slug}`} class="hover:underline">
+      <CardTitle className="text-base font-[800] line-clamp-2">
+        {title}
+      </CardTitle>
+    </a>
+    <div class="text-xs font-[600] text-muted-foreground line-clamp-3">
+      {excerpt}
+    </div>
+  </CardHeader>
+</Card>

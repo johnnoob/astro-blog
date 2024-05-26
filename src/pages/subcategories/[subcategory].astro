@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+  const uniqueSubcategories = [
+    ...new Set(allPosts.map((post) => post.data.subcategory)),
+  ];
+  return uniqueSubcategories.map((subcategory) => {
+    const filteredPosts = allPosts.filter(
+      (post) => post.data.subcategory === subcategory
+    );
+    return {
+      params: { subcategory },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+const { subcategory } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BlogLayout filterName="子類別" fitlerItem={subcategory} posts={posts} />
