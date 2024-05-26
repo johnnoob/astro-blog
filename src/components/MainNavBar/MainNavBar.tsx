@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { FaRss, FaBars } from "react-icons/fa6";
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
 import Logo from "./Logo.tsx";
+import { IoInfinite } from "react-icons/io5";
 
 const MainNavNar = () => {
   const [theme, setThemeState] = useTheme();
@@ -26,8 +27,8 @@ const MainNavNar = () => {
               href="/"
               className="flex items-center space-x-2 text-primary font-bold"
             >
-              <Logo size={35} theme={theme} />
-              <span>John's Script</span>
+              <IoInfinite size={30} />
+              <span>智慧學院</span>
             </a>
           </div>
           <div className="flex items-center gap-3 text-sm">

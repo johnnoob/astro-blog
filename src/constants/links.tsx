@@ -1,10 +1,16 @@
-import { FaFacebook, FaInstagram, FaGithub, FaLinkedin } from "react-icons/fa6";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaGithub,
+  FaLinkedin,
+  FaXTwitter,
+} from "react-icons/fa6";
 
 type SocialLink = {
-  platform: "facebook" | "instagram" | "github" | "linkedIn";
+  platform: "facebook" | "instagram" | "github" | "linkedIn" | "twitter";
   url: string;
   icon: React.ReactNode;
-  iconAlt: "facebook" | "instagram" | "github" | "linkedIn";
+  iconAlt: "facebook" | "instagram" | "github" | "linkedIn" | "twitter";
 };
 
 export const socialLinks: SocialLink[] = [
@@ -27,6 +33,12 @@ export const socialLinks: SocialLink[] = [
     iconAlt: "github",
   },
   {
+    platform: "twitter",
+    url: "https://github.com/johnnoob",
+    icon: <FaXTwitter size={25} />,
+    iconAlt: "twitter",
+  },
+  {
     platform: "linkedIn",
     url: "https://github.com/johnnoob",
     icon: <FaLinkedin size={25} />,
@@ -40,7 +52,8 @@ type NavLink = {
 };
 
 export const navLinks: NavLink[] = [
-  { label: "首頁", url: "/" },
-  { label: "文章列表", url: "/blog" },
+  { label: "最新貼文", url: "/blog" },
+  { label: "人工智慧宇宙", url: "/categories/人工智慧宇宙" },
+  { label: "易經推演宇宙", url: "/categories/易經推演宇宙" },
   { label: "關於筆者", url: "/about" },
 ];
