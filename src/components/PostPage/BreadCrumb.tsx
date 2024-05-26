@@ -21,7 +21,7 @@ export function BreadcrumbCustom({ postTitle }: { postTitle: string }) {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink>
-            <a href="/blog">文章列表</a>
+            <a href="/blog">全部貼文</a>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

@@ -21,4 +21,9 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<BlogLayout filterName="標籤" fitlerItem={tag} posts={posts} />
+<BlogLayout
+  filterLabel="標籤"
+  filterItem={tag}
+  filterItemUrl={`./${tag}`}
+  posts={posts}
+/>

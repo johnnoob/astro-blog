@@ -1,4 +1,4 @@
----
+<!-- ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PostCard from "@/components/Blog/PostCard.astro";
 import type { CollectionEntry } from "astro:content";
@@ -6,12 +6,10 @@ import { BreadcrumbCustom } from "@/components/Blog/BreadCrumb";
 
 type Props = {
   filterLabel?: string;
-  filterItem?: string;
-  filterItemUrl?: string;
   posts: CollectionEntry<"posts">[];
 };
 
-const { filterLabel, filterItem, filterItemUrl, posts } = Astro.props;
+const { filterLabel, posts } = Astro.props;
 ---
 
 <BaseLayout
@@ -19,8 +17,6 @@ const { filterLabel, filterItem, filterItemUrl, posts } = Astro.props;
 >
   <div class="pt-8 mb-5">
     <BreadcrumbCustom
-      filterItem={filterItem}
-      filterItemUrl={filterItemUrl}
       filterLabel={filterLabel}
     />
   </div>
@@ -48,4 +44,4 @@ const { filterLabel, filterItem, filterItemUrl, posts } = Astro.props;
       ))
     }
   </section>
-</BaseLayout>
+</BaseLayout> -->

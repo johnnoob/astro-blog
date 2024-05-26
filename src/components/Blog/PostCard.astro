@@ -53,11 +53,11 @@ const excerpt = body.replace(/[\r\n]/g, "");
       <span>{date}</span>
     </div>
     <a href={`/blog/${slug}`} class="hover:underline">
-      <CardTitle className="text-base line-clamp-2">
+      <CardTitle className="text-lg line-clamp-2">
         {title}
       </CardTitle>
     </a>
-    <div class="text-sm text-muted-foreground line-clamp-3">
+    <div class="text-muted-foreground line-clamp-3">
       {excerpt}
     </div>
   </CardHeader>

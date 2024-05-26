@@ -21,4 +21,9 @@ const { subcategory } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<BlogLayout filterName="子類別" fitlerItem={subcategory} posts={posts} />
+<BlogLayout
+  filterLabel="子類別"
+  filterItem={subcategory}
+  filterItemUrl={`./${subcategory}`}
+  posts={posts}
+/>
