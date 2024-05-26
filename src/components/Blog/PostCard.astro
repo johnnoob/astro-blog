@@ -37,27 +37,27 @@ const excerpt = body.replace(/[\r\n]/g, "");
         style={{ objectFit: "cover" }}
       />
     </a>
-    <div class="flex items-center gap-3 text-[.8rem] font-semibold">
+    <div class="flex items-center gap-3 font-semibold">
       <a
         href=`/categories/${category}`
-        class="rounded bg-primary text-white px-2 py-1">{category}</a
+        class="rounded bg-primary text-white text-sm px-2 py-1">{category}</a
       >
       <a
         href=`/subcategories/${subcategory}`
-        class="rounded bg-muted-foreground text-white px-2 py-1"
+        class="rounded bg-muted-foreground text-white text-sm px-2 py-1"
         >{subcategory}</a
       >
     </div>
-    <div class="flex gap-1 items-center text-[.7rem] text-muted-foreground">
+    <div class="flex gap-1 items-center text-sm text-muted-foreground">
       <LuCalendarDays size={15} />
       <span>{date}</span>
     </div>
     <a href={`/blog/${slug}`} class="hover:underline">
-      <CardTitle className="text-base font-[800] line-clamp-2">
+      <CardTitle className="text-base line-clamp-2">
         {title}
       </CardTitle>
     </a>
-    <div class="text-xs font-[600] text-muted-foreground line-clamp-3">
+    <div class="text-sm text-muted-foreground line-clamp-3">
       {excerpt}
     </div>
   </CardHeader>
