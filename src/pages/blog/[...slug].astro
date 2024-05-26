@@ -35,33 +35,36 @@ const { Content } = await post.render();
   <div class="pt-8">
     <BreadcrumbCustom postTitle={title} />
   </div>
-  <section class="py-6 flex flex-col items-center gap-4">
-    <div>
-      <h1 class="text-3xl text-center font-bold leading-normal">{title}</h1>
-    </div>
-    <div class="flex items-center space-x-3 text-muted-foreground">
-      <div>by {author}</div>
-      <Separator orientation="vertical" className="h-7" />
-      <div class="flex items-center space-x-1">
-        <LuCalendarDays size={20} /><span>{date}</span>
+  <div class="flex gap-5 items-start">
+    <section class="py-6 flex flex-col items-start gap-4 w-2/3">
+      <div>
+        <h1 class="text-3xl font-bold leading-normal">{title}</h1>
       </div>
-    </div>
-    <div
-      class="text-foreground flex items-center flex-wrap justify-center gap-2"
-    >
-      {
-        tags.map((tag) => (
-          <a
-            href={`/tags/${tag}`}
-            class="bg-muted rounded-2xl px-2 py-1 hover:bg-primary hover:text-white"
-          >
-            {tag}
-          </a>
-        ))
-      }
-    </div>
-  </section>
-  <div class="post-content">
-    <Content />
+      <div
+        class="flex justify-start items-center space-x-3 text-muted-foreground"
+      >
+        <div>by {author}</div>
+        <Separator orientation="vertical" className="h-7" />
+        <div class="flex items-center space-x-1">
+          <LuCalendarDays size={20} /><span>{date}</span>
+        </div>
+      </div>
+      <div class="flex items-center flex-wrap gap-2">
+        {
+          tags.map((tag) => (
+            <a
+              href={`/tags/${tag}`}
+              class="bg-muted-foreground text-muted text-sm rounded-2xl px-2 py-1 hover:bg-primary hover:text-muted"
+            >
+              {tag}
+            </a>
+          ))
+        }
+      </div>
+      <div class="post-content">
+        <Content />
+      </div>
+    </section>
+    <aside class="w-1/3 h-[500px] bg-slate-200">asdasdasdasd</aside>
   </div>
 </BaseLayout>

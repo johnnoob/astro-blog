@@ -27,8 +27,8 @@ const MainNavNar = () => {
               href="/"
               className="flex items-center space-x-2 text-primary font-bold"
             >
-              <IoInfinite size={30} />
-              <span>智慧學院</span>
+              <Logo theme={theme} size={30} />
+              <span>John's Script</span>
             </a>
           </div>
           <div className="flex items-center gap-3 text-sm">

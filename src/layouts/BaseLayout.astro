@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Footer from "@/components/Footer/Footer.astro";
 import MainNavBar from "@/components/MainNavBar/MainNavBar";
+import { ViewTransitions } from "astro:transitions";
 interface Props {
   pageTitle: string;
 }
@@ -16,6 +17,7 @@ const { pageTitle } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle} | John's Script</title>
+    <ViewTransitions />
   </head>
   <body>
     <MainNavBar client:only="react" />
