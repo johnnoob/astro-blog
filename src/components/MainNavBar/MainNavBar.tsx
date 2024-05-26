@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTheme } from "./utils.ts";
 import { navLinks } from "@/constants/links";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -6,24 +7,8 @@ import { FaRss, FaBars } from "react-icons/fa6";
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
 import Logo from "./Logo.tsx";
 
-type Theme = "light" | "dark";
-
 const MainNavNar = () => {
-  const storedTheme = localStorage.getItem("theme");
-  const initialTheme: Theme = storedTheme === null ? "light" : "dark";
-
-  const [theme, setThemeState] = useState<Theme>(initialTheme);
-
-  useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains("dark");
-    setThemeState(isDarkMode ? "dark" : "light");
-  }, []);
-
-  useEffect(() => {
-    const isDark = theme === "dark";
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-  }, [theme]);
-
+  const [theme, setThemeState] = useTheme();
   const handleThemeChange = (e: boolean): void => {
     e ? setThemeState("dark") : setThemeState("light");
   };
