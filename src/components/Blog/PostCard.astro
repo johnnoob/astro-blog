@@ -31,8 +31,8 @@ const excerpt = body.replace(/[\r\n]/g, "");
 >
   <CardHeader className="space-y-2">
     <a href={`/blog/${slug}`}>
-      <img
-        src={image.src.src}
+      <Image
+        src={image.src}
         alt={image.alt}
         class="rounded-xl aspect-[16/10]"
         style={{ objectFit: "cover" }}
