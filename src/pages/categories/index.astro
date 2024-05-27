@@ -1,9 +1,22 @@
 ---
+import FilterLayout from "@/layouts/FilterLayout.astro";
 import { getCollection } from "astro:content";
-import BlogLayout from "@/layouts/BlogLayout.astro";
-const posts = await getCollection("posts", ({ data }) => {
-  return data.isDraft !== true;
+
+const allPosts = await getCollection("posts");
+const categoryCountMap = new Map();
+
+allPosts.forEach((post) => {
+  const category = post.data.category;
+  if (categoryCountMap.has(category)) {
+    categoryCountMap.set(category, categoryCountMap.get(category) + 1);
+  } else {
+    categoryCountMap.set(category, 1);
+  }
 });
 ---
 
-<BlogLayout posts={posts} />
+<FilterLayout
+  filterUrl="/categories"
+  filterLabel="類別"
+  countMap={categoryCountMap}
+/>

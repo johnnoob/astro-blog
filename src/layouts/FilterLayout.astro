@@ -1,47 +1,38 @@
-<!-- ---
+---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import PostCard from "@/components/Blog/PostCard.astro";
-import type { CollectionEntry } from "astro:content";
 import { BreadcrumbCustom } from "@/components/Blog/BreadCrumb";
 
 type Props = {
-  filterLabel?: string;
-  posts: CollectionEntry<"posts">[];
+  filterUrl: string;
+  filterLabel: string;
+  countMap: Map<string, number>;
 };
 
-const { filterLabel, posts } = Astro.props;
+const { filterUrl, filterLabel, countMap } = Astro.props;
 ---
 
-<BaseLayout
-  pageTitle={filterLabel ? `${filterLabel}－${filterItem}` : "全部貼文"}
->
+<BaseLayout pageTitle={filterLabel}>
   <div class="pt-8 mb-5">
-    <BreadcrumbCustom
-      filterLabel={filterLabel}
-    />
+    <BreadcrumbCustom filterLabel={filterLabel} />
   </div>
   <div class="w-fit mx-auto">
     <h1 class="text-2xl font-bold mb-5">
-      {filterLabel ? `${filterLabel}：${filterItem}` : "全部貼文"}
+      {`${filterLabel}頁`}
     </h1>
   </div>
   <section
-    class="grid gap-6 grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 mb-8"
+    class="grid gap-4 grid-cols-4 max-lg:grid-cols-3 max-sm:grid-cols-2 mb-6"
   >
     {
-      posts.map((post) => (
-        <PostCard
-          title={post.data.title}
-          category={post.data.category}
-          subcategory={post.data.subcategory}
-          tags={post.data.tags}
-          date={post.data.date}
-          author={post.data.author}
-          image={post.data.heroImage}
-          slug={post.slug}
-          body={post.body}
-        />
+      Array.from(countMap.keys()).map((key) => (
+        <a
+          href={`${filterUrl}/${key}`}
+          class="flex flex-col gap-2 items-center py-3 px-1 bg-primary rounded-xl text-muted"
+        >
+          <h3 class="text-lg font-semibold">{key}</h3>
+          <p>{countMap.get(key)}則文章</p>
+        </a>
       ))
     }
   </section>
-</BaseLayout> -->
+</BaseLayout>

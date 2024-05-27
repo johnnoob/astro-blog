@@ -1,0 +1,25 @@
+---
+import FilterLayout from "@/layouts/FilterLayout.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("posts");
+const subcategoryCountMap = new Map();
+
+allPosts.forEach((post) => {
+  const subcategory = post.data.subcategory;
+  if (subcategoryCountMap.has(subcategory)) {
+    subcategoryCountMap.set(
+      subcategory,
+      subcategoryCountMap.get(subcategory) + 1
+    );
+  } else {
+    subcategoryCountMap.set(subcategory, 1);
+  }
+});
+---
+
+<FilterLayout
+  filterUrl="/subcategories"
+  filterLabel="子類別"
+  countMap={subcategoryCountMap}
+/>
