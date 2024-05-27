@@ -1,7 +1,7 @@
 ---
 import { Card, CardTitle, CardHeader } from "../ui/card";
 import { LuCalendarDays } from "react-icons/lu";
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
 import { type ImageMetadata } from "astro";
 
 type HeroImage = {
@@ -22,6 +22,7 @@ type Props = {
 };
 const { title, category, subcategory, tags, date, author, image, slug, body } =
   Astro.props;
+
 const excerpt = body.replace(/[\r\n]/g, "");
 ---
 
@@ -30,7 +31,7 @@ const excerpt = body.replace(/[\r\n]/g, "");
 >
   <CardHeader className="space-y-2">
     <a href={`/blog/${slug}`}>
-      <Picture
+      <Image
         src={image.src}
         alt={image.alt}
         class="rounded-xl aspect-[16/10]"

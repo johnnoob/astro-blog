@@ -9,28 +9,33 @@ const Tags = ({ tags }: TagsProps) => {
   const [isShowTags, setIsShowTags] = useState<boolean>(false);
   const tagsLengthLimit = 3;
   return (
-    <div className="flex items-center flex-wrap gap-2">
+    <div className="flex items-start gap-2 max-sm:flex-col max-sm:items-start">
       {tags.length > tagsLengthLimit && (
         <button
-          className="flex items-center space-x-1 text-sm rounded-2xl px-2 py-1 bg-muted"
+          className="flex items-center space-x-1 text-sm rounded-2xl px-2 py-1 bg-muted min-w-fit"
           onClick={() => setIsShowTags(!isShowTags)}
         >
-          <span>+{tags.length - tagsLengthLimit} More...</span>
+          <div className="flex items-center gap-1">
+            <FaTag size={22} />
+            <span>{tags.length}</span>
+          </div>
           {isShowTags ? <FaCaretDown /> : <FaCaretRight />}
         </button>
       )}
-      {tags.map((tag, index) => (
-        <a
-          key={index}
-          href={`/tags/${tag}`}
-          className="bg-muted-foreground text-muted text-sm rounded-2xl px-2 py-1 hover:bg-primary hover:text-muted"
-          style={{
-            display: isShowTags || index < tagsLengthLimit ? "block" : "none",
-          }}
-        >
-          {tag}
-        </a>
-      ))}
+      <div className="flex items-center flex-wrap gap-1">
+        {tags.map((tag, index) => (
+          <a
+            key={index}
+            href={`/tags/${tag}`}
+            className="bg-muted-foreground text-muted text-sm rounded-2xl px-2 py-1 hover:bg-primary hover:text-muted"
+            style={{
+              display: isShowTags || index < tagsLengthLimit ? "block" : "none",
+            }}
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
     </div>
   );
 };
