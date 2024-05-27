@@ -17,7 +17,12 @@ export function BreadcrumbCustom({
   filterItemUrl?: string;
   filterLabel?: string;
 }) {
-  return filterItem ? (
+  const filterUrlMap = new Map([
+    ["類別", "/categories"],
+    ["子類別", "/subcategories"],
+    ["標籤", "/tags"],
+  ]);
+  return filterItem && filterLabel ? (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
@@ -34,7 +39,7 @@ export function BreadcrumbCustom({
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink>
-            <a href="./">{filterLabel}</a>
+            <a href={filterUrlMap.get(filterLabel)}>{filterLabel}</a>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
