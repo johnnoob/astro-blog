@@ -6,13 +6,19 @@ import type { CollectionEntry } from "astro:content";
 import { BreadcrumbCustom } from "@/components/Blog/BreadCrumb";
 
 type Props = {
-  filterLabel?: string;
+  filter?: "category" | "subcategory" | "tag";
   filterItem?: string;
   filterItemUrl?: string;
   posts: CollectionEntry<"posts">[];
 };
 
-const { filterLabel, filterItem, filterItemUrl, posts } = Astro.props;
+const { filter, filterItem, filterItemUrl, posts } = Astro.props;
+const filterLabelMap = new Map([
+  ["category", "類別"],
+  ["subcategory", "子類別"],
+  ["tag", "標籤"],
+]);
+const filterLabel = filter ? filterLabelMap.get(filter) : undefined;
 
 const categoryCountMap = new Map();
 posts.forEach((post) => {
@@ -64,8 +70,10 @@ posts.forEach((post) => {
       {filterLabel ? `${filterLabel}：${filterItem}` : "全部貼文"}
     </h1>
   </div>
-  <div class="grid grid-cols-3 gap-6">
-    <section class="grid col-span-2 gap-6 grid-cols-2 max-sm:grid-cols-1 mb-8">
+  <div class="grid grid-cols-3 gap-6 max-lg:grid-cols-2">
+    <section
+      class="grid col-span-2 content-start gap-6 grid-cols-2 max-sm:grid-cols-1 mb-8"
+    >
       {
         posts.map((post) => (
           <PostCard
@@ -82,11 +90,13 @@ posts.forEach((post) => {
         ))
       }
     </section>
-    <aside>
+    <aside class="max-lg:hidden">
       <Sidebar
+        filter={filter}
         categoryCountMap={categoryCountMap}
         subcategoryCountMap={subcategoryCountMap}
         tagCountMap={tagCountMap}
+        client:load
       />
     </aside>
   </div>

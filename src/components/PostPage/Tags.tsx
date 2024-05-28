@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FaCaretRight, FaCaretDown, FaTag, FaEllipsis } from "react-icons/fa6";
+import { FaCaretRight, FaCaretDown, FaTag } from "react-icons/fa6";
+import { AiOutlineEllipsis } from "react-icons/ai";
 
 type TagsProps = {
   tags: string[];
@@ -35,7 +36,11 @@ const Tags = ({ tags }: TagsProps) => {
             {tag}
           </a>
         ))}
-        <span>{tags.length > tagsLengthLimit && !isShowTags && "..."}</span>
+        <span>
+          {tags.length > tagsLengthLimit && !isShowTags && (
+            <AiOutlineEllipsis />
+          )}
+        </span>
       </div>
     </div>
   );

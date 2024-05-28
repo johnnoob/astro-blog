@@ -1,113 +1,112 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { FaCaretRight, FaCaretDown } from "react-icons/fa6";
+import { AiOutlineEllipsis } from "react-icons/ai";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 
 type SidebarProps = {
+  filter: "category" | "subcategory" | "tag" | undefined;
   categoryCountMap: Map<string, number>;
   subcategoryCountMap: Map<string, number>;
   tagCountMap: Map<string, number>;
 };
 
 const Sidebar = ({
+  filter,
   categoryCountMap,
   subcategoryCountMap,
   tagCountMap,
 }: SidebarProps) => {
+  const filterLabelMap = new Map([
+    ["category", "類別"],
+    ["subcategory", "子類別"],
+    ["tag", "標籤"],
+  ]);
+  const postsCount = Array.from(categoryCountMap.values()).reduce(
+    (acc, value) => (acc += value),
+    0
+  );
+  const tagsCount = Array.from(tagCountMap.keys()).length;
+  const [isShowTags, setIsShowTags] = useState<boolean>(false);
+  const tagsLengthLimit = 5;
+
   return (
     <Card>
-      <CardHeader className="py-2">
-        <CardTitle className="text-lg">貼文列表</CardTitle>
+      <CardHeader className="py-3 bg-muted">
+        <CardTitle className="text-xl">
+          {filter !== undefined
+            ? `有${postsCount}篇貼文在此${filterLabelMap.get(filter)}中...`
+            : `全部有${postsCount}篇貼文...`}
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div>
-          {Array.from(categoryCountMap.keys()).map((key) => (
-            <a href={`/categories/${key}`} className="">
-              {key}
-              <Badge>{categoryCountMap.get(key)}</Badge>
-            </a>
-          ))}
-        </div>
+      <Separator />
+      <CardContent className="grid gap-2 pt-2 pb-4">
+        {filter !== "category" && (
+          <div className="grid gap-2">
+            <div className="text-lg font-semibold">類別</div>
+            {Array.from(categoryCountMap.keys()).map((key) => (
+              <a
+                key={key}
+                className="flex items-center space-x-1"
+                href={`/categories/${key}`}
+              >
+                <span>{key}</span>
+                <Badge className="block">{categoryCountMap.get(key)}</Badge>
+              </a>
+            ))}
+            <Separator />
+          </div>
+        )}
+        {filter !== "subcategory" && (
+          <div className="grid gap-2">
+            <div className="text-lg font-semibold">子類別</div>
+            {Array.from(subcategoryCountMap.keys()).map((key) => (
+              <a
+                key={key}
+                className="flex items-center space-x-1"
+                href={`/subcategories/${key}`}
+              >
+                <span>{key}</span>
+                <Badge className="block">{subcategoryCountMap.get(key)}</Badge>
+              </a>
+            ))}
+            <Separator />
+          </div>
+        )}
+        {filter !== "tag" && (
+          <div className="grid gap-2">
+            <div className="flex gap-1 items-center">
+              <div className="text-lg font-semibold">標籤</div>
+
+              {tagsCount >= tagsLengthLimit && (
+                <button onClick={() => setIsShowTags(!isShowTags)}>
+                  {isShowTags ? <FaCaretDown /> : <FaCaretRight />}
+                </button>
+              )}
+            </div>
+            {Array.from(tagCountMap.keys()).map((key, index) => (
+              <a
+                key={key}
+                className="flex items-center space-x-1"
+                href={`/tags/${key}`}
+                style={{
+                  display: isShowTags || index < tagsLengthLimit ? "" : "none",
+                }}
+              >
+                <span>{key}</span>
+                <Badge className="block">{tagCountMap.get(key)}</Badge>
+              </a>
+            ))}
+            {!isShowTags && tagsCount >= tagsLengthLimit && (
+              <AiOutlineEllipsis />
+            )}
+            <Separator />
+          </div>
+        )}
       </CardContent>
     </Card>
   );
 };
 
 export default Sidebar;
-
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// export default function Component() {
-//   return (
-//     <Card>
-//       <CardHeader>
-//         <CardTitle>Recent Sales</CardTitle>
-//       </CardHeader>
-//       <CardContent className="grid gap-8">
-//         <div className="flex items-center gap-4">
-//           <Avatar className="hidden h-9 w-9 sm:flex">
-//             <AvatarImage src="/avatars/01.png" alt="Avatar" />
-//             <AvatarFallback>OM</AvatarFallback>
-//           </Avatar>
-//           <div className="grid gap-1">
-//             <p className="text-sm font-medium leading-none">Olivia Martin</p>
-//             <p className="text-sm text-muted-foreground">
-//               olivia.martin@email.com
-//             </p>
-//           </div>
-//           <div className="ml-auto font-medium">+$1,999.00</div>
-//         </div>
-//         <div className="flex items-center gap-4">
-//           <Avatar className="hidden h-9 w-9 sm:flex">
-//             <AvatarImage src="/avatars/02.png" alt="Avatar" />
-//             <AvatarFallback>JL</AvatarFallback>
-//           </Avatar>
-//           <div className="grid gap-1">
-//             <p className="text-sm font-medium leading-none">Jackson Lee</p>
-//             <p className="text-sm text-muted-foreground">
-//               jackson.lee@email.com
-//             </p>
-//           </div>
-//           <div className="ml-auto font-medium">+$39.00</div>
-//         </div>
-//         <div className="flex items-center gap-4">
-//           <Avatar className="hidden h-9 w-9 sm:flex">
-//             <AvatarImage src="/avatars/03.png" alt="Avatar" />
-//             <AvatarFallback>IN</AvatarFallback>
-//           </Avatar>
-//           <div className="grid gap-1">
-//             <p className="text-sm font-medium leading-none">Isabella Nguyen</p>
-//             <p className="text-sm text-muted-foreground">
-//               isabella.nguyen@email.com
-//             </p>
-//           </div>
-//           <div className="ml-auto font-medium">+$299.00</div>
-//         </div>
-//         <div className="flex items-center gap-4">
-//           <Avatar className="hidden h-9 w-9 sm:flex">
-//             <AvatarImage src="/avatars/04.png" alt="Avatar" />
-//             <AvatarFallback>WK</AvatarFallback>
-//           </Avatar>
-//           <div className="grid gap-1">
-//             <p className="text-sm font-medium leading-none">William Kim</p>
-//             <p className="text-sm text-muted-foreground">will@email.com</p>
-//           </div>
-//           <div className="ml-auto font-medium">+$99.00</div>
-//         </div>
-//         <div className="flex items-center gap-4">
-//           <Avatar className="hidden h-9 w-9 sm:flex">
-//             <AvatarImage src="/avatars/05.png" alt="Avatar" />
-//             <AvatarFallback>SD</AvatarFallback>
-//           </Avatar>
-//           <div className="grid gap-1">
-//             <p className="text-sm font-medium leading-none">Sofia Davis</p>
-//             <p className="text-sm text-muted-foreground">
-//               sofia.davis@email.com
-//             </p>
-//           </div>
-//           <div className="ml-auto font-medium">+$39.00</div>
-//         </div>
-//       </CardContent>
-//     </Card>
-//   );
-// }
