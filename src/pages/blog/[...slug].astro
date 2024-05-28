@@ -57,9 +57,9 @@ const { Content, remarkPluginFrontmatter } = await post.render();
         </h1>
       </div>
       <div
-        class="flex justify-start items-center space-x-3 text-muted-foreground"
+        class="flex items-center space-x-2 text-muted-foreground text-sm flex-wrap"
       >
-        <div>by {author}</div>
+        <div>{author}</div>
         <Separator orientation="vertical" className="h-7" />
         <div class="flex items-center space-x-1">
           <LuCalendarDays size={20} /><span
