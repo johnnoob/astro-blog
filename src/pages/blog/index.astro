@@ -4,6 +4,9 @@ import BlogLayout from "@/layouts/BlogLayout.astro";
 const posts = await getCollection("posts", ({ data }) => {
   return data.isDraft !== true;
 });
+const sortedPosts = posts.sort((a, b) => {
+  return b.data.date.getTime() - a.data.date.getTime();
+});
 ---
 
-<BlogLayout posts={posts} />
+<BlogLayout posts={sortedPosts} />

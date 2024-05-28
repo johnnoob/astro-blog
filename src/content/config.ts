@@ -7,7 +7,7 @@ const postsCollection = defineCollection({
       title: z.string(),
       category: z.string(),
       subcategory: z.string(),
-      date: z.string(),
+      date: z.string().transform((date) => new Date(date)),
       heroImage: z.object({
         src: image(),
         alt: z.string(),

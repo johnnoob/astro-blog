@@ -1,0 +1,37 @@
+---
+title: "快速準確AI預測全球天氣 with GraphCast by Google Research Lam et al."
+category: "人工智慧宇宙"
+subcategory: "AI實作範例"
+date: "2024-02-21"
+heroImage: { 
+    src: "./hero.jpg",
+    alt: "快速準確AI預測"
+    }
+tags: ["天氣預測模型", "人工智慧預測天氣"]
+author: "John Hu"
+isDraft: false
+---
+
+在三國演義中，赤壁之戰，諸葛亮憑藉對湖陸風向的預測，火燒連環船，使得孫劉聯軍得以大敗曹操，奠定三國鼎立的基礎。由此可見，對於天氣的精密掌握，不僅得以改善各種生存條件，還能藉此訂定各種軍事策略，對於各種地緣政治紛爭的此刻，有其重大意義，於是各國對於快速準確的天氣預測技術，皆十分有興趣。
+
+```py
+def greet(name):
+    print('hewwo') # [!code --]
+    print('hello') # [!code ++]
+
+greet("World")
+```
+
+```js {1-2}
+type Person = {
+    name:String;
+}
+```
+`code`
+![本地圖像](./hero.jpg)
+
+在三國演義中，赤壁之戰，諸葛亮憑藉對湖陸風向的預測，火燒連環船，使得孫劉聯軍得以大敗曹操，奠定三國鼎立的基礎。由此可見，對於天氣的精密掌握，不僅得以改善各種生存條件，還能藉此訂定各種軍事策略，對於各種地緣政治紛爭的此刻，有其重大意義，於是各國對於快速準確的天氣預測技術，皆十分有興趣。
+Google Research於2023年11月，在自然(Nature)雜誌上，發表了能夠快速且準確預測全球天氣的人工智慧模型，採用自回歸(self-Regression)，如同GPT那樣進行逐步推演，可以預測到10天後，比歐洲中期天氣預報中心(ECMWF)用超級計算機計算的高解析HRES方法，預測的還要準確。預測的項目包含溫度，風速，壓力，濕度，等等。[開源程式碼](https://github.com/google-deepmind/graphcast)用[python Jax](https://github.com/google/jax)寫成，Jax套件由Google開發，可對神經網路運算進行加速優化。
+# 論文主要架構:
+使用Graph Neuron Network，如下圖所示，每一個Mesh point的Embedding，皆由鄰近的地理天氣數據經過MLP(Multiple Layer Perceptron)編碼產生，此過程被論文稱為Grid-to-Mesh。緊接著，使用MLP採樣如下圖所示M0~M6的Mesh points產生更進一步的Embeddings，此過程被論文稱為Mesh-to-Mesh。最後解回來僅參考鄰近的三個Mesh，輸入皆為上一步產生的，更進一步的Embeddings，經由MLP傳導至輸出，此過程被論文稱為Mesh-to-Grid，這裡的構造設計充分利用資料的**空間相關性**。
+在時間相關性部分，GraphCast使用相鄰的一個時間來推斷，輸入總共是兩筆時間的Data，後續的預測輸入拿先前的輸出結果來做預測，這就是俗稱自回歸的過程，也是目前GPT文字接龍使用的方式，作者發現取鄰近兩個時間的資料，效果比單一時間還好，取兩個以上的部分，效果並沒有改善很多，相比於Memory使用量的開銷來說。

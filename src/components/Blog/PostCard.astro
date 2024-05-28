@@ -14,7 +14,7 @@ type Props = {
   category: string;
   subcategory: string;
   tags: string[];
-  date: string;
+  date: Date;
   author: string;
   image: HeroImage;
   slug: string;
@@ -41,17 +41,26 @@ const excerpt = body.replace(/[\r\n]/g, "");
     <div class="flex items-center gap-3 font-semibold">
       <a
         href=`/categories/${category}`
-        class="rounded bg-primary text-muted text-sm px-2 py-1">{category}</a
+        class="rounded bg-primary text-muted text-sm px-2 py-1 hover:underline"
+        >{category}</a
       >
       <a
         href=`/subcategories/${subcategory}`
-        class="rounded bg-muted-foreground text-muted text-sm px-2 py-1"
+        class="rounded bg-muted-foreground text-muted text-sm px-2 py-1 hover:underline"
         >{subcategory}</a
       >
     </div>
     <div class="flex gap-1 items-center text-sm text-muted-foreground">
       <LuCalendarDays size={15} />
-      <span>{date}</span>
+      <span
+        >{
+          date.toLocaleDateString("zh-TW", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+        }</span
+      >
     </div>
     <a href={`/blog/${slug}`} class="hover:underline">
       <CardTitle className="text-lg line-clamp-2">

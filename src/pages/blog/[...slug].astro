@@ -41,16 +41,22 @@ const { Content } = await post.render();
       <div class="space-x-2">
         <a
           href=`/categories/${category}`
-          class="rounded bg-primary text-muted text-sm px-2 py-1">{category}</a
+          class="rounded bg-primary text-muted text-sm px-2 py-1 hover:underline"
+          >{category}</a
         >
         <a
           href=`/subcategories/${subcategory}`
-          class="rounded bg-muted-foreground text-muted text-sm px-2 py-1"
+          class="rounded bg-muted-foreground text-muted text-sm px-2 py-1 hover:underline"
           >{subcategory}</a
         >
       </div>
       <div>
-        <h1 class="text-3xl font-bold leading-normal">{title}</h1>
+        <h1
+          class="text-3xl font-bold leading-normal"
+          transition:animate="slide"
+        >
+          {title}
+        </h1>
       </div>
       <div
         class="flex justify-start items-center space-x-3 text-muted-foreground"
@@ -58,7 +64,15 @@ const { Content } = await post.render();
         <div>by {author}</div>
         <Separator orientation="vertical" className="h-7" />
         <div class="flex items-center space-x-1">
-          <LuCalendarDays size={20} /><span>{date}</span>
+          <LuCalendarDays size={20} /><span
+            >{
+              date.toLocaleDateString("zh-TW", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+            }</span
+          >
         </div>
       </div>
       <Tags tags={tags} client:visible />

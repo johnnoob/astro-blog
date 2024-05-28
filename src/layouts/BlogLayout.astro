@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PostCard from "@/components/Blog/PostCard.astro";
+import Sidebar from "@/components/Blog/Sidebar";
 import type { CollectionEntry } from "astro:content";
 import { BreadcrumbCustom } from "@/components/Blog/BreadCrumb";
 
@@ -12,6 +13,40 @@ type Props = {
 };
 
 const { filterLabel, filterItem, filterItemUrl, posts } = Astro.props;
+
+const categoryCountMap = new Map();
+posts.forEach((post) => {
+  const category = post.data.category;
+  if (categoryCountMap.has(category)) {
+    categoryCountMap.set(category, categoryCountMap.get(category) + 1);
+  } else {
+    categoryCountMap.set(category, 1);
+  }
+});
+
+const subcategoryCountMap = new Map();
+posts.forEach((post) => {
+  const subcategory = post.data.subcategory;
+  if (subcategoryCountMap.has(subcategory)) {
+    subcategoryCountMap.set(
+      subcategory,
+      subcategoryCountMap.get(subcategory) + 1
+    );
+  } else {
+    subcategoryCountMap.set(subcategory, 1);
+  }
+});
+
+const tagCountMap = new Map();
+posts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    if (tagCountMap.has(tag)) {
+      tagCountMap.set(tag, tagCountMap.get(tag) + 1);
+    } else {
+      tagCountMap.set(tag, 1);
+    }
+  });
+});
 ---
 
 <BaseLayout
@@ -24,28 +59,35 @@ const { filterLabel, filterItem, filterItemUrl, posts } = Astro.props;
       filterLabel={filterLabel}
     />
   </div>
-  <div class="w-fit mx-auto">
+  <div class="w-fit">
     <h1 class="text-2xl font-bold mb-5">
       {filterLabel ? `${filterLabel}：${filterItem}` : "全部貼文"}
     </h1>
   </div>
-  <section
-    class="grid gap-6 grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 mb-8"
-  >
-    {
-      posts.map((post) => (
-        <PostCard
-          title={post.data.title}
-          category={post.data.category}
-          subcategory={post.data.subcategory}
-          tags={post.data.tags}
-          date={post.data.date}
-          author={post.data.author}
-          image={post.data.heroImage}
-          slug={post.slug}
-          body={post.body}
-        />
-      ))
-    }
-  </section>
+  <div class="grid grid-cols-3 gap-6">
+    <section class="grid col-span-2 gap-6 grid-cols-2 max-sm:grid-cols-1 mb-8">
+      {
+        posts.map((post) => (
+          <PostCard
+            title={post.data.title}
+            category={post.data.category}
+            subcategory={post.data.subcategory}
+            tags={post.data.tags}
+            date={post.data.date}
+            author={post.data.author}
+            image={post.data.heroImage}
+            slug={post.slug}
+            body={post.body}
+          />
+        ))
+      }
+    </section>
+    <aside>
+      <Sidebar
+        categoryCountMap={categoryCountMap}
+        subcategoryCountMap={subcategoryCountMap}
+        tagCountMap={tagCountMap}
+      />
+    </aside>
+  </div>
 </BaseLayout>

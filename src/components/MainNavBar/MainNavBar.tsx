@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { FaRss, FaBars } from "react-icons/fa6";
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
 import Logo from "./Logo.tsx";
-import { IoInfinite } from "react-icons/io5";
 
 const MainNavNar = () => {
   const [theme, setThemeState] = useTheme();
