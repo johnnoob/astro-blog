@@ -56,6 +56,7 @@ const MainNavNar = () => {
               handleThemeChange={handleThemeChange}
             />
             <Button
+              id="sidebar-button"
               variant={"ghost"}
               className="lg:hidden"
               onClick={() => {

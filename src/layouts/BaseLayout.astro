@@ -22,21 +22,10 @@ const { pageTitle } = Astro.props;
   </head>
   <body>
     <MainNavBar client:only="react" />
-    <Sidebar client:load />
+    <Sidebar client:only="react" />
     <main id="main" class="max-container pt-[65px]">
       <slot />
     </main>
     <Footer />
-    <script>
-      import { isSidebarOpenStore } from "@/store/isSidebarOpenStore";
-      isSidebarOpenStore.subscribe((isOpen) => {
-        console.log(isOpen);
-        if (isOpen) {
-          document.body.style.overflow = "hidden";
-        } else {
-          document.body.style.overflow = "auto";
-        }
-      });
-    </script>
   </body>
 </html>

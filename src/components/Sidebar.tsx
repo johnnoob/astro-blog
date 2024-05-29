@@ -1,54 +1,53 @@
 import { navLinks } from "@/constants/links";
 import { useStore } from "@nanostores/react";
 import { isSidebarOpenStore } from "@/store/isSidebarOpenStore";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
+import { themeStore } from "@/store/contextStore";
+import Logo from "./MainNavBar/Logo";
 import { Separator } from "./ui/separator";
-import { FaXmark } from "react-icons/fa6";
+import { useEffect } from "react";
 
 const Sidebar = () => {
   const isSidrbarOpen = useStore(isSidebarOpenStore);
+  const theme = useStore(themeStore);
+  useEffect(() => {
+    if (isSidrbarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isSidrbarOpen]);
   return (
-    <section>
+    <section id="sidebar">
       <div
-        className={`fixed top-0 left-0 h-screen w-full bg-black z-20 opacity-60 ${
-          !isSidrbarOpen && "hidden"
-        }`}
-      />
-      <div
-        className={`fixed top-0 left-0 h-screen w-1/2 bg-background transition-all z-30 ${
+        className={`fixed top-[65px] left-0 h-screen w-full transition-all z-30 backdrop-filter backdrop-blur-sm bg-opacity-80 ${
           !isSidrbarOpen && "-translate-x-full"
-        }`}
+        } ${theme === "light" ? "bg-white" : "bg-black"}`}
       >
-        <Button
-          variant="ghost"
-          className="absolute top-4 right-3"
-          onClick={() => {
-            isSidebarOpenStore.set(!isSidrbarOpen);
-          }}
-        >
-          <FaXmark size={25} />
-        </Button>
-        <Card className="border-none shadow-none pt-1">
-          <CardHeader>
-            <CardTitle>導覽列</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-3 text-lg">
-              {navLinks.map((link) => (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  onClick={() => {
-                    isSidebarOpenStore.set(false);
-                  }}
-                >
-                  {link.label}
-                </a>
-              ))}
+        <div className="grid place-content-center">
+          <div className="flex flex-col items-center border-none shadow-none w-fit mx-auto">
+            <div className="py-6">
+              <Logo size={80} />
             </div>
-          </CardContent>
-        </Card>
+            {/* <div className="text-2xl font-semibold">
+              <h2>導覽列</h2>
+            </div> */}
+            <div>
+              <div className="flex flex-col items-center gap-3 text-lg">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    onClick={() => {
+                      isSidebarOpenStore.set(false);
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
