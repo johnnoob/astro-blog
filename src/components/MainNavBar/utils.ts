@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useStore } from "@nanostores/react";
-import { themeStore } from "@/store/themeStore";
+import { themeStore } from "@/store/contextStore";
 
 type Theme = "light" | "dark";
 

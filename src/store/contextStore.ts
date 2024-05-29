@@ -1,5 +1,6 @@
 import { atom, type WritableAtom } from "nanostores";
 
+// theme
 type Theme = "light" | "dark";
 
 const getThemePreference = (): Theme => {

@@ -1,11 +1,11 @@
 import { useStore } from "@nanostores/react";
-import { themeStore } from "@/store/themeStore";
+import { themeStore } from "@/store/contextStore";
 
-type Icon = {
+type Prop = {
   size: number;
 };
 
-const Logo = ({ size }: Icon) => {
+const Logo = ({ size }: Prop) => {
   const theme = useStore(themeStore);
   const bgfillColor =
     theme === "dark" ? "hsl(60 9.1% 97.8%)" : "hsl(24 9.8% 10%)";

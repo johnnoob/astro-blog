@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Logo from "@/components/MainNavBar/Logo";
+import { Separator } from "@/components/ui/separator";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 const allPosts = await getCollection("posts", ({ data }) => {
   return data.isDraft === false;
@@ -8,11 +8,9 @@ const allPosts = await getCollection("posts", ({ data }) => {
 ---
 
 <BaseLayout pageTitle="首頁">
-  <section class="grid place-content-center gap-3">
-    <h1 class="flex items-center text-3xl font-bold gap-3 w-fit mx-auto">
-      <Logo size={60} client:only="react" /><span>John's Script</span>
-    </h1>
-    <p class="text-lg text-muted-foreground">
+  <section class="grid place-content-center gap-3 py-8">
+    <h1 class="text-xl font-bold w-fit mx-auto">John's Script</h1>
+    <p class="text-muted-foreground text-center">
       這是一個分享程式設計筆記、讀書心得及吃喝玩樂等雜七雜八內容的Blog
     </p>
   </section>

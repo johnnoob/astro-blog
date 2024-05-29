@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import { themeStore } from "@/store/themeStore";
+import { themeStore } from "@/store/contextStore";
 
 type Prop = {
   size: number;
