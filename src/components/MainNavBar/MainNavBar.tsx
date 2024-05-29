@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useTheme } from "./utils.ts";
 import { navLinks } from "@/constants/links";
 import { Separator } from "@/components/ui/separator";
@@ -6,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { FaRss, FaBars } from "react-icons/fa6";
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
 import Logo from "./Logo.tsx";
+import { atomTheme } from "@/store/themeStore";
+import { useStore } from "@nanostores/react";
 
 const MainNavNar = () => {
   const [theme, setThemeState] = useTheme();
+
   const handleThemeChange = (e: boolean): void => {
     e ? setThemeState("dark") : setThemeState("light");
   };

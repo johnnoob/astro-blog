@@ -62,7 +62,7 @@ const { Content, remarkPluginFrontmatter } = await post.render();
         <div>{author}</div>
         <Separator orientation="vertical" className="h-7" />
         <div class="flex items-center space-x-1">
-          <LuCalendarDays size={20} /><span
+          <LuCalendarDays size={15} /><span
             >{
               date.toLocaleDateString("zh-TW", {
                 year: "numeric",
@@ -74,8 +74,8 @@ const { Content, remarkPluginFrontmatter } = await post.render();
         </div>
         <Separator orientation="vertical" className="h-7" />
         <div class="flex items-center space-x-1">
-          <FaRegClock size={20} />
-          <span>{remarkPluginFrontmatter.minutesRead}</span>
+          <FaRegClock size={15} />
+          <span>{Math.ceil(remarkPluginFrontmatter.minutes)} mins</span>
         </div>
       </div>
       <Tags tags={tags} client:visible />

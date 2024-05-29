@@ -1,17 +1,15 @@
 ---
-import { Button } from "@/components/ui/button";
-import { AiFillAlert } from "react-icons/ai";
+import { getCollection } from "astro:content";
+import Logo from "@/components/MainNavBar/Logo";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { CardWithForm } from "@/components/Card";
-import { Icon } from "astro-icon/components";
+const allPosts = await getCollection("posts", ({ data }) => {
+  return data.isDraft === false;
+});
 ---
 
-<BaseLayout pageTitle="Home">
-  <CardWithForm client:load />
-  <CardWithForm client:load />
-  <CardWithForm client:load />
-  <CardWithForm client:load />
-  <CardWithForm client:load />
-  <CardWithForm client:load />
-  <CardWithForm client:load />
+<BaseLayout pageTitle="首頁">
+  <section>
+    <h1><span>John's Script</span></h1>
+    <p>這是一個分享學習程式設計、讀書心得及吃喝玩樂等內容雜七雜八的Blog</p>
+  </section>
 </BaseLayout>

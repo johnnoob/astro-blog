@@ -1,3 +1,3 @@
 import { atom } from "nanostores";
 
-export const currentTheme = atom("dark");
+export const atomTheme = atom(true);
