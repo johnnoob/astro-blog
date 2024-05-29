@@ -2,9 +2,28 @@
 import { getCollection } from "astro:content";
 import { Separator } from "@/components/ui/separator";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { type Post, type ClassifiedPosts } from "@/types/home";
+import CategorySection from "@/components/Home/CategorySection";
+
 const allPosts = await getCollection("posts", ({ data }) => {
   return data.isDraft === false;
 });
+const sortedPosts = allPosts.sort(
+  (a, b) => a.data.date.getTime() - b.data.date.getTime()
+);
+
+function classifyPostsByCategory(posts: Post[]) {
+  const classifiedPosts: ClassifiedPosts = {};
+  posts.forEach((post) => {
+    const category = post.data.category;
+    if (!classifiedPosts[category]) {
+      classifiedPosts[category] = [];
+    }
+    classifiedPosts[category].push(post);
+  });
+  return classifiedPosts;
+}
+const classifiedPosts = classifyPostsByCategory(sortedPosts);
 ---
 
 <BaseLayout pageTitle="首頁">
@@ -14,4 +33,15 @@ const allPosts = await getCollection("posts", ({ data }) => {
       這是一個分享程式設計筆記、讀書心得及吃喝玩樂等雜七雜八內容的Blog
     </p>
   </section>
+  <Separator />
+  {
+    Object.keys(classifiedPosts).map((category) => {
+      return (
+        <CategorySection
+          category={category}
+          classifiedPosts={classifiedPosts}
+        />
+      );
+    })
+  }
 </BaseLayout>
