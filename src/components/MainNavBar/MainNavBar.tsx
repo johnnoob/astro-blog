@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import { FaRss, FaBars } from "react-icons/fa6";
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
 import Logo from "./Logo.tsx";
-import { atomTheme } from "@/store/themeStore";
-import { useStore } from "@nanostores/react";
 
 const MainNavNar = () => {
   const [theme, setThemeState] = useTheme();
@@ -28,7 +26,7 @@ const MainNavNar = () => {
               href="/"
               className="flex items-center space-x-2 text-primary font-bold"
             >
-              <Logo theme={theme} size={30} />
+              <Logo size={30} />
               <span>John's Script</span>
             </a>
           </div>

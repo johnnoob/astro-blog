@@ -1,116 +1,18 @@
 ---
 import FooterLinks from "./FooterLinks.tsx";
-import { Icon } from "astro-icon/components";
+import AstroIcon from "./AstroIcon";
 ---
 
 <footer class="py-7 border-t-[1px]">
   <div class="w-fit mx-auto flex-col space-y-5">
     <FooterLinks />
-    <div class="flex-col space-y-1 text-sm text-center">
-      <p>
-        Made with <Icon
-          id="astro-light"
-          name="astro-light"
-          width={20}
-          height={20}
-          class="inline-block"
-        />
-        <Icon
-          id="astro-dark"
-          name="astro-dark"
-          width={20}
-          height={20}
-          class="hidden"
-        /> in Taiwan
+    <div class="flex flex-col space-y-1 text-sm items-center gap-1">
+      <p class="flex gap-2">
+        Made with
+        <AstroIcon size={20} client:only="react" />
+        in Taiwan
       </p>
       <p>&copy {new Date().getFullYear()} John's Script</p>
     </div>
   </div>
 </footer>
-
-<script>
-  interface LocalStorageChangeEventDetail {
-    key: string | null;
-    oldValue: string | null;
-    newValue: string | null;
-  }
-
-  type LocalStorageChangeEvent = CustomEvent<LocalStorageChangeEventDetail>;
-
-  (function () {
-    const originalSetItem = localStorage.setItem;
-    const originalRemoveItem = localStorage.removeItem;
-    const originalClear = localStorage.clear;
-
-    localStorage.setItem = function (key: string, value: string): void {
-      const event: LocalStorageChangeEvent = new CustomEvent(
-        "localStorageChange",
-        {
-          detail: {
-            key,
-            oldValue: localStorage.getItem(key),
-            newValue: value,
-          },
-        }
-      );
-      window.dispatchEvent(event);
-      originalSetItem.apply(localStorage, [key, value]);
-    };
-
-    localStorage.removeItem = function (key: string): void {
-      const event: LocalStorageChangeEvent = new CustomEvent(
-        "localStorageChange",
-        {
-          detail: {
-            key,
-            oldValue: localStorage.getItem(key),
-            newValue: null,
-          },
-        }
-      );
-      window.dispatchEvent(event);
-      originalRemoveItem.apply(localStorage, [key]);
-    };
-
-    localStorage.clear = function (): void {
-      const event: LocalStorageChangeEvent = new CustomEvent(
-        "localStorageChange",
-        {
-          detail: {
-            key: null,
-            oldValue: null,
-            newValue: null,
-          },
-        }
-      );
-      window.dispatchEvent(event);
-      originalClear.apply(localStorage);
-    };
-  })();
-
-  const astroLightIcon = document.getElementById("astro-light");
-  const astroDarkIcon = document.getElementById("astro-dark");
-  window.addEventListener("localStorageChange", (event: Event) => {
-    const customEvent = event as LocalStorageChangeEvent;
-    const key = customEvent.detail.key;
-    if (key === "theme") {
-      const newTheme = customEvent.detail.newValue;
-      switch (newTheme) {
-        case "light":
-          if (astroLightIcon !== null && astroDarkIcon !== null) {
-            astroLightIcon.style.display = "inline-block";
-            astroDarkIcon.style.display = "none";
-          }
-          return;
-        case "dark":
-          if (astroLightIcon !== null && astroDarkIcon !== null) {
-            astroLightIcon.style.display = "none";
-            astroDarkIcon.style.display = "inline-block";
-          }
-          return;
-        default:
-          return;
-      }
-    }
-  });
-</script>

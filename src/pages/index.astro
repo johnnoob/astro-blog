@@ -8,8 +8,12 @@ const allPosts = await getCollection("posts", ({ data }) => {
 ---
 
 <BaseLayout pageTitle="首頁">
-  <section>
-    <h1><span>John's Script</span></h1>
-    <p>這是一個分享學習程式設計、讀書心得及吃喝玩樂等內容雜七雜八的Blog</p>
+  <section class="grid place-content-center gap-3">
+    <h1 class="flex items-center text-3xl font-bold gap-3 w-fit mx-auto">
+      <Logo size={60} client:only="react" /><span>John's Script</span>
+    </h1>
+    <p class="text-lg text-muted-foreground">
+      這是一個分享程式設計筆記、讀書心得及吃喝玩樂等雜七雜八內容的Blog
+    </p>
   </section>
 </BaseLayout>

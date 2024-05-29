@@ -1,25 +1,19 @@
 import { useState, useEffect } from "react";
+import { useStore } from "@nanostores/react";
+import { themeStore } from "@/store/themeStore";
 
 type Theme = "light" | "dark";
 
 export const useTheme = (): [Theme, (theme: Theme) => void] => {
-  const getThemePreference = (): Theme => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      const theme = localStorage.getItem("theme");
-      if (theme !== null && (theme === "light" || theme === "dark"))
-        return theme;
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
-  const initialTheme: Theme = getThemePreference();
-  const [theme, setThemeState] = useState<Theme>(initialTheme);
+  const $theme = useStore(themeStore);
   useEffect(() => {
-    const isDark = theme === "dark";
+    const isDark = $theme === "dark";
     document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+    localStorage.setItem("theme", $theme);
+  }, [$theme]);
+  const setThemeState = (theme: Theme) => {
+    themeStore.set(theme);
+  };
 
-  return [theme, setThemeState];
+  return [$theme, setThemeState];
 };
