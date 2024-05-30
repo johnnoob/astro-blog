@@ -4,6 +4,7 @@ import { LuCalendarDays } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
 import { Separator } from "@/components/ui/separator";
 import { BreadcrumbCustom } from "@/components/PostPage/BreadCrumb";
+import Prose from "@/components/PostPage/Prose.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Tags from "@/components/PostPage/Tags.tsx";
 export const getStaticPaths = async () => {
@@ -79,9 +80,7 @@ const { Content, remarkPluginFrontmatter } = await post.render();
         </div>
       </div>
       <Tags tags={tags} client:visible />
-      <div class="post-content">
-        <Content />
-      </div>
+      <Prose><Content /></Prose>
     </section>
   </div>
 </BaseLayout>

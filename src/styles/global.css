@@ -95,8 +95,12 @@
     }
 }
 
+iframe {
+  @apply max-w-[560px]
+}
+
 /* PO文內容的style */
-.post-content-content h1,
+/* .post-content-content h1,
 .post-content h2,
 .post-content p {
   @apply tracking-wider mb-3
@@ -115,10 +119,10 @@
 
 .post-content p {
   @apply text-lg text-foreground leading-loose
-}
+} */
 
 /* code block的style */
-.post-content pre {
+/* .post-content pre {
   @apply relative p-4 mb-2
 }
 
@@ -135,4 +139,4 @@
 }
 .post-content pre .line.highlighted {
   @apply bg-gray-200
-}
+} */

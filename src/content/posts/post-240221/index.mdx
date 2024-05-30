@@ -18,13 +18,13 @@ isDraft: false
 
 Google Research於2023年11月，在自然(Nature)雜誌上，發表了能夠快速且準確預測全球天氣的人工智慧模型，採用自回歸(self-Regression)，如同GPT那樣進行逐步推演，可以預測到10天後，比歐洲中期天氣預報中心(ECMWF)用超級計算機計算的高解析HRES方法，預測的還要準確。預測的項目包含溫度，風速，壓力，濕度，等等。開源程式碼用python Jax 寫成，Jax套件由Google開發，可對神經網路運算進行加速優化。
 
-<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/Q6fOlW-Y_Ss" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p align="center"><iframe width="100%" height="315" src="https://www.youtube.com/embed/Q6fOlW-Y_Ss" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 # 論文主要架構:
 使用Graph Neuron Network，如下圖所示，每一個Mesh point的Embedding，皆由鄰近的地理天氣數據經過MLP(Multiple Layer Perceptron)編碼產生，此過程被論文稱為Grid-to-Mesh。緊接著，使用MLP採樣如下圖所示M0~M6的Mesh points產生更進一步的Embeddings，此過程被論文稱為Mesh-to-Mesh。最後解回來僅參考鄰近的三個Mesh，輸入皆為上一步產生的，更進一步的Embeddings，經由MLP傳導至輸出，此過程被論文稱為Mesh-to-Grid，這裡的構造設計充分利用資料的**空間相關性**。
 
 <p align="center">![](./fig1.jpg)</p>
-<p align="center">自回歸的方式逐步預測全球天氣，利用Grid-Mesh-Grid的資料結構準換，搭建MLP神經網路，用於準確預測全球天氣</p>
+<figcaption>自回歸的方式逐步預測全球天氣，利用Grid-Mesh-Grid的資料結構準換，搭建MLP神經網路，用於準確預測全球天氣</figcaption>
 
 在**時間相關性**部分，GraphCast使用相鄰的一個時間來推斷，輸入總共是兩筆時間的Data，後續的預測輸入拿先前的輸出結果來做預測，這就是俗稱自回歸的過程，也是目前GPT文字接龍使用的方式，作者發現取鄰近兩個時間的資料，效果比單一時間還好，取兩個以上的部分，效果並沒有改善很多，相比於Memory使用量的開銷來說。
 
@@ -38,7 +38,7 @@ Loss方面使用Mean square error，針對所有10天內自回歸在不同地點
 資料來源是歐洲中期天氣預報中心(ECMWF)，創立於1975年，是一個國際組織，位於英格蘭。ECMWF 的 ERA5資料集，擁有從1959年到現在的天氣數據集，地理解析度為0.25。經度與緯度，約28x28 km2，每個位置擁有上百組(5+6 x 37)資料，以每個小時的時間解析度呈現。本篇論文保留原數據集的地理解析度，取如下圖所示的資料，並且將時間取樣率改成6小時，用以加速整個訓練與評估過程。
 
 <p align="center">![](./fig4.jpg)</p>
-<p align="center">氣壓(Pressure Levels)與高度(z)有關，所以除了表面的數據5組數據以外，空中的數據有6 x 37組</p>
+<figcaption>氣壓(Pressure Levels)與高度(z)有關，所以除了表面的數據5組數據以外，空中的數據有6 x 37組</figcaption>
 
 # 論文結果評估:
 從絕對RMSE誤差以及ACC (Correlation score)來看，約在推論3.5天以後和HRES(原有的可解析手法)，Graphcast才會開始拉開距離，但是從RMSE的誤差比例來看，所有推論時間段皆比原本的HRES好。在表面推論與高空推論中(表面氣壓高，高空氣壓低)，只有在極度高空(50hPa)，推論結果會輸給HRES，其他從表面到100hPa皆取得優勝。

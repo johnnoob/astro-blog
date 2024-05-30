@@ -46,6 +46,7 @@
     "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "@shikijs/transformers": "^1.6.0"
+    "@shikijs/transformers": "^1.6.0",
+    "@tailwindcss/typography": "^0.5.13"
   }
 }
