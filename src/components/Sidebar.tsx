@@ -3,7 +3,6 @@ import { useStore } from "@nanostores/react";
 import { isSidebarOpenStore } from "@/store/isSidebarOpenStore";
 import { themeStore } from "@/store/contextStore";
 import Logo from "./MainNavBar/Logo";
-import { Separator } from "./ui/separator";
 import { useEffect } from "react";
 
 const Sidebar = () => {
@@ -28,9 +27,6 @@ const Sidebar = () => {
             <div className="py-6">
               <Logo size={80} />
             </div>
-            {/* <div className="text-2xl font-semibold">
-              <h2>導覽列</h2>
-            </div> */}
             <div>
               <div className="flex flex-col items-center gap-3 text-lg">
                 {navLinks.map((link) => (

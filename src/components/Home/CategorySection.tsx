@@ -1,24 +1,28 @@
 import { type ClassifiedPosts } from "@/types/home";
 import CardSm from "./CardSm";
+import { Separator } from "../ui/separator";
+type PostIdToMinutesMap = {
+  [postId: string]: number;
+};
 
 type CategorySectionProps = {
   category: string;
   classifiedPosts: ClassifiedPosts;
+  postIdToMinutesMap: PostIdToMinutesMap;
 };
 
 const CategorySection = ({
   category,
   classifiedPosts,
+  postIdToMinutesMap,
 }: CategorySectionProps) => {
-  classifiedPosts["人工智慧宇宙"].forEach(async (post) => {
-    console.log((await post.render()).remarkPluginFrontmatter.minutes);
-  });
   return (
-    <section className="flex flex-col gap-2">
+    <section className="flex flex-col gap-4">
       <a href={`/categories/${category}`}>
-        <h2 className="text-lg font-semibold hover:underline">{category}</h2>
+        <h2 className="text-xl font-semibold hover:underline">{category}</h2>
       </a>
-      <div className="grid grid-cols-5 gap-3">
+      <Separator />
+      <div className="grid grid-cols-3 gap-3">
         {classifiedPosts[category].map((post, index) => (
           <CardSm
             key={index}
@@ -29,6 +33,7 @@ const CategorySection = ({
             imageAlt={post.data.heroImage.alt}
             date={post.data.date}
             author={post.data.author}
+            minutes={postIdToMinutesMap[post.id]}
           />
         ))}
       </div>

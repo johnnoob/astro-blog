@@ -1,7 +1,9 @@
 ---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Sidebar from "@/components/Home/Sidebar.astro";
 import { getCollection } from "astro:content";
 import { Separator } from "@/components/ui/separator";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+
 import { type Post, type ClassifiedPosts } from "@/types/home";
 import CategorySection from "@/components/Home/CategorySection";
 
@@ -24,6 +26,19 @@ function classifyPostsByCategory(posts: Post[]) {
   return classifiedPosts;
 }
 const classifiedPosts = classifyPostsByCategory(sortedPosts);
+
+const processPostsMinutes = async () => {
+  const postIdToMinutesMap: { [postId: string]: number } = {};
+  for (const category of Object.keys(classifiedPosts)) {
+    for (const post of classifiedPosts[category]) {
+      const renderResponse = await post.render();
+      const minutes = renderResponse.remarkPluginFrontmatter.minutes;
+      postIdToMinutesMap[post.id] = minutes;
+    }
+  }
+  return postIdToMinutesMap;
+};
+const postIdToMinutesMap = await processPostsMinutes();
 ---
 
 <BaseLayout pageTitle="首頁">
@@ -33,15 +48,21 @@ const classifiedPosts = classifyPostsByCategory(sortedPosts);
       這是一個分享程式設計筆記、讀書心得及吃喝玩樂等雜七雜八內容的Blog
     </p>
   </section>
-  <Separator />
-  {
-    Object.keys(classifiedPosts).map((category) => {
-      return (
-        <CategorySection
-          category={category}
-          classifiedPosts={classifiedPosts}
-        />
-      );
-    })
-  }
+  <div class="py-6 flex gap-4">
+    <div class="flex flex-col gap-3 w-3/4">
+      {
+        Object.keys(classifiedPosts).map((category) => {
+          return (
+            <CategorySection
+              category={category}
+              classifiedPosts={classifiedPosts}
+              postIdToMinutesMap={postIdToMinutesMap}
+              client:load
+            />
+          );
+        })
+      }
+    </div>
+    <Sidebar />
+  </div>
 </BaseLayout>

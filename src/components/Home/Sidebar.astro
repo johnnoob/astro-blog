@@ -1,0 +1,19 @@
+---
+import { Image } from "astro:assets";
+import authorImage from "@/images/author.jpeg";
+---
+
+<div class="bg-muted w-1/4 px-2">
+  <div class="flex flex-col items-center">
+    <h3 class="text-lg font-semibold text-center">關於筆者</h3>
+    <img
+      src={authorImage.src}
+      alt="author"
+      class="object-cover aspect-square rounded-full max-w-[150px]"
+    />
+    <h4>嗨，我是John</h4>
+    <p>
+      在公務界打滾的資料科學家，以部落格寫作記錄自己的知識焦慮，記下我看過的書、寫過的程式碼、以及數據分析工作的見聞。
+    </p>
+  </div>
+</div>

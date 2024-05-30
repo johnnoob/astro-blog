@@ -28,10 +28,9 @@ const Tags = ({ tags }: TagsProps) => {
           <a
             key={index}
             href={`/tags/${tag}`}
-            className="bg-muted text-foreground border-[1px] text-sm rounded-2xl px-2 py-1 hover:bg-primary hover:text-muted"
-            style={{
-              display: isShowTags || index < tagsLengthLimit ? "" : "none",
-            }}
+            className={`bg-muted text-foreground border-[1px] text-sm rounded-2xl px-2 py-1 hover:bg-primary hover:text-muted ${
+              isShowTags || index < tagsLengthLimit ? "" : "hidden"
+            }`}
           >
             {tag}
           </a>

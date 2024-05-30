@@ -56,8 +56,8 @@ const AstroIcon = ({ size }: Prop) => {
               y2="84.9468"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#D83333" />
-              <stop offset="1" stop-color="#F041FF" />
+              <stop stopColor="#D83333" />
+              <stop offset="1" stopColor="#F041FF" />
             </linearGradient>
           </defs>
         </svg>
