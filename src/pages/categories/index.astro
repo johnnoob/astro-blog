@@ -2,10 +2,12 @@
 import FilterLayout from "@/layouts/FilterLayout.astro";
 import { getCollection } from "astro:content";
 
-const allPosts = await getCollection("posts");
+const posts = await getCollection("posts", ({ data }) => {
+  return data.isDraft !== true;
+});
 const categoryCountMap = new Map();
 
-allPosts.forEach((post) => {
+posts.forEach((post) => {
   const category = post.data.category;
   if (categoryCountMap.has(category)) {
     categoryCountMap.set(category, categoryCountMap.get(category) + 1);

@@ -2,10 +2,12 @@
 import FilterLayout from "@/layouts/FilterLayout.astro";
 import { getCollection } from "astro:content";
 
-const allPosts = await getCollection("posts");
+const posts = await getCollection("posts", ({ data }) => {
+  return data.isDraft !== true;
+});
 const tagCountMap = new Map();
 
-allPosts.forEach((post) => {
+posts.forEach((post) => {
   post.data.tags.forEach((tag) => {
     if (tagCountMap.has(tag)) {
       tagCountMap.set(tag, tagCountMap.get(tag) + 1);
