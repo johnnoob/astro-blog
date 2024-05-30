@@ -61,7 +61,7 @@ const CardSm = ({
           </div>
         </div>
         <a href={url} className="hover:underline">
-          <CardTitle className="text-sm line-clamp-2">{title}</CardTitle>
+          <CardTitle className="line-clamp-2">{title}</CardTitle>
         </a>
       </CardContent>
     </Card>
