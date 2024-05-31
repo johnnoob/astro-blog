@@ -33,7 +33,7 @@ const Sidebar = ({
 
   return (
     <Card>
-      <CardHeader className="py-3 bg-muted">
+      <CardHeader className="py-3">
         <CardTitle className="text-xl">
           {filter !== undefined
             ? `有${postsCount}篇貼文在此${filterLabelMap.get(filter)}中...`

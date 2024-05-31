@@ -13,7 +13,7 @@ const Tags = ({ tags }: TagsProps) => {
     <div className="flex items-start gap-2 text-sm max-sm:flex-col max-sm:items-start">
       {tags.length > tagsLengthLimit && (
         <button
-          className="flex items-center space-x-1 rounded-2xl px-2 py-1 bg-muted-foreground text-muted min-w-fit"
+          className="flex items-center space-x-1 rounded-md px-2 py-1 bg-muted-foreground text-muted min-w-fit"
           onClick={() => setIsShowTags(!isShowTags)}
         >
           <div className="flex items-center gap-1">
@@ -28,11 +28,11 @@ const Tags = ({ tags }: TagsProps) => {
           <a
             key={index}
             href={`/tags/${tag}`}
-            className={`bg-muted text-foreground border-[1px] text-sm rounded-2xl px-2 py-1 hover:bg-primary hover:text-muted ${
+            className={`bg-muted text-muted-foreground border-[1px] text-sm rounded-md px-2 py-1 hover:border-primary hover:text-primary ${
               isShowTags || index < tagsLengthLimit ? "" : "hidden"
             }`}
           >
-            {tag}
+            # {tag}
           </a>
         ))}
         <span>

@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { LuCalendarDays } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
 import { Separator } from "@/components/ui/separator";
-import { BreadcrumbCustom } from "@/components/PostPage/BreadCrumb";
+import { FaArrowLeft } from "react-icons/fa6";
 import Prose from "@/components/PostPage/Prose.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Tags from "@/components/PostPage/Tags.tsx";
@@ -35,21 +35,22 @@ const { Content, remarkPluginFrontmatter } = await post.render();
 ---
 
 <BaseLayout pageTitle={title}>
-  <div class="max-w-[650px] mx-auto">
-    <div class="pt-8">
-      <BreadcrumbCustom postTitle={title} />
-    </div>
-    <section class="py-6 flex flex-col items-start gap-4">
-      <div class="space-x-2">
+  <div class="max-w-[768px] mx-auto pb-8">
+    <section class="relative py-6 flex flex-col items-start gap-3">
+      <button
+        id="back-btn"
+        class="px-3 py-3 rounded-full border-[1px] border-muted-foreground text-muted-foreground hover:border-primary hover:text-primary"
+        ><FaArrowLeft /></button
+      >
+      <div class="flex gap-1 items-center text-muted-foreground">
         <a
           href=`/categories/${category}`
-          class="rounded bg-primary text-muted text-sm px-2 py-1 hover:underline"
-          >{category}</a
+          class="py-1 hover:underline hover:text-primary">{category}</a
         >
+        ·
         <a
           href=`/subcategories/${subcategory}`
-          class="rounded bg-muted-foreground text-muted text-sm px-2 py-1 hover:underline"
-          >{subcategory}</a
+          class="py-1 hover:underline hover:text-primary">{subcategory}</a
         >
       </div>
       <div>
@@ -84,3 +85,12 @@ const { Content, remarkPluginFrontmatter } = await post.render();
     </section>
   </div>
 </BaseLayout>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+  document.addEventListener("astro:page-load", () => {
+    document.getElementById("back-btn")?.addEventListener("click", goBack);
+  });
+</script>
