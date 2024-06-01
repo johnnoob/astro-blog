@@ -1,9 +1,20 @@
 import { type ClassifiedPosts } from "@/types/home";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import CardSm from "./CardSm";
-import NextPrevBtn from "./NextPrevBtn";
 import { Separator } from "../ui/separator";
-import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import {
+  Card,
+  CardHeader,
+  CardDescription,
+  CardTitle,
+  CardContent,
+} from "../ui/card";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from "../ui/pagination";
+import { Button } from "../ui/button";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 type PostIdToMinutesMap = {
   [postId: string]: number;
@@ -31,22 +42,57 @@ const CategorySection = ({
     groupedPosts.push(posts.slice(i, i + postsPerPage));
   }
   const currentPosts = groupedPosts[page - 1];
-  console.log(currentPosts);
+  const handleNextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setPage((prev) => {
+      return Math.min(prev + 1, pages);
+    });
+  };
+  const handlePrevPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setPage((prev) => Math.max(prev - 1, 1));
+  };
 
   return (
-    <Card className="flex flex-col gap-4 overflow-hidden">
-      <CardHeader className="max-sm:py-4">
-        <CardTitle>
-          {" "}
-          <a href={`/categories/${category}`} className="w-fit">
-            <h2 className="text-2xl font-bold">{category}</h2>
-          </a>
-        </CardTitle>
+    <Card className="flex flex-col overflow-hidden">
+      <CardHeader className="flex flex-row items-center justify-between max-sm:py-4">
+        <div>
+          <CardTitle>
+            <a href={`/categories/${category}`} className="w-fit">
+              <h2 className="text-2xl font-bold">{category}</h2>
+            </a>
+          </CardTitle>
+          <CardDescription>共有{posts.length}篇貼文</CardDescription>
+        </div>
+        <div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="h-9 w-9"
+                  onClick={handlePrevPage}
+                >
+                  <FaAngleLeft />
+                </Button>
+              </PaginationItem>
+              <div className="text-sm">
+                {page} / {pages}
+              </div>
+              <PaginationItem>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="h-9 w-9"
+                  onClick={handleNextPage}
+                >
+                  <FaAngleRight />
+                </Button>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
       </CardHeader>
-
       <CardContent className="relative flex flex-col gap-4 group max-sm:gap-2">
-        {/* <NextPrevBtn position="left" />
-        <NextPrevBtn position="right" /> */}
         {currentPosts.map((post, index) => (
           <CardSm
             key={index}

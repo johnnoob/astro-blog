@@ -50,6 +50,14 @@ const CardSm = ({
             className="hover:underline hover:text-primary"
           >
             {subcategory}
+            <span className="sm:hidden">
+              ·
+              {date.toLocaleDateString("zh-TW", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })}
+            </span>
           </a>
         </div>
         <a href={url} className="hover:underline">
