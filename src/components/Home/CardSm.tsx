@@ -5,6 +5,7 @@ import { Separator } from "../ui/separator";
 
 type CardSmProps = {
   url: string;
+  category: string;
   subcategory: string;
   title: string;
   imageSrc: string;
@@ -12,10 +13,12 @@ type CardSmProps = {
   date: Date;
   author: string;
   minutes: number;
+  body: string;
 };
 
 const CardSm = ({
   url,
+  category,
   subcategory,
   title,
   imageSrc,
@@ -23,27 +26,39 @@ const CardSm = ({
   date,
   author,
   minutes,
+  body,
 }: CardSmProps) => {
   const minutesCeil = Math.ceil(minutes);
+  const excerpt = body.replace(/[#\*]/g, "");
   return (
-    <Card className="border-none shadow-none">
-      <CardHeader className="p-0 mb-2">
+    <Card className="border-none shadow-none flex items-center gap-4">
+      <CardHeader className="p-0 mb-2 flex-shrink-0">
         <a href={url}>
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            className="object-cover aspect-[16/10] rounded-md"
-          />
+          <div className="h-[170px] aspect-[16/10] max-sm:h-[70px]">
+            <img
+              src={imageSrc}
+              alt={imageAlt}
+              className="object-cover w-full h-full rounded-md"
+            />
+          </div>
         </a>
       </CardHeader>
-      <CardContent className="px-0 flex flex-col gap-2 items-start">
-        <a
-          href={`/subcategories/${subcategory}`}
-          className="rounded bg-muted-foreground text-muted text-xs px-2 py-1 hover:underline"
-        >
-          {subcategory}
+      <CardContent className="px-0 py-0 flex flex-col gap-2 items-start max-sm:gap-1">
+        <div className="text-muted-foreground text-sm">
+          <a
+            href={`/subcategories/${subcategory}`}
+            className="hover:underline hover:text-primary"
+          >
+            {subcategory}
+          </a>
+        </div>
+        <a href={url} className="hover:underline">
+          <CardTitle className="text-lg line-clamp-2 max-sm:text-base">
+            {title}
+          </CardTitle>
         </a>
-        <div className="flex gap-1 text-sm">
+        <p className="text-sm line-clamp-2 max-sm:hidden">{excerpt}</p>
+        <div className="flex gap-2 text-sm max-sm:hidden">
           <div className="flex gap-1 items-center text-muted-foreground">
             <LuCalendarDays size={15} />
             <span>
@@ -54,15 +69,12 @@ const CardSm = ({
               })}
             </span>
           </div>
-          <Separator orientation="vertical" />
-          <div className="flex gap-1 items-center text-xs text-muted-foreground">
-            <FaRegClock size={15} />
-            <span>{minutesCeil} mins</span>
+          <Separator orientation="vertical" className="max-sm:hidden" />
+          <div className="flex gap-1 items-center text-muted-foreground max-sm:hidden">
+            <FaRegClock size={14} />
+            <span>{minutesCeil} 分鐘</span>
           </div>
         </div>
-        <a href={url} className="hover:underline">
-          <CardTitle className="text-base line-clamp-2">{title}</CardTitle>
-        </a>
       </CardContent>
     </Card>
   );

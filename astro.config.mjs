@@ -3,32 +3,20 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
-import {
-  transformerNotationDiff,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-  transformerNotationFocus,
-  transformerNotationErrorLevel,
-  transformerMetaHighlight,
-  transformerMetaWordHighlight,
-} from "@shikijs/transformers";
+import { transformerNotationDiff, transformerNotationHighlight, transformerNotationWordHighlight, transformerNotationFocus, transformerNotationErrorLevel, transformerMetaHighlight, transformerMetaWordHighlight } from "@shikijs/transformers";
 import { remarkReadingTime } from "./remark-plugins/remark-reading-time.mjs";
+
+import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "viewport",
+    defaultStrategy: "viewport"
   },
-  integrations: [
-    mdx(),
-    react(),
-    tailwind(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    icon(),
-  ],
+  integrations: [mdx(), react(), tailwind(), tailwind({
+    applyBaseStyles: false
+  }), icon(), db()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
     shikiConfig: {
@@ -49,15 +37,7 @@ export default defineConfig({
       wrap: true,
       // Add custom transformers: https://shiki.style/guide/transformers
       // Find common transformers: https://shiki.style/packages/transformers
-      transformers: [
-        transformerNotationDiff(),
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationFocus(),
-        transformerNotationErrorLevel(),
-        transformerMetaHighlight(),
-        transformerMetaWordHighlight(),
-      ],
-    },
-  },
+      transformers: [transformerNotationDiff(), transformerNotationHighlight(), transformerNotationWordHighlight(), transformerNotationFocus(), transformerNotationErrorLevel(), transformerMetaHighlight(), transformerMetaWordHighlight()]
+    }
+  }
 });
