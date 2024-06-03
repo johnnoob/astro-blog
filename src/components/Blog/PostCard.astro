@@ -22,7 +22,6 @@ type Props = {
 };
 const { title, category, subcategory, tags, date, author, image, slug, body } =
   Astro.props;
-
 const excerpt = body.replace(/[\r\n]/g, "");
 ---
 
