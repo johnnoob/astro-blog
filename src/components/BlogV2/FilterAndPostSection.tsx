@@ -1,8 +1,8 @@
 // react
 import { useState, useMemo, useEffect } from "react";
 // react components
-import FilterSection from "./FilterSection";
 import PostSection from "./PostSection";
+import FilterSidebar from "./FilterSidebar";
 // types
 import { type AugmentedPost } from "@/types";
 // custom hooks
@@ -11,6 +11,15 @@ import {
   useFilteredAndSortedPosts,
   useNotFoundFilters,
 } from "./utils";
+// shadCN
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 type Props = {
   allPosts: AugmentedPost[];
@@ -87,22 +96,47 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
     );
 
   return (
-    <div>
-      <FilterSection
-        categoryFilters={categoryFilters}
-        subcategoryFilters={subcategoryFilters}
-        tagFilters={tagFilters}
-        categoryToNumOfPostsMap={categoryToNumOfPostsMap}
-        subcategoryToNumOfPostsMap={subcategoryToNumOfPostsMap}
-        tagToNumOfPostsMap={tagToNumOfPostsMap}
-        notFoundCategories={notFoundCategories}
-        notFoundSubcategories={notFoundSubcategories}
-        notFoundTags={notFoundTags}
-        handleCategorySelect={handleCategorySelect}
-        handleSubcategorySelect={handleSubcategorySelect}
-        handleTagSelect={handleTagSelect}
-      />
-      <PostSection allPosts={allPosts} posts={filteredPosts} />
+    <div className="grid grid-cols-4 gap-5 py-[50px] max-lg:grid-cols-3">
+      <div className="col-span-3">
+        <div className="mb-3 flex items-center gap-2">
+          <Select
+            defaultValue={isDateAscending ? "ascending" : "descending"}
+            onValueChange={(value) => setIsDateAscending(value === "ascending")}
+          >
+            <SelectTrigger className="w-[110px]">
+              <SelectValue placeholder="Themes" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ascending">由舊到新</SelectItem>
+              <SelectItem value="descending">由新到舊</SelectItem>
+            </SelectContent>
+          </Select>
+          <Input
+            type="text"
+            placeholder="搜尋標題"
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+            }}
+          />
+        </div>
+        <PostSection allPosts={allPosts} posts={filteredPosts} />
+      </div>
+      <div className="max-lg:hidden">
+        <FilterSidebar
+          categoryFilters={categoryFilters}
+          subcategoryFilters={subcategoryFilters}
+          tagFilters={tagFilters}
+          categoryToNumOfPostsMap={categoryToNumOfPostsMap}
+          subcategoryToNumOfPostsMap={subcategoryToNumOfPostsMap}
+          tagToNumOfPostsMap={tagToNumOfPostsMap}
+          notFoundCategories={notFoundCategories}
+          notFoundSubcategories={notFoundSubcategories}
+          notFoundTags={notFoundTags}
+          handleCategorySelect={handleCategorySelect}
+          handleSubcategorySelect={handleSubcategorySelect}
+          handleTagSelect={handleTagSelect}
+        />
+      </div>
     </div>
   );
 };

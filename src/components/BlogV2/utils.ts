@@ -21,8 +21,8 @@ export const useFilterSelect = (
   (e: React.MouseEvent<HTMLButtonElement>) => void
 ] => {
   const [filters, setFilters] = useState<string[]>(initialFilters);
-  const handleFilterSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as HTMLButtonElement;
+  const handleFilterSelect = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    const target = e.currentTarget;
     const targetFilter = target.value;
     if (filters.includes(targetFilter)) {
       setFilters((prevFilters) =>

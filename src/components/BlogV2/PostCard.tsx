@@ -6,8 +6,6 @@ import { Separator } from "../ui/separator";
 // react icons
 import { LuCalendarDays } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
-// react
-import { useEffect, useState } from "react";
 
 const PostCard = ({
   title,
@@ -25,17 +23,17 @@ const PostCard = ({
   const excerpt = body.replace(/[\r\n]/g, "");
   const minutesCeil = Math.ceil(minutes);
   return (
-    <Card className="shadow-none">
-      <CardHeader>
-        <div>
+    <Card className="shadow-none border-none">
+      <CardHeader className="px-0 pt-0 pb-3">
+        <a href={url} className="rounded-md overflow-hidden">
           <img
             src={image.src.src}
             alt={image.alt}
             className="aspect-[16/10] object-cover w-full h-full"
           />
-        </div>
+        </a>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+      <CardContent className="flex flex-col gap-2 p-0">
         <div className="text-muted-foreground text-sm">
           <a
             href={`/categories/${category}`}
