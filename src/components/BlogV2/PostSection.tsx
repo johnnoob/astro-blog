@@ -1,28 +1,17 @@
 // types
-import { type AugmentedPost, type PostCardProps } from "@/types.ts";
+import { type AugmentedPost } from "@/types.ts";
 // react component
 import PostCard from "./PostCard.tsx";
-// react
-import { useState, useEffect } from "react";
-// custom hooks
-import {
-  useFilterSelect,
-  useFilteredAndSortedPosts,
-  useNotFoundFilters,
-} from "./utils";
-// nano store
-import { postsStore } from "@/store/postsStore.ts";
-import { useStore } from "@nanostores/react";
 
 type Props = {
   allPosts: AugmentedPost[];
+  posts: AugmentedPost[];
 };
 
-const PostSection = ({ allPosts }: Props) => {
-  // const posts = useStore(postsStore);
+const PostSection = ({ allPosts, posts }: Props) => {
   return (
     <section className="grid gap-3 grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1">
-      {allPosts.map((post) => (
+      {posts.map((post) => (
         <PostCard
           key={post.id}
           title={post.data.title}

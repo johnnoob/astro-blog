@@ -1,7 +1,3 @@
-// react
-import { useState, useMemo, useEffect } from "react";
-// types
-import { type AugmentedPost } from "@/types";
 // shadCN components
 import {
   Card,
@@ -10,87 +6,150 @@ import {
   CardContent,
   CardDescription,
 } from "../ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "../ui/separator";
-// custom hooks
-import {
-  useFilterSelect,
-  useFilteredAndSortedPosts,
-  useNotFoundFilters,
-} from "./utils";
-// nano store
-import { useStore } from "@nanostores/react";
-import { postsStore } from "@/store/postsStore";
+import { Badge } from "../ui/badge";
 
 type Props = {
-  allPosts: AugmentedPost[];
+  categoryFilters: string[];
+  subcategoryFilters: string[];
+  tagFilters: string[];
+  categoryToNumOfPostsMap: Record<string, number>;
+  subcategoryToNumOfPostsMap: Record<string, number>;
+  tagToNumOfPostsMap: Record<string, number>;
+  notFoundCategories: string[];
+  notFoundSubcategories: string[];
+  notFoundTags: string[];
+  handleCategorySelect: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  handleSubcategorySelect: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  handleTagSelect: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-const FilterSection = ({ allPosts }: Props) => {
-  const allTags = useMemo(() => {
-    return [...new Set(allPosts.map((post) => post.data.tags).flat())];
-  }, [allPosts]);
-  const categoryToNumOfPostsMap = useMemo(
-    () =>
-      allPosts.reduce<Record<string, number>>((acc, post) => {
-        const category = post.data.category;
-        if (Object.keys(acc).includes(category))
-          return { ...acc, [category]: (acc[category] += 1) };
-        return { ...acc, [category]: 1 };
-      }, {}),
-    [allPosts]
+const FilterSection = ({
+  categoryFilters,
+  subcategoryFilters,
+  tagFilters,
+  categoryToNumOfPostsMap,
+  subcategoryToNumOfPostsMap,
+  tagToNumOfPostsMap,
+  notFoundCategories,
+  notFoundSubcategories,
+  notFoundTags,
+  handleCategorySelect,
+  handleSubcategorySelect,
+  handleTagSelect,
+}: Props) => {
+  const allCategories = Object.keys(categoryToNumOfPostsMap);
+  const allSubcategories = Object.keys(subcategoryToNumOfPostsMap);
+  const allTags = Object.keys(tagToNumOfPostsMap);
+  const foundCategories = allCategories.filter(
+    (category) => !notFoundCategories.includes(category)
   );
-  const subcategoryToNumOfPostsMap = useMemo(
-    () =>
-      allPosts.reduce<Record<string, number>>((acc, post) => {
-        const subcategory = post.data.subcategory;
-        if (Object.keys(acc).includes(subcategory))
-          return { ...acc, [subcategory]: (acc[subcategory] += 1) };
-        return { ...acc, [subcategory]: 1 };
-      }, {}),
-    [allPosts]
+  const foundSubcategories = allSubcategories.filter(
+    (subcategory) => !notFoundSubcategories.includes(subcategory)
   );
-
-  const [categoryFilters, setCatergoryFilters, handleCategorySelect] =
-    useFilterSelect([]);
-  const [subcategoryFilters, setSubcategoryFilters, handleSubcategorySelect] =
-    useFilterSelect([]);
-  const [tagFilters, setTagFilters, handleTagSelect] = useFilterSelect([]);
-  const [isDateAscending, setIsDateAscending] = useState<boolean>(false);
-  const [searchInput, setSearchInput] = useState<string>("");
-
-  const posts = useFilteredAndSortedPosts(
-    allPosts,
-    categoryFilters,
-    subcategoryFilters,
-    tagFilters,
-    isDateAscending,
-    searchInput
-  );
-  // useEffect(() => {
-  //   postsStore.set(posts);
-  // }, [posts]);
-  const { notFoundCategories, notFoundSubcategories, notFoundTags } =
-    useNotFoundFilters(
-      posts,
-      categoryFilters,
-      subcategoryFilters,
-      tagFilters,
-      allTags,
-      allPosts,
-      categoryToNumOfPostsMap,
-      subcategoryToNumOfPostsMap
-    );
+  const foundTags = allTags.filter((tag) => !notFoundTags.includes(tag));
 
   return (
     <section>
-      <Card>
-        <CardHeader>
-          <CardTitle>篩選</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div></div>
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="category" className="w-[400px]">
+        <TabsList className="w-full grid grid-cols-3">
+          <TabsTrigger value="category">類別</TabsTrigger>
+          <TabsTrigger value="subcategory">子類別</TabsTrigger>
+          <TabsTrigger value="tag">標籤</TabsTrigger>
+        </TabsList>
+        <TabsContent value="category">
+          <Card>
+            <CardHeader>
+              <CardTitle>篩選類別</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-3">
+              <div className="flex flex-wrap items-center gap-2">
+                {foundCategories.map((category) => (
+                  <button
+                    key={category}
+                    className={`px-2 py-1 flex gap-1 items-center rounded-md ${
+                      categoryFilters.includes(category)
+                        ? "bg-primary text-muted"
+                        : "bg-muted text-primary"
+                    }`}
+                    value={category}
+                    onClick={handleCategorySelect}
+                  >
+                    {category}
+                    <span className="rounded-full w-6 h-6 bg-primary text-muted grid place-content-center text-sm">
+                      {categoryToNumOfPostsMap[category]}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <Separator />
+              <div className="flex flex-wrap items-center gap-2">
+                {notFoundCategories.map((category) => (
+                  <button
+                    key={category}
+                    value={category}
+                    onClick={handleCategorySelect}
+                    className={`px-2 py-1 rounded-md opacity-50 ${
+                      categoryFilters.includes(category)
+                        ? "bg-destructive text-destructive-foreground"
+                        : "bg-muted text-primary"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="subcategory">
+          <Card>
+            <CardHeader>
+              <CardTitle>篩選子類別</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                {foundSubcategories.map((subcategory) => (
+                  <button
+                    key={subcategory}
+                    className={`px-2 py-1 rounded-md ${
+                      subcategoryFilters.includes(subcategory)
+                        ? "bg-primary text-muted"
+                        : "bg-muted text-primary"
+                    }`}
+                    value={subcategory}
+                    onClick={handleSubcategorySelect}
+                  >
+                    {subcategory}
+                  </button>
+                ))}
+              </div>
+              <Separator />
+              <div className="flex flex-wrap items-center gap-2">
+                {notFoundSubcategories.map((subcategory) => (
+                  <button
+                    key={subcategory}
+                    value={subcategory}
+                    className={`px-2 py-1 rounded-md opacity-50 ${
+                      subcategoryFilters.includes(subcategory)
+                        ? "bg-destructive text-destructive-foreground"
+                        : "bg-muted text-primary"
+                    }`}
+                    onClick={handleSubcategorySelect}
+                  >
+                    {subcategory}
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </section>
   );
 };

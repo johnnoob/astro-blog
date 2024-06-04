@@ -36,7 +36,6 @@ export const useFilterSelect = (
 };
 
 export const useNotFoundFilters = (
-  posts: AugmentedPost[],
   categoryFilters: string[],
   subcategoryFilters: string[],
   tagFilters: string[],
@@ -134,7 +133,6 @@ export const useNotFoundFilters = (
     setNotFoundSubcategories(notFoundGenerator("subcategories"));
     setNotFoundTags(notFoundGenerator("tags"));
   }, [
-    posts,
     categoryFilters,
     subcategoryFilters,
     tagFilters,
@@ -154,7 +152,7 @@ export const useFilteredAndSortedPosts = (
   tagFilters: string[],
   isDateAscending: boolean,
   searchInput: string
-) => {
+): AugmentedPost[] => {
   const [posts, setPosts] = useState<AugmentedPost[]>([]);
 
   useEffect(() => {
