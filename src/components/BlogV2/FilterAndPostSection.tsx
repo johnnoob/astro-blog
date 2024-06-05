@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from "react";
 // react components
 import PostSection from "./PostSection";
 import FilterSidebar from "./FilterSidebar";
+import SelectAscending from "./SelectAscending";
 // types
 import { type AugmentedPost } from "@/types";
 // custom hooks
@@ -99,18 +100,10 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
     <div className="grid grid-cols-4 gap-5 py-[50px] max-lg:grid-cols-3">
       <div className="col-span-3">
         <div className="mb-3 flex items-center gap-2">
-          <Select
-            defaultValue={isDateAscending ? "ascending" : "descending"}
-            onValueChange={(value) => setIsDateAscending(value === "ascending")}
-          >
-            <SelectTrigger className="w-[130px]">
-              <SelectValue placeholder="Themes" />
-            </SelectTrigger>
-            <SelectContent onPointerDownOutside={(e) => e.preventDefault()}>
-              <SelectItem value="ascending">由舊到新</SelectItem>
-              <SelectItem value="descending">由新到舊</SelectItem>
-            </SelectContent>
-          </Select>
+          <SelectAscending
+            isDateAscending={isDateAscending}
+            setIsDateAscending={setIsDateAscending}
+          />
           <Input
             type="text"
             placeholder="搜尋標題"
