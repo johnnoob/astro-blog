@@ -20,7 +20,7 @@ const SelectAscending = ({ isDateAscending, setIsDateAscending }: Props) => {
     e.preventDefault();
   };
   return (
-    <div className="relative">
+    <div>
       <Select
         defaultValue={isDateAscending ? "ascending" : "descending"}
         onValueChange={(value) => setIsDateAscending(value === "ascending")}
@@ -34,18 +34,9 @@ const SelectAscending = ({ isDateAscending, setIsDateAscending }: Props) => {
           <SelectItem value="descending">由新到舊</SelectItem>
         </SelectContent>
       </Select>
-
       {isSelectOpen && (
         <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 10,
-            backgroundColor: "rgba(0, 0, 0, 0)", // 可根据需要调整透明度
-          }}
+          className="fixed top-0 left-0 w-full h-full z-10 bg-transparent"
           onClick={handleClickOverlay}
         />
       )}

@@ -10,7 +10,7 @@ type Props = {
 
 const PostSection = ({ allPosts, posts }: Props) => {
   return (
-    <section className="grid gap-5 grid-cols-3 max-sm:grid-cols-1">
+    <section className="py-3 grid gap-5 grid-cols-3 max-sm:grid-cols-1">
       {posts.map((post) => (
         <PostCard
           key={post.id}

@@ -1,12 +1,5 @@
 ---
-import { getCollection } from "astro:content";
-import BlogLayout from "@/layouts/BlogLayout.astro";
-const posts = await getCollection("posts", ({ data }) => {
-  return data.isDraft !== true;
-});
-const sortedPosts = posts.sort((a, b) => {
-  return b.data.date.getTime() - a.data.date.getTime();
-});
+import BlogLayoutV2 from "@/layouts/BlogLayoutV2.astro";
 ---
 
-<BlogLayout posts={sortedPosts} />
+<BlogLayoutV2 />

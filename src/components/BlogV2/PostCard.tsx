@@ -23,17 +23,19 @@ const PostCard = ({
   const excerpt = body.replace(/[\r\n]/g, "");
   const minutesCeil = Math.ceil(minutes);
   return (
-    <Card className="shadow-none border-none">
-      <CardHeader className="px-0 pt-0 pb-3">
-        <a href={url} className="rounded-md overflow-hidden">
-          <img
-            src={image.src.src}
-            alt={image.alt}
-            className="aspect-[16/10] object-cover w-full h-full"
-          />
+    <Card className="shadow-none border-none max-sm:flex max-sm:gap-2 max-sm:items-center">
+      <CardHeader className="px-0 pt-0 pb-3 max-sm:pb-0">
+        <a href={url}>
+          <div className="rounded-md overflow-hidden aspect-[16/10] max-sm:h-[90px]">
+            <img
+              src={image.src.src}
+              alt={image.alt}
+              className="object-cover w-full h-full"
+            />
+          </div>
         </a>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2 p-0">
+      <CardContent className="flex flex-col gap-2 p-0 max-sm:gap-1">
         <div className="text-muted-foreground text-sm">
           <a
             href={`/categories/${category}`}
@@ -54,8 +56,8 @@ const PostCard = ({
             {title}
           </CardTitle>
         </a>
-        <div className="line-clamp-3 text-sm">{excerpt}</div>
-        <div className="flex items-center gap-2 text-sm">
+        <div className="line-clamp-3 text-sm max-sm:hidden">{excerpt}</div>
+        <div className="flex items-center gap-2 text-sm max-sm:gap-1">
           <div className="flex gap-1 items-center text-muted-foreground">
             <LuCalendarDays size={15} />
             <span>
@@ -66,8 +68,8 @@ const PostCard = ({
               })}
             </span>
           </div>
-          <Separator orientation="vertical" className="max-sm:hidden" />
-          <div className="flex gap-1 items-center text-muted-foreground max-sm:hidden">
+          <Separator orientation="vertical" />
+          <div className="flex gap-1 items-center text-muted-foreground">
             <FaRegClock size={14} />
             <span>{minutesCeil} 分鐘</span>
           </div>
