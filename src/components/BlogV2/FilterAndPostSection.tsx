@@ -103,10 +103,10 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
             defaultValue={isDateAscending ? "ascending" : "descending"}
             onValueChange={(value) => setIsDateAscending(value === "ascending")}
           >
-            <SelectTrigger className="w-[110px]">
+            <SelectTrigger className="w-[130px]">
               <SelectValue placeholder="Themes" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent onPointerDownOutside={(e) => e.preventDefault()}>
               <SelectItem value="ascending">由舊到新</SelectItem>
               <SelectItem value="descending">由新到舊</SelectItem>
             </SelectContent>
