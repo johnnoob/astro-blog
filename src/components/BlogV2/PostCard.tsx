@@ -6,6 +6,8 @@ import { Separator } from "../ui/separator";
 // react icons
 import { LuCalendarDays } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
+// react components
+import Link from "../Link";
 
 const PostCard = ({
   title,
@@ -37,19 +39,21 @@ const PostCard = ({
       </CardHeader>
       <CardContent className="flex flex-col gap-2 p-0 max-sm:gap-1">
         <div className="text-muted-foreground text-sm">
-          <a
-            href={`/categories/${category}`}
+          <Link
+            filterType="category"
+            filter={category}
             className="hover:underline hover:text-primary"
           >
             {category}
-          </a>
+          </Link>
           <span>·</span>
-          <a
-            href={`/subcategories/${subcategory}`}
+          <Link
+            filterType="subcategory"
+            filter={subcategory}
             className="hover:underline hover:text-primary"
           >
             {subcategory}
-          </a>
+          </Link>
         </div>
         <a href={url} className="hover:underline">
           <CardTitle className="text-lg line-clamp-2 max-sm:text-base">

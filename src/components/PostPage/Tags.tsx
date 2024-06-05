@@ -1,6 +1,10 @@
+// react
 import { useState } from "react";
+// react icons
 import { FaCaretRight, FaCaretDown, FaTag } from "react-icons/fa6";
 import { AiOutlineEllipsis } from "react-icons/ai";
+// react components
+import Link from "../Link";
 
 type TagsProps = {
   tags: string[];
@@ -25,15 +29,15 @@ const Tags = ({ tags }: TagsProps) => {
       )}
       <div className="flex items-center flex-wrap gap-2">
         {tags.map((tag, index) => (
-          <a
-            key={index}
-            href={`/tags/${tag}`}
+          <Link
+            filterType="tag"
+            filter={tag}
             className={`bg-muted text-muted-foreground border-[1px] text-sm rounded-md px-2 py-1 hover:border-primary hover:text-primary ${
               isShowTags || index < tagsLengthLimit ? "" : "hidden"
             }`}
           >
             # {tag}
-          </a>
+          </Link>
         ))}
         <span>
           {tags.length > tagsLengthLimit && !isShowTags && (

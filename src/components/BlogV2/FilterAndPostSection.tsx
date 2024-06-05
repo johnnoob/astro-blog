@@ -4,6 +4,8 @@ import { useState, useMemo, useEffect } from "react";
 import PostSection from "./PostSection";
 import FilterSidebar from "./FilterSidebar";
 import SelectAscending from "./SelectAscending";
+// react icon
+import { FaFilter } from "react-icons/fa6";
 // types
 import { type AugmentedPost } from "@/types";
 // custom hooks
@@ -13,20 +15,30 @@ import {
   useNotFoundFilters,
 } from "./utils";
 // shadCN
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Button } from "../ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+// nano store
+import { useStore } from "@nanostores/react";
+import { linkStore } from "@/store/linkStore";
 
 type Props = {
   allPosts: AugmentedPost[];
 };
 
 const FilterAndPostSection = ({ allPosts }: Props) => {
+  const linkProps = useStore(linkStore);
+
+  //
   const allTags = useMemo(
     () => [...new Set(allPosts.map((post) => post.data.tags).flat())],
     [allPosts]
@@ -75,6 +87,21 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
   const [tagFilters, setTagFilters, handleTagSelect] = useFilterSelect([]);
   const [isDateAscending, setIsDateAscending] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
+  useEffect(() => {
+    if (linkProps !== null) {
+      switch (linkProps.filterType) {
+        case "category":
+          setCatergoryFilters([linkProps.filter]);
+          break;
+        case "subcategory":
+          setSubcategoryFilters([linkProps.filter]);
+          break;
+        case "tag":
+          setTagFilters([linkProps.filter]);
+          break;
+      }
+    }
+  }, [linkProps]);
 
   const filteredPosts = useFilteredAndSortedPosts(
     allPosts,
@@ -97,7 +124,7 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
     );
 
   return (
-    <div className="grid grid-cols-4 gap-5 py-[50px] max-lg:grid-cols-3">
+    <div className="grid grid-cols-4 gap-5 py-[20px] max-lg:grid-cols-3">
       <div className="col-span-3">
         <div className="mb-3 flex items-center gap-2">
           <SelectAscending
@@ -111,6 +138,30 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
               setSearchInput(e.target.value);
             }}
           />
+          <Sheet>
+            <SheetTrigger className="lg:hidden">
+              <Button variant="outline" className="gap-1 text-sm font-normal">
+                <FaFilter />
+                <span>篩選文章</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="pt-12">
+              <FilterSidebar
+                categoryFilters={categoryFilters}
+                subcategoryFilters={subcategoryFilters}
+                tagFilters={tagFilters}
+                categoryToNumOfPostsMap={categoryToNumOfPostsMap}
+                subcategoryToNumOfPostsMap={subcategoryToNumOfPostsMap}
+                tagToNumOfPostsMap={tagToNumOfPostsMap}
+                notFoundCategories={notFoundCategories}
+                notFoundSubcategories={notFoundSubcategories}
+                notFoundTags={notFoundTags}
+                handleCategorySelect={handleCategorySelect}
+                handleSubcategorySelect={handleSubcategorySelect}
+                handleTagSelect={handleTagSelect}
+              />
+            </SheetContent>
+          </Sheet>
         </div>
         <PostSection allPosts={allPosts} posts={filteredPosts} />
       </div>

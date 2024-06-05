@@ -1,6 +1,13 @@
+// types
 import { type ClassifiedPosts } from "@/types/home";
-import { useState, type ChangeEvent } from "react";
+// react
+import { useState } from "react";
+// react components
 import CardSm from "./CardSm";
+import Link from "../Link";
+// react icons
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+// shadCN
 import { Separator } from "../ui/separator";
 import {
   Card,
@@ -15,7 +22,7 @@ import {
   PaginationItem,
 } from "../ui/pagination";
 import { Button } from "../ui/button";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+
 type PostIdToMinutesMap = {
   [postId: string]: number;
 };
@@ -56,9 +63,9 @@ const CategorySection = ({
       <CardHeader className="flex flex-row items-center justify-between max-sm:py-4">
         <div>
           <CardTitle>
-            <a href={`/categories/${category}`} className="w-fit">
+            <Link filterType="category" filter={category} className="w-fit">
               <h2 className="text-2xl font-bold">{category}</h2>
-            </a>
+            </Link>
           </CardTitle>
           <CardDescription>共有{posts.length}篇貼文</CardDescription>
         </div>

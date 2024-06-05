@@ -1,12 +1,18 @@
 ---
+// astro components
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { LuCalendarDays } from "react-icons/lu";
-import { FaRegClock } from "react-icons/fa6";
-import { Separator } from "@/components/ui/separator";
-import { FaArrowLeft } from "react-icons/fa6";
 import Prose from "@/components/PostPage/Prose.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
+// shadCN
+import { Separator } from "@/components/ui/separator";
+//react icons
+import { LuCalendarDays } from "react-icons/lu";
+import { FaRegClock } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6";
+// react components
 import Tags from "@/components/PostPage/Tags.tsx";
+import Link from "@/components/Link";
+
 export const getStaticPaths = async () => {
   const posts = await getCollection("posts");
   const paths = posts.map((post) => {
@@ -43,14 +49,18 @@ const { Content, remarkPluginFrontmatter } = await post.render();
         ><FaArrowLeft /></button
       >
       <div class="flex gap-1 items-center text-muted-foreground">
-        <a
-          href=`/categories/${category}`
-          class="py-1 hover:underline hover:text-primary">{category}</a
+        <Link
+          filterType="category"
+          filter={category}
+          className="py-1 hover:underline hover:text-primary"
+          client:load>{category}</Link
         >
-        ·
-        <a
-          href=`/subcategories/${subcategory}`
-          class="py-1 hover:underline hover:text-primary">{subcategory}</a
+        <span>·</span>
+        <Link
+          filterType="subcategory"
+          filter={subcategory}
+          className="py-1 hover:underline hover:text-primary"
+          client:load>{subcategory}</Link
         >
       </div>
       <div>

@@ -1,7 +1,11 @@
+// react icons
 import { LuCalendarDays } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
+// shadCN
 import { Card, CardHeader, CardContent, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";
+// react components
+import Link from "../Link";
 
 type CardSmProps = {
   url: string;
@@ -45,8 +49,9 @@ const CardSm = ({
       </CardHeader>
       <CardContent className="px-0 py-0 flex flex-col gap-2 items-start max-sm:gap-1">
         <div className="text-muted-foreground text-sm">
-          <a
-            href={`/subcategories/${subcategory}`}
+          <Link
+            filterType="subcategory"
+            filter={subcategory}
             className="hover:underline hover:text-primary"
           >
             {subcategory}
@@ -58,7 +63,7 @@ const CardSm = ({
                 day: "2-digit",
               })}
             </span>
-          </a>
+          </Link>
         </div>
         <a href={url} className="hover:underline">
           <CardTitle className="text-lg line-clamp-2 max-sm:text-base">
