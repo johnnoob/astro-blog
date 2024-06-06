@@ -1,5 +1,31 @@
 ---
-import BlogLayoutV2 from "@/layouts/BlogLayoutV2.astro";
+// astro components
+import BaseLayout from "@/layouts/BaseLayout.astro";
+// react components
+import FilterAndPostSection from "@/components/Blog/FilterAndPostSection";
+// content collection
+import { getCollection } from "astro:content";
+
+const posts = await getCollection(
+  "posts",
+  (post) => post.data.isDraft === false
+);
+// 將非同步post.render()的結果取出minutes
+const fetchPostDetails = async () => {
+  const details = await Promise.all(
+    posts.map(async (post) => {
+      const renderedPost = await post.render();
+      return {
+        ...post,
+        minutes: renderedPost.remarkPluginFrontmatter.minutes,
+      };
+    })
+  );
+  return details;
+};
+const augmentedAllPosts = await fetchPostDetails();
 ---
 
-<BlogLayoutV2 />
+<BaseLayout pageTitle="Blog"
+  ><FilterAndPostSection allPosts={augmentedAllPosts} client:load />
+</BaseLayout>

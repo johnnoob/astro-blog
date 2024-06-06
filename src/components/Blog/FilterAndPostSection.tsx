@@ -117,10 +117,10 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
       categoryFilters,
       subcategoryFilters,
       tagFilters,
-      allTags,
       allPosts,
       categoryToNumOfPostsMap,
-      subcategoryToNumOfPostsMap
+      subcategoryToNumOfPostsMap,
+      tagToNumOfPostsMap
     );
 
   return (
@@ -139,7 +139,7 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
             }}
           />
           <Sheet>
-            <SheetTrigger className="lg:hidden">
+            <SheetTrigger className="lg:hidden" asChild>
               <Button variant="outline" className="gap-1 text-sm font-normal">
                 <FaFilter />
                 <span>篩選文章</span>

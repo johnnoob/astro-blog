@@ -27,6 +27,7 @@ export const getStaticPaths = async () => {
   });
   return paths;
 };
+
 type Props = {
   post: CollectionEntry<"posts">;
 };
@@ -90,7 +91,7 @@ const { Content, remarkPluginFrontmatter } = await post.render();
           <span>{Math.ceil(remarkPluginFrontmatter.minutes)} 分鐘</span>
         </div>
       </div>
-      <Tags tags={tags} client:visible />
+      <Tags tags={tags} client:load />
       <Prose><Content /></Prose>
     </section>
   </div>

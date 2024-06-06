@@ -30,6 +30,7 @@ const Tags = ({ tags }: TagsProps) => {
       <div className="flex items-center flex-wrap gap-2">
         {tags.map((tag, index) => (
           <Link
+            key={tag}
             filterType="tag"
             filter={tag}
             className={`bg-muted text-muted-foreground border-[1px] text-sm rounded-md px-2 py-1 hover:border-primary hover:text-primary ${

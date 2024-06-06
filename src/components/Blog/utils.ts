@@ -39,15 +39,18 @@ export const useNotFoundFilters = (
   categoryFilters: string[],
   subcategoryFilters: string[],
   tagFilters: string[],
-  allTags: string[],
   allPosts: AugmentedPost[],
   categoryToNumOfPostsMap: {
     [category: string]: number;
   },
   subcategoryToNumOfPostsMap: {
     [subcategory: string]: number;
+  },
+  tagToNumOfPostsMap: {
+    [tag: string]: number;
   }
 ) => {
+  const allTags = Object.keys(tagToNumOfPostsMap);
   const generateFiltersMap = (filteredPosts: AugmentedPost[]): FiltersMap => {
     const filtersMap = filteredPosts.reduce(
       (acc, post) => {
@@ -113,12 +116,12 @@ export const useNotFoundFilters = (
     },
     [
       allPosts,
-      allTags,
       categoryFilters,
       subcategoryFilters,
       tagFilters,
       categoryToNumOfPostsMap,
       subcategoryToNumOfPostsMap,
+      tagToNumOfPostsMap,
     ]
   );
 
@@ -137,9 +140,9 @@ export const useNotFoundFilters = (
     subcategoryFilters,
     tagFilters,
     allPosts,
-    allTags,
     categoryToNumOfPostsMap,
     subcategoryToNumOfPostsMap,
+    tagToNumOfPostsMap,
     notFoundGenerator,
   ]);
   return { notFoundCategories, notFoundSubcategories, notFoundTags };
