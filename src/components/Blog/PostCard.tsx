@@ -40,7 +40,7 @@ const PostCard = ({
       <CardContent className="flex flex-col gap-2 p-0 max-sm:gap-1">
         <div className="text-muted-foreground text-sm">
           <Link
-            filterType="category"
+            filterType="categoryFilters"
             filter={category}
             className="hover:underline hover:text-primary"
           >
@@ -48,7 +48,7 @@ const PostCard = ({
           </Link>
           <span>·</span>
           <Link
-            filterType="subcategory"
+            filterType="subcategoryFilters"
             filter={subcategory}
             className="hover:underline hover:text-primary"
           >

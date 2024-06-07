@@ -32,18 +32,18 @@ export const socialLinks: SocialLink[] = [
     icon: <FaGithub size={25} />,
     iconAlt: "github",
   },
-  {
-    platform: "twitter",
-    url: "https://github.com/johnnoob",
-    icon: <FaXTwitter size={25} />,
-    iconAlt: "twitter",
-  },
-  {
-    platform: "linkedIn",
-    url: "https://github.com/johnnoob",
-    icon: <FaLinkedin size={25} />,
-    iconAlt: "linkedIn",
-  },
+  // {
+  //   platform: "twitter",
+  //   url: "https://github.com/johnnoob",
+  //   icon: <FaXTwitter size={25} />,
+  //   iconAlt: "twitter",
+  // },
+  // {
+  //   platform: "linkedIn",
+  //   url: "https://github.com/johnnoob",
+  //   icon: <FaLinkedin size={25} />,
+  //   iconAlt: "linkedIn",
+  // },
 ];
 
 type NavLink = {

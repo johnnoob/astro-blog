@@ -51,14 +51,14 @@ const { Content, remarkPluginFrontmatter } = await post.render();
       >
       <div class="flex gap-1 items-center text-muted-foreground">
         <Link
-          filterType="category"
+          filterType="categoryFilters"
           filter={category}
           className="py-1 hover:underline hover:text-primary"
           client:load>{category}</Link
         >
         <span>·</span>
         <Link
-          filterType="subcategory"
+          filterType="subcategoryFilters"
           filter={subcategory}
           className="py-1 hover:underline hover:text-primary"
           client:load>{subcategory}</Link

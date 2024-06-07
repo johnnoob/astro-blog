@@ -1,24 +1,32 @@
 // react
 import React from "react";
 // nano store
-import { linkStore } from "@/store/linkStore";
+import { filterStore } from "@/store/filterStore";
 
 type Props = {
-  filterType: "category" | "subcategory" | "tag";
+  filterType: "categoryFilters" | "subcategoryFilters" | "tagFilters";
   filter: string;
   children: React.ReactNode;
   className: string;
 };
 
 const Link = ({ filterType, filter, children, className }: Props) => {
+  const defaultFilterMap = {
+    categoryFilters: [],
+    subcategoryFilters: [],
+    tagFilters: [],
+    isDateAscending: false,
+    searchInput: "",
+  };
+
   return (
     <a
       href="/blog"
       className={className}
       onClick={() => {
-        linkStore.set({
-          filterType,
-          filter,
+        filterStore.set({
+          ...defaultFilterMap,
+          [filterType]: [filter],
         });
       }}
     >

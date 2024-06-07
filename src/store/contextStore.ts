@@ -1,4 +1,4 @@
-import { atom, type WritableAtom } from "nanostores";
+import { atom } from "nanostores";
 
 // theme
 type Theme = "light" | "dark";
@@ -13,4 +13,4 @@ const getThemePreference = (): Theme => {
     : "light";
 };
 const initialTheme: Theme = getThemePreference();
-export const themeStore: WritableAtom<Theme> = atom(initialTheme);
+export const themeStore = atom<Theme>(initialTheme);

@@ -8,38 +8,19 @@ type FiltersMap = {
 };
 // react
 import React, { useState, useEffect, useCallback } from "react";
+// nano store
+import { filterStore } from "@/store/filterStore";
+import { useStore } from "@nanostores/react";
 
 const isArraySubset = (subset: string[], superset: string[]) => {
   return subset.some((element) => superset.includes(element));
 };
 
-export const useFilterSelect = (
-  initialFilters: string[]
-): [
-  string[],
-  React.Dispatch<React.SetStateAction<string[]>>,
-  (e: React.MouseEvent<HTMLButtonElement>) => void
-] => {
-  const [filters, setFilters] = useState<string[]>(initialFilters);
-  const handleFilterSelect = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    const target = e.currentTarget;
-    const targetFilter = target.value;
-    if (filters.includes(targetFilter)) {
-      setFilters((prevFilters) =>
-        prevFilters.filter((filter) => filter !== targetFilter)
-      );
-    } else {
-      setFilters((prevFilters) => [...prevFilters, targetFilter]);
-    }
-  };
-  return [filters, setFilters, handleFilterSelect];
-};
-
 export const useNotFoundFilters = (
+  allPosts: AugmentedPost[],
   categoryFilters: string[],
   subcategoryFilters: string[],
   tagFilters: string[],
-  allPosts: AugmentedPost[],
   categoryToNumOfPostsMap: {
     [category: string]: number;
   },
@@ -72,46 +53,50 @@ export const useNotFoundFilters = (
     };
   };
 
-  const notFoundGenerator = useCallback(
+  const searchNotFound = useCallback(
     (filterType: FilterType) => {
       let filteredPosts: AugmentedPost[];
-      if (filterType === "tags") {
-        filteredPosts = allPosts.filter((post) => {
-          if (categoryFilters.length === 0) return true;
-          return categoryFilters.includes(post.data.category);
-        });
-        filteredPosts = filteredPosts.filter((post) => {
-          if (subcategoryFilters.length === 0) return true;
-          return subcategoryFilters.includes(post.data.subcategory);
-        });
-        const filtersMap = generateFiltersMap(filteredPosts);
-        return allTags.filter((tag) => !filtersMap.tags.includes(tag));
-      } else if (filterType === "categories") {
-        filteredPosts = allPosts.filter((post) => {
-          if (subcategoryFilters.length === 0) return true;
-          return subcategoryFilters.includes(post.data.subcategory);
-        });
-        filteredPosts = filteredPosts.filter((post) => {
-          if (tagFilters.length === 0) return true;
-          return isArraySubset(tagFilters, post.data.tags);
-        });
-        const filtersMap = generateFiltersMap(filteredPosts);
-        return Object.keys(categoryToNumOfPostsMap).filter(
-          (category) => !filtersMap.categories.includes(category)
-        );
-      } else {
-        filteredPosts = allPosts.filter((post) => {
-          if (categoryFilters.length === 0) return true;
-          return categoryFilters.includes(post.data.category);
-        });
-        filteredPosts = filteredPosts.filter((post) => {
-          if (tagFilters.length === 0) return true;
-          return isArraySubset(tagFilters, post.data.tags);
-        });
-        const filtersMap = generateFiltersMap(filteredPosts);
-        return Object.keys(subcategoryToNumOfPostsMap).filter(
-          (subcategory) => !filtersMap.subcategories.includes(subcategory)
-        );
+      switch (filterType) {
+        case "tags":
+          filteredPosts = allPosts.filter((post) => {
+            if (categoryFilters.length === 0) return true;
+            return categoryFilters.includes(post.data.category);
+          });
+          filteredPosts = filteredPosts.filter((post) => {
+            if (subcategoryFilters.length === 0) return true;
+            return subcategoryFilters.includes(post.data.subcategory);
+          });
+          const tagsFiltersMap = generateFiltersMap(filteredPosts);
+          return allTags.filter((tag) => !tagsFiltersMap.tags.includes(tag));
+
+        case "categories":
+          filteredPosts = allPosts.filter((post) => {
+            if (subcategoryFilters.length === 0) return true;
+            return subcategoryFilters.includes(post.data.subcategory);
+          });
+          filteredPosts = filteredPosts.filter((post) => {
+            if (tagFilters.length === 0) return true;
+            return isArraySubset(tagFilters, post.data.tags);
+          });
+          const categoriesFiltersMap = generateFiltersMap(filteredPosts);
+          return Object.keys(categoryToNumOfPostsMap).filter(
+            (category) => !categoriesFiltersMap.categories.includes(category)
+          );
+
+        default:
+          filteredPosts = allPosts.filter((post) => {
+            if (categoryFilters.length === 0) return true;
+            return categoryFilters.includes(post.data.category);
+          });
+          filteredPosts = filteredPosts.filter((post) => {
+            if (tagFilters.length === 0) return true;
+            return isArraySubset(tagFilters, post.data.tags);
+          });
+          const subcategoriesFiltersMap = generateFiltersMap(filteredPosts);
+          return Object.keys(subcategoryToNumOfPostsMap).filter(
+            (subcategory) =>
+              !subcategoriesFiltersMap.subcategories.includes(subcategory)
+          );
       }
     },
     [
@@ -132,18 +117,18 @@ export const useNotFoundFilters = (
   const [notFoundTags, setNotFoundTags] = useState<string[]>([]);
 
   useEffect(() => {
-    setNotFoundCategories(notFoundGenerator("categories"));
-    setNotFoundSubcategories(notFoundGenerator("subcategories"));
-    setNotFoundTags(notFoundGenerator("tags"));
+    setNotFoundCategories(searchNotFound("categories"));
+    setNotFoundSubcategories(searchNotFound("subcategories"));
+    setNotFoundTags(searchNotFound("tags"));
   }, [
+    allPosts,
     categoryFilters,
     subcategoryFilters,
     tagFilters,
-    allPosts,
     categoryToNumOfPostsMap,
     subcategoryToNumOfPostsMap,
     tagToNumOfPostsMap,
-    notFoundGenerator,
+    searchNotFound,
   ]);
   return { notFoundCategories, notFoundSubcategories, notFoundTags };
 };

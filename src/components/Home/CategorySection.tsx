@@ -63,7 +63,11 @@ const CategorySection = ({
       <CardHeader className="flex flex-row items-center justify-between max-sm:py-4">
         <div>
           <CardTitle>
-            <Link filterType="category" filter={category} className="w-fit">
+            <Link
+              filterType="categoryFilters"
+              filter={category}
+              className="w-fit"
+            >
               <h2 className="text-2xl font-bold">{category}</h2>
             </Link>
           </CardTitle>

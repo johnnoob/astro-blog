@@ -31,7 +31,7 @@ const Tags = ({ tags }: TagsProps) => {
         {tags.map((tag, index) => (
           <Link
             key={tag}
-            filterType="tag"
+            filterType="tagFilters"
             filter={tag}
             className={`bg-muted text-muted-foreground border-[1px] text-sm rounded-md px-2 py-1 hover:border-primary hover:text-primary ${
               isShowTags || index < tagsLengthLimit ? "" : "hidden"

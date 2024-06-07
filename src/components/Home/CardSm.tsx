@@ -50,7 +50,7 @@ const CardSm = ({
       <CardContent className="px-0 py-0 flex flex-col gap-2 items-start max-sm:gap-1">
         <div className="text-muted-foreground text-sm">
           <Link
-            filterType="subcategory"
+            filterType="subcategoryFilters"
             filter={subcategory}
             className="hover:underline hover:text-primary"
           >

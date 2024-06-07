@@ -2,7 +2,7 @@ import { socialLinks } from "@/constants/links";
 
 const FooterLinks = () => {
   return (
-    <ul className="flex space-x-7">
+    <ul className="flex space-x-7 mx-auto w-fit">
       {socialLinks.map((link) => (
         <li key={link.url}>
           <a

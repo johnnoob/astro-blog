@@ -27,5 +27,5 @@ const augmentedAllPosts = await fetchPostDetails();
 ---
 
 <BaseLayout pageTitle="Blog"
-  ><FilterAndPostSection allPosts={augmentedAllPosts} client:load />
+  ><FilterAndPostSection allPosts={augmentedAllPosts} client:only="react" />
 </BaseLayout>

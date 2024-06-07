@@ -1,5 +1,5 @@
 // react
-import { useState, useMemo, useEffect } from "react";
+import { useMemo } from "react";
 // react components
 import PostSection from "./PostSection";
 import FilterSidebar from "./FilterSidebar";
@@ -9,40 +9,20 @@ import { FaFilter } from "react-icons/fa6";
 // types
 import { type AugmentedPost } from "@/types";
 // custom hooks
-import {
-  useFilterSelect,
-  useFilteredAndSortedPosts,
-  useNotFoundFilters,
-} from "./utils";
+import { useFilteredAndSortedPosts, useNotFoundFilters } from "./utils";
 // shadCN
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 // nano store
 import { useStore } from "@nanostores/react";
-import { linkStore } from "@/store/linkStore";
+import { filterStore } from "@/store/filterStore";
 
 type Props = {
   allPosts: AugmentedPost[];
 };
 
 const FilterAndPostSection = ({ allPosts }: Props) => {
-  const linkProps = useStore(linkStore);
-
-  //
-  const allTags = useMemo(
-    () => [...new Set(allPosts.map((post) => post.data.tags).flat())],
-    [allPosts]
-  );
   // filter to number of posts map
   const categoryToNumOfPostsMap = useMemo(
     () =>
@@ -80,28 +60,55 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
     [allPosts]
   );
   // filters state
-  const [categoryFilters, setCatergoryFilters, handleCategorySelect] =
-    useFilterSelect([]);
-  const [subcategoryFilters, setSubcategoryFilters, handleSubcategorySelect] =
-    useFilterSelect([]);
-  const [tagFilters, setTagFilters, handleTagSelect] = useFilterSelect([]);
-  const [isDateAscending, setIsDateAscending] = useState<boolean>(false);
-  const [searchInput, setSearchInput] = useState<string>("");
-  useEffect(() => {
-    if (linkProps !== null) {
-      switch (linkProps.filterType) {
-        case "category":
-          setCatergoryFilters([linkProps.filter]);
-          break;
-        case "subcategory":
-          setSubcategoryFilters([linkProps.filter]);
-          break;
-        case "tag":
-          setTagFilters([linkProps.filter]);
-          break;
-      }
+  const {
+    categoryFilters,
+    subcategoryFilters,
+    tagFilters,
+    isDateAscending,
+    searchInput,
+  } = useStore(filterStore);
+
+  // handle select filter
+  const handleCategorySelect = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    const targetFilter = e.currentTarget.value;
+    if (categoryFilters.includes(targetFilter)) {
+      filterStore.setKey(
+        "categoryFilters",
+        categoryFilters.filter((filter) => filter !== targetFilter)
+      );
+    } else {
+      filterStore.setKey("categoryFilters", [...categoryFilters, targetFilter]);
     }
-  }, [linkProps]);
+  };
+  const handleSubcategorySelect = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    const targetFilter = e.currentTarget.value;
+    if (subcategoryFilters.includes(targetFilter)) {
+      filterStore.setKey(
+        "subcategoryFilters",
+        subcategoryFilters.filter((filter) => filter !== targetFilter)
+      );
+    } else {
+      filterStore.setKey("subcategoryFilters", [
+        ...subcategoryFilters,
+        targetFilter,
+      ]);
+    }
+  };
+  const handleTagSelect = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    const targetFilter = e.currentTarget.value;
+    if (tagFilters.includes(targetFilter)) {
+      filterStore.setKey(
+        "tagFilters",
+        tagFilters.filter((filter) => filter !== targetFilter)
+      );
+    } else {
+      filterStore.setKey("tagFilters", [...tagFilters, targetFilter]);
+    }
+  };
 
   const filteredPosts = useFilteredAndSortedPosts(
     allPosts,
@@ -114,10 +121,10 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
 
   const { notFoundCategories, notFoundSubcategories, notFoundTags } =
     useNotFoundFilters(
+      allPosts,
       categoryFilters,
       subcategoryFilters,
       tagFilters,
-      allPosts,
       categoryToNumOfPostsMap,
       subcategoryToNumOfPostsMap,
       tagToNumOfPostsMap
@@ -129,13 +136,15 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
         <div className="mb-3 flex items-center gap-2">
           <SelectAscending
             isDateAscending={isDateAscending}
-            setIsDateAscending={setIsDateAscending}
+            setIsDateAscending={() =>
+              filterStore.setKey("isDateAscending", !isDateAscending)
+            }
           />
           <Input
             type="text"
             placeholder="搜尋標題"
             onChange={(e) => {
-              setSearchInput(e.target.value);
+              filterStore.setKey("searchInput", e.target.value);
             }}
           />
           <Sheet>
