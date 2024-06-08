@@ -1,0 +1,13 @@
+---
+import { buildToc } from "./utils";
+const { headings } = Astro.props;
+const toc = buildToc(headings);
+
+import TableOfContentsHeading from "./TableOfContentsHeading.astro";
+---
+
+<nav class="toc">
+  <ul>
+    {toc.map((heading) => <TableOfContentsHeading heading={heading} />)}
+  </ul>
+</nav>

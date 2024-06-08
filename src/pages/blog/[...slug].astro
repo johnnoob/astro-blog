@@ -12,6 +12,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 // react components
 import Tags from "@/components/PostPage/Tags.tsx";
 import Link from "@/components/Link";
+// table of content
+import TableOfContents from "@/components/PostPage/TableOfContents.astro";
 
 export const getStaticPaths = async () => {
   const posts = await getCollection("posts");
@@ -37,11 +39,11 @@ const {
     data: { title, category, subcategory, date, tags, author },
   },
 } = Astro.props;
-
-const { Content, remarkPluginFrontmatter } = await post.render();
+const { Content, headings, remarkPluginFrontmatter } = await post.render();
 ---
 
 <BaseLayout pageTitle={title}>
+  <TableOfContents headings={headings} />
   <div class="max-w-[768px] mx-auto pb-8">
     <section class="relative py-6 flex flex-col items-start gap-3">
       <button
