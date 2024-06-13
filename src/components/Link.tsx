@@ -17,6 +17,10 @@ const Link = ({ filterType, filter, children, className }: Props) => {
     tagFilters: [],
     isDateAscending: false,
     searchInput: "",
+    dateRange: {
+      from: undefined,
+      to: undefined,
+    },
   };
 
   return (
