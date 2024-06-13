@@ -63,6 +63,6 @@ export default defineConfig({
       ],
     },
   },
-  output: "hybrid",
-  adapter: vercel(),
+  output: "static",
+  // adapter: vercel(),
 });
