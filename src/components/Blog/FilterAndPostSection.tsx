@@ -6,6 +6,7 @@ import FilterSidebar from "./FilterSidebar";
 import SelectAscending from "./SelectAscending";
 // react icon
 import { FaFilter, FaArrowRotateRight } from "react-icons/fa6";
+import { IoSearchOutline } from "react-icons/io5";
 // types
 import { type AugmentedPost } from "@/types";
 // custom hooks
@@ -158,13 +159,20 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
               filterStore.setKey("isDateAscending", !isDateAscending)
             }
           />
-          <Input
-            type="text"
-            placeholder="搜尋標題"
-            onChange={(e) => {
-              filterStore.setKey("searchInput", e.target.value);
-            }}
-          />
+          <div className="relative w-full">
+            <Input
+              className="pl-8"
+              type="text"
+              placeholder="搜尋標題"
+              onChange={(e) => {
+                filterStore.setKey("searchInput", e.target.value);
+              }}
+            />
+            <IoSearchOutline
+              className="absolute top-1/2 left-[9px] -translate-y-1/2 text-muted-foreground"
+              size={17}
+            />
+          </div>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" className="gap-1 text-sm font-normal">
