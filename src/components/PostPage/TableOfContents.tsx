@@ -7,7 +7,6 @@ type Prop = {
 
 const TableOfContents = ({ headings }: Prop) => {
   const toc = buildToc(headings);
-  console.log(toc);
 
   return (
     <nav>

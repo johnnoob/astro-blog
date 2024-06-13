@@ -8,9 +8,9 @@ type Props = {
   posts: AugmentedPost[];
 };
 
-const PostSection = ({ allPosts, posts }: Props) => {
+const PostSection = ({ posts }: Props) => {
   return (
-    <section className="py-3 grid gap-5 grid-cols-3 max-sm:grid-cols-1">
+    <section className="py-3 grid gap-5 grid-cols-4 max-lg:grid-cols-3 max-sm:grid-cols-1">
       {posts.map((post) => (
         <PostCard
           key={post.id}

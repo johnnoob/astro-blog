@@ -1,5 +1,7 @@
 // shadCN components
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// react
+import { useState } from "react";
 // react components
 import FilterTabsCard from "./FilterTabsCard";
 
@@ -47,13 +49,59 @@ const FilterSidebar = ({
   );
   const foundTags = allTags.filter((tag) => !notFoundTags.includes(tag));
 
+  // tab switch
+  type TabValue = "category" | "subcategory" | "tag";
+  const [tabValue, setTabValue] = useState<TabValue>("category");
+
   return (
     <section>
-      <Tabs defaultValue="category">
+      <Tabs
+        defaultValue="category"
+        onValueChange={(value) => setTabValue(value as TabValue)}
+      >
         <TabsList className="w-full grid grid-cols-3">
-          <TabsTrigger value="category">類別</TabsTrigger>
-          <TabsTrigger value="subcategory">子類別</TabsTrigger>
-          <TabsTrigger value="tag">標籤</TabsTrigger>
+          <TabsTrigger value="category" className="flex gap-1 items-center">
+            類別
+            {categoryFilters.length > 0 && (
+              <span
+                className={`w-5 h-5 rounded-full grid place-content-center ${
+                  tabValue === "category"
+                    ? "bg-primary text-muted"
+                    : "bg-muted-foreground text-muted"
+                }`}
+              >
+                {categoryFilters.length}
+              </span>
+            )}
+          </TabsTrigger>
+          <TabsTrigger value="subcategory" className="flex gap-1 items-center">
+            子類別
+            {subcategoryFilters.length > 0 && (
+              <span
+                className={`w-5 h-5 rounded-full grid place-content-center ${
+                  tabValue === "subcategory"
+                    ? "bg-primary text-muted"
+                    : "bg-muted-foreground text-muted"
+                }`}
+              >
+                {subcategoryFilters.length}
+              </span>
+            )}
+          </TabsTrigger>
+          <TabsTrigger value="tag" className="flex gap-1 items-center">
+            標籤
+            {tagFilters.length > 0 && (
+              <span
+                className={`w-5 h-5 rounded-full grid place-content-center ${
+                  tabValue === "tag"
+                    ? "bg-primary text-muted"
+                    : "bg-muted-foreground text-muted"
+                }`}
+              >
+                {tagFilters.length}
+              </span>
+            )}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="category" className="text-sm">
           <FilterTabsCard

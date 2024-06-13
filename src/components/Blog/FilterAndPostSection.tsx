@@ -5,7 +5,7 @@ import PostSection from "./PostSection";
 import FilterSidebar from "./FilterSidebar";
 import SelectAscending from "./SelectAscending";
 // react icon
-import { FaFilter } from "react-icons/fa6";
+import { FaFilter, FaArrowRotateRight } from "react-icons/fa6";
 // types
 import { type AugmentedPost } from "@/types";
 // custom hooks
@@ -129,10 +129,28 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
       subcategoryToNumOfPostsMap,
       tagToNumOfPostsMap
     );
+  const handleResetFilters = () => {
+    filterStore.set({
+      categoryFilters: [],
+      subcategoryFilters: [],
+      tagFilters: [],
+      isDateAscending,
+      searchInput,
+    });
+  };
 
   return (
     <div className="grid grid-cols-4 gap-5 py-[20px] max-lg:grid-cols-3">
-      <div className="col-span-3">
+      <div className="flex gap-4 items-center col-span-4">
+        <h2 className="text-xl font-semibold tracking-wide">
+          共有{filteredPosts.length}篇文章
+        </h2>
+        <Button variant="ghost" onClick={handleResetFilters}>
+          <FaArrowRotateRight />
+          <span className="ml-1">清除篩選</span>
+        </Button>
+      </div>
+      <div className="col-span-4">
         <div className="mb-3 flex items-center gap-2">
           <SelectAscending
             isDateAscending={isDateAscending}
@@ -148,7 +166,7 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
             }}
           />
           <Sheet>
-            <SheetTrigger className="lg:hidden" asChild>
+            <SheetTrigger asChild>
               <Button variant="outline" className="gap-1 text-sm font-normal">
                 <FaFilter />
                 <span>篩選文章</span>
@@ -173,22 +191,6 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
           </Sheet>
         </div>
         <PostSection allPosts={allPosts} posts={filteredPosts} />
-      </div>
-      <div className="max-lg:hidden">
-        <FilterSidebar
-          categoryFilters={categoryFilters}
-          subcategoryFilters={subcategoryFilters}
-          tagFilters={tagFilters}
-          categoryToNumOfPostsMap={categoryToNumOfPostsMap}
-          subcategoryToNumOfPostsMap={subcategoryToNumOfPostsMap}
-          tagToNumOfPostsMap={tagToNumOfPostsMap}
-          notFoundCategories={notFoundCategories}
-          notFoundSubcategories={notFoundSubcategories}
-          notFoundTags={notFoundTags}
-          handleCategorySelect={handleCategorySelect}
-          handleSubcategorySelect={handleSubcategorySelect}
-          handleTagSelect={handleTagSelect}
-        />
       </div>
     </div>
   );
