@@ -1,9 +1,10 @@
 // react
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 // react components
 import PostSection from "./PostSection";
 import FilterSidebar from "./FilterSidebar";
 import SelectAscending from "./SelectAscending";
+import { DatePickerWithRange } from "./DateRangePicker";
 // react icon
 import { FaFilter, FaArrowRotateRight } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
@@ -67,6 +68,7 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
     tagFilters,
     isDateAscending,
     searchInput,
+    dateRange,
   } = useStore(filterStore);
 
   // handle select filter
@@ -117,7 +119,8 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
     subcategoryFilters,
     tagFilters,
     isDateAscending,
-    searchInput
+    searchInput,
+    dateRange
   );
 
   const { notFoundCategories, notFoundSubcategories, notFoundTags } =
@@ -130,26 +133,43 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
       subcategoryToNumOfPostsMap,
       tagToNumOfPostsMap
     );
+
+  // const postDates = allPosts
+  //   .map((post) => post.data.date)
+  //   .sort((a, b) => a.getTime() - b.getTime());
+  // const firstPostDate = postDates[0];
+  // const lastPostDate = postDates[postDates.length - 1];
+  // useEffect(() => {
+  //   filterStore.setKey("dateRange", { from: firstPostDate, to: lastPostDate });
+  // }, []);
+
   const handleResetFilters = () => {
     filterStore.set({
       categoryFilters: [],
       subcategoryFilters: [],
       tagFilters: [],
       isDateAscending,
-      searchInput,
+      searchInput: "",
+      dateRange: { from: undefined, to: undefined },
     });
   };
 
   return (
     <div className="grid grid-cols-4 gap-5 py-[20px] max-lg:grid-cols-3">
-      <div className="flex gap-4 items-center col-span-4">
+      <div className="flex gap-4 items-center col-span-4 h-[35px]">
+        <DatePickerWithRange date={dateRange} />
         <h2 className="text-xl font-semibold tracking-wide">
           共有{filteredPosts.length}篇文章
         </h2>
-        <Button variant="ghost" onClick={handleResetFilters}>
-          <FaArrowRotateRight />
-          <span className="ml-1">清除篩選</span>
-        </Button>
+        {(categoryFilters.length !== 0 ||
+          subcategoryFilters.length !== 0 ||
+          tagFilters.length !== 0 ||
+          searchInput !== "") && (
+          <Button variant="ghost" onClick={handleResetFilters}>
+            <FaArrowRotateRight />
+            <span className="ml-1">清除篩選</span>
+          </Button>
+        )}
       </div>
       <div className="col-span-4">
         <div className="mb-3 flex items-center gap-2">
@@ -164,6 +184,7 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
               className="pl-8"
               type="text"
               placeholder="搜尋標題"
+              value={searchInput}
               onChange={(e) => {
                 filterStore.setKey("searchInput", e.target.value);
               }}

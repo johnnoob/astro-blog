@@ -11,6 +11,8 @@ import React, { useState, useEffect, useCallback } from "react";
 // nano store
 import { filterStore } from "@/store/filterStore";
 import { useStore } from "@nanostores/react";
+// date range type
+import { type DateRange } from "react-day-picker";
 
 const isArraySubset = (subset: string[], superset: string[]) => {
   return subset.some((element) => superset.includes(element));
@@ -139,7 +141,8 @@ export const useFilteredAndSortedPosts = (
   subcategoryFilters: string[],
   tagFilters: string[],
   isDateAscending: boolean,
-  searchInput: string
+  searchInput: string,
+  dateRange: DateRange
 ): AugmentedPost[] => {
   const [posts, setPosts] = useState<AugmentedPost[]>([]);
 
@@ -157,6 +160,16 @@ export const useFilteredAndSortedPosts = (
     filteredPosts = filteredPosts.filter((post) => {
       if (tagFilters.length === 0) return true;
       return isArraySubset(tagFilters, post.data.tags);
+    });
+    filteredPosts = filteredPosts.filter((post) => {
+      const postDatetime = post.data.date.getTime();
+      if (dateRange && dateRange.from && dateRange.to) {
+        return (
+          postDatetime >= dateRange.from.getTime() &&
+          postDatetime <= dateRange.to.getTime()
+        );
+      }
+      return true;
     });
 
     const sortedPosts = [...filteredPosts].sort((a, b) => {
@@ -177,6 +190,7 @@ export const useFilteredAndSortedPosts = (
     tagFilters,
     isDateAscending,
     searchInput,
+    dateRange,
   ]);
   return posts;
 };

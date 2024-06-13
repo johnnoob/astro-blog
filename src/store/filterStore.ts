@@ -1,4 +1,6 @@
+import { subDays } from "date-fns";
 import { map } from "nanostores";
+import { type DateRange } from "react-day-picker";
 
 type FilterStoreProps = {
   categoryFilters: string[];
@@ -6,6 +8,7 @@ type FilterStoreProps = {
   tagFilters: string[];
   isDateAscending: boolean;
   searchInput: string;
+  dateRange: DateRange;
 };
 
 export const filterStore = map<FilterStoreProps>({
@@ -14,4 +17,8 @@ export const filterStore = map<FilterStoreProps>({
   tagFilters: [],
   isDateAscending: false,
   searchInput: "",
+  dateRange: {
+    from: undefined,
+    to: undefined,
+  },
 });
