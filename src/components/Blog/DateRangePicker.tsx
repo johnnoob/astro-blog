@@ -1,8 +1,13 @@
+// react
 import * as React from "react";
-import { addDays, format } from "date-fns";
+// date-fns
+import { format } from "date-fns";
+import { zhTW } from "date-fns/locale";
+// react icons
 import { FaRegCalendar } from "react-icons/fa6";
+// type
 import { type DateRange } from "react-day-picker";
-
+// shadCN components
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -14,7 +19,7 @@ import {
 // nono store
 import { filterStore } from "@/store/filterStore";
 
-export function DatePickerWithRange({
+export default function DateRangePicker({
   className,
   date,
 }: React.HTMLAttributes<HTMLDivElement> & { date: DateRange }) {
@@ -26,7 +31,7 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
@@ -34,19 +39,19 @@ export function DatePickerWithRange({
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
+                  {format(date.from, "y/MM/dd")} - {format(date.to, "y/MM/dd")}
                 </>
               ) : (
-                format(date.from, "LLL dd, y")
+                format(date.from, "y/MM/dd")
               )
             ) : (
-              <span>文章期間</span>
+              <span>選取期間</span>
             )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
+            locale={zhTW}
             initialFocus
             mode="range"
             defaultMonth={date?.from}
@@ -56,8 +61,9 @@ export function DatePickerWithRange({
                 from: dateRange?.from,
                 to: dateRange?.to,
               });
+              console.log(dateRange?.from, dateRange?.to);
             }}
-            numberOfMonths={3}
+            numberOfMonths={2}
           />
         </PopoverContent>
       </Popover>

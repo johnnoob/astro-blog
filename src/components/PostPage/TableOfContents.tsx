@@ -1,6 +1,7 @@
 import { buildToc } from "./utils";
 import TableOfContentsHeading from "./TableOfContentsHeading";
 import type { MarkdownHeading } from "astro";
+
 type Prop = {
   headings: MarkdownHeading[];
 };

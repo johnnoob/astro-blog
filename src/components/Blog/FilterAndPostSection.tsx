@@ -1,10 +1,10 @@
 // react
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 // react components
 import PostSection from "./PostSection";
 import FilterSidebar from "./FilterSidebar";
 import SelectAscending from "./SelectAscending";
-import { DatePickerWithRange } from "./DateRangePicker";
+import DateRangePicker from "./DateRangePicker";
 // react icon
 import { FaFilter, FaArrowRotateRight } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
@@ -134,15 +134,6 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
       tagToNumOfPostsMap
     );
 
-  // const postDates = allPosts
-  //   .map((post) => post.data.date)
-  //   .sort((a, b) => a.getTime() - b.getTime());
-  // const firstPostDate = postDates[0];
-  // const lastPostDate = postDates[postDates.length - 1];
-  // useEffect(() => {
-  //   filterStore.setKey("dateRange", { from: firstPostDate, to: lastPostDate });
-  // }, []);
-
   const handleResetFilters = () => {
     filterStore.set({
       categoryFilters: [],
@@ -157,7 +148,6 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
   return (
     <div className="grid grid-cols-4 gap-5 py-[20px] max-lg:grid-cols-3">
       <div className="flex gap-4 items-center col-span-4 h-[35px]">
-        <DatePickerWithRange date={dateRange} />
         <h2 className="text-xl font-semibold tracking-wide">
           共有{filteredPosts.length}篇文章
         </h2>
@@ -179,7 +169,7 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
               filterStore.setKey("isDateAscending", !isDateAscending)
             }
           />
-          <div className="relative w-full">
+          <div className="relative w-full max-sm:hidden">
             <Input
               className="pl-8"
               type="text"
@@ -201,23 +191,45 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
                 <span>篩選文章</span>
               </Button>
             </SheetTrigger>
-            <SheetContent className="pt-12">
-              <FilterSidebar
-                categoryFilters={categoryFilters}
-                subcategoryFilters={subcategoryFilters}
-                tagFilters={tagFilters}
-                categoryToNumOfPostsMap={categoryToNumOfPostsMap}
-                subcategoryToNumOfPostsMap={subcategoryToNumOfPostsMap}
-                tagToNumOfPostsMap={tagToNumOfPostsMap}
-                notFoundCategories={notFoundCategories}
-                notFoundSubcategories={notFoundSubcategories}
-                notFoundTags={notFoundTags}
-                handleCategorySelect={handleCategorySelect}
-                handleSubcategorySelect={handleSubcategorySelect}
-                handleTagSelect={handleTagSelect}
-              />
+            <SheetContent className="pt-12 flex flex-col gap-5">
+              <div className="flex flex-col gap-2">
+                <h3 className="font-semibold">篩選期間</h3>
+                <DateRangePicker date={dateRange} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3 className="font-semibold">篩選分類</h3>
+                <FilterSidebar
+                  categoryFilters={categoryFilters}
+                  subcategoryFilters={subcategoryFilters}
+                  tagFilters={tagFilters}
+                  categoryToNumOfPostsMap={categoryToNumOfPostsMap}
+                  subcategoryToNumOfPostsMap={subcategoryToNumOfPostsMap}
+                  tagToNumOfPostsMap={tagToNumOfPostsMap}
+                  notFoundCategories={notFoundCategories}
+                  notFoundSubcategories={notFoundSubcategories}
+                  notFoundTags={notFoundTags}
+                  handleCategorySelect={handleCategorySelect}
+                  handleSubcategorySelect={handleSubcategorySelect}
+                  handleTagSelect={handleTagSelect}
+                />
+              </div>
             </SheetContent>
           </Sheet>
+        </div>
+        <div className="relative w-full sm:hidden">
+          <Input
+            className="pl-8"
+            type="text"
+            placeholder="搜尋標題"
+            value={searchInput}
+            onChange={(e) => {
+              filterStore.setKey("searchInput", e.target.value);
+            }}
+          />
+          <IoSearchOutline
+            className="absolute top-1/2 left-[9px] -translate-y-1/2 text-muted-foreground"
+            size={17}
+          />
         </div>
         <PostSection allPosts={allPosts} posts={filteredPosts} />
       </div>
