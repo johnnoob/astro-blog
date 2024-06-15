@@ -12,35 +12,6 @@ author: "David Vanguard"
 isDraft: false
 ---
 
-
-$$
-A = \begin{pmatrix}
-a_{11} & a_{12} & a_{13} \\
-a_{21} & a_{22} & a_{23} \\
-a_{31} & a_{32} & a_{33}
-\end{pmatrix}
-$$
-$$
-\det(A) = \begin{vmatrix}
-a_{11} & a_{12} & a_{13} \\
-a_{21} & a_{22} & a_{23} \\
-a_{31} & a_{32} & a_{33}
-\end{vmatrix}
-= a_{11}(a_{22}a_{33} - a_{23}a_{32}) - a_{12}(a_{21}a_{33} - a_{23}a_{31}) + a_{13}(a_{21}a_{32} - a_{22}a_{31})
-$$
-$$
-\mathcal{H}\{f(t)\} = \frac{1}{\pi} \mathrm{P.V.} \int_{-\infty}^\infty \frac{f(\tau)}{t - \tau} \, d\tau
-$$
-$$
-|\psi\rangle = \alpha |0\rangle + \beta |1\rangle
-$$
-$$
-H = \frac{1}{\sqrt{2}}
-\begin{pmatrix}
-1 & 1 \\
-1 & -1
-\end{pmatrix}
-$$
 近日(2024/2月中) OpenAI 的 SORA引起大家廣泛的討論與注意，其底層架構來自於DiT (Diffusion Transformer)，但其實這個領域的競爭對手還不少，這次要介紹的這篇，使用Mask-LM的生成方式，可以達到最頂尖的FID/FVD分數，兼顧生成品質與生成速度，讓我們一起來看看Google與卡內基美濃大學Yu同學 (原中國北京大學高材生)團隊針對影片生成領域提出了那些SoTA見解。
 [Language Model Beats Diffusion](https://magvit.cs.cmu.edu/v2/)
 生成影片技術的本質就是一種資料壓縮，把影片中的每時每刻，每張瞬間的圖片，經由模型映射成如同文字那樣的Token向量，之後就能用LM語言模型相關的技術，把類似的影片藉由Token的組合，經過反向生成 or Decode出來。神經網路能夠用很廉價的方式抽取黑格爾小邏輯裡面所提到的本質，這本質往往具有空間不變性，時間不變性，概念不變性，可以在不同的觸發條件下，像積木一樣，重新做各種排列組合以組成萬物。讓我們抱著期待的心情，看看MAGVIT架構能為我們帶來哪些驚喜應用潛能與突破。
@@ -53,7 +24,9 @@ $$
 ## 可以根據分鏡圖
 **有了這些工具，一個影片工作者就能搞定原本需要一整個特效/動畫團隊才能做的事情，只要能好好的Leverage這些工具，要成立一人影業/電影/動畫公司，不再是遙不可及的夢想**
 **MAGVIT一推出便驚艷世人，兼具多種生成模式彈性與達成極高的生成效率，火爆整個AI生成圈。**
-MASK-LM首先會產生一組固定的MASK框架，根據想要生成的任務(初始條件)把輸入影像填入，然後經由COMMIT Masking的步驟，一步一步將原本遮罩中的影像逐漸生成，經過多次迭代，便能完成上述所有應用目標的作業。訓練的時候，會有Scheduler來逐漸放開Mask，這種過程會被Model利用Lmask (Objective loss)學起來，這樣一來在Inference的時候就能夠自動逐步地把影像生成出來，這種手法值得我們的學習。
+MASK-LM首先會產生一組固定的MASK框架，根據想要生成的任務(初始條件)把輸入影像填入，然後經由COMMIT
+### 哈囉
+ Masking的步驟，一步一步將原本遮罩中的影像逐漸生成，經過多次迭代，便能完成上述所有應用目標的作業。訓練的時候，會有Scheduler來逐漸放開Mask，這種過程會被Model利用Lmask (Objective loss)學起來，這樣一來在Inference的時候就能夠自動逐步地把影像生成出來，這種手法值得我們的學習。
 # MAGVIT-V2改良部分:
 * LFQ
 

@@ -154,7 +154,8 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
         {(categoryFilters.length !== 0 ||
           subcategoryFilters.length !== 0 ||
           tagFilters.length !== 0 ||
-          searchInput !== "") && (
+          searchInput !== "" ||
+          (dateRange.from !== undefined && dateRange.to !== undefined)) && (
           <Button variant="ghost" onClick={handleResetFilters}>
             <FaArrowRotateRight />
             <span className="ml-1">清除篩選</span>

@@ -1,5 +1,4 @@
 import type { TocItem } from "./utils.ts";
-import { useRef } from "react";
 
 type Prop = {
   heading: TocItem;
@@ -7,7 +6,7 @@ type Prop = {
 
 const TableOfContentsHeading = ({ heading }: Prop) => {
   return (
-    <li>
+    <li className="flex flex-col gap-1">
       <a
         href={"#" + heading.slug}
         onClick={(e) => {
@@ -25,7 +24,7 @@ const TableOfContentsHeading = ({ heading }: Prop) => {
         {heading.text}
       </a>
       {heading.subheadings.length > 0 && (
-        <ul className="pl-3">
+        <ul className="pl-4">
           {heading.subheadings.map((subheading: TocItem, index) => (
             <TableOfContentsHeading key={index} heading={subheading} />
           ))}

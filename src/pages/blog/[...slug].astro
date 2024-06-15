@@ -5,6 +5,8 @@ import Prose from "@/components/PostPage/Prose.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 // shadCN
 import { Separator } from "@/components/ui/separator";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 //react icons
 import { LuCalendarDays } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
@@ -13,6 +15,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import Tags from "@/components/PostPage/Tags.tsx";
 import Link from "@/components/Link";
 import TableOfContents from "@/components/PostPage/TableOfContents";
+import TableOfContentsSidebar from "@/components/PostPage/TableOfContentsSidebar";
 
 export const getStaticPaths = async () => {
   const posts = await getCollection("posts");
@@ -43,7 +46,9 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render();
 
 <BaseLayout pageTitle={title}>
   <div class="max-w-[768px] mx-auto pb-8">
-    <TableOfContents headings={headings} client:load />
+    <aside class="fixed right-0 top-[150px] z-30">
+      <TableOfContentsSidebar headings={headings} client:load />
+    </aside>
     <section class="relative py-6 flex flex-col items-start gap-3">
       <button
         id="back-btn"
