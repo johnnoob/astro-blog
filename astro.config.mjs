@@ -13,6 +13,10 @@ import {
   transformerMetaWordHighlight,
 } from "@shikijs/transformers";
 import { remarkReadingTime } from "./remark-plugins/remark-reading-time.mjs";
+// mdx latex
+import rehypeKatex from "rehype-katex"; // relevant
+import remarkMath from "remark-math"; // relevant
+// astro db
 import db from "@astrojs/db";
 
 import vercel from "@astrojs/vercel/serverless";
@@ -33,7 +37,8 @@ export default defineConfig({
     db(),
   ],
   markdown: {
-    remarkPlugins: [remarkReadingTime],
+    remarkPlugins: [remarkReadingTime, remarkMath],
+    rehypePlugins: [rehypeKatex],
     shikiConfig: {
       // Choose from Shiki's built-in themes (or add your own)
       // https://shiki.style/themes
