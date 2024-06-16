@@ -47,7 +47,7 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render();
 <BaseLayout pageTitle={title}>
   <div class="max-w-[768px] mx-auto pb-8">
     <aside class="fixed right-0 top-[150px] z-30">
-      <TableOfContentsSidebar headings={headings} client:load />
+      <TableOfContentsSidebar headings={headings} client:only="react" />
     </aside>
     <section class="relative py-6 flex flex-col items-start gap-3">
       <button
