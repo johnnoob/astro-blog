@@ -73,7 +73,7 @@ const TableOfContents = ({ headings }: Prop) => {
 
   return (
     <nav>
-      <ScrollArea className="h-[380px]">
+      <ScrollArea className="max-h-[380px]">
         <ul className="flex flex-col gap-1 pr-4">
           {toc.map((heading, index) => (
             <TableOfContentsHeading
