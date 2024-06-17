@@ -1,10 +1,12 @@
 // react
 import { useState } from "react";
+//react components
+import TableOfContents from "./TableOfContents";
+// utils
+import { useHeadingObserver, useScrollDirection } from "./utils";
 // shadCN
 import { Card, CardHeader, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-//react components
-import TableOfContents from "./TableOfContents";
 // react icons
 import { FaList, FaAngleRight } from "react-icons/fa6";
 // type
@@ -16,8 +18,10 @@ type Prop = {
 
 const TableOfContentsSidebar = ({ headings }: Prop) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const isScrollDown = useScrollDirection();
+  const intersectHeadingId = useHeadingObserver(isScrollDown);
   return (
-    <Card className="border-r-0 rounded-r-none max-w-[250px]">
+    <Card className="border-r-0 rounded-r-none max-w-[250px] max-lg:hidden">
       <CardHeader className="px-3 py-2">
         <Button
           className="w-fit"
@@ -29,7 +33,10 @@ const TableOfContentsSidebar = ({ headings }: Prop) => {
         </Button>
       </CardHeader>
       <CardContent className={`${!isOpen && "hidden"}`}>
-        <TableOfContents headings={headings} />
+        <TableOfContents
+          headings={headings}
+          intersectHeadingId={intersectHeadingId}
+        />
       </CardContent>
     </Card>
   );
