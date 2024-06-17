@@ -10,9 +10,14 @@ import { ScrollArea } from "../ui/scroll-area";
 type Props = {
   headings: MarkdownHeading[];
   intersectHeadingId: string;
+  setIsNavbarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const TableOfContents = ({ headings, intersectHeadingId }: Props) => {
+const TableOfContents = ({
+  headings,
+  intersectHeadingId,
+  setIsNavbarOpen,
+}: Props) => {
   const toc = buildToc(headings);
   return (
     <nav>
@@ -23,6 +28,7 @@ const TableOfContents = ({ headings, intersectHeadingId }: Props) => {
               key={index}
               heading={heading}
               intersectHeadingId={intersectHeadingId}
+              setIsNavbarOpen={setIsNavbarOpen}
             />
           ))}
         </ul>

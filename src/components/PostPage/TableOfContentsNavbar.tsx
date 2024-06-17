@@ -18,25 +18,24 @@ type Props = {
 
 const TableOfContentsNavbar = ({ headings }: Props) => {
   const [theme, setThemeState] = useTheme();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
   const isScrollDown = useScrollDirection();
   const intersectHeadingId = useHeadingObserver(isScrollDown);
-  console.log(theme);
 
   return (
     <nav
-      className={`fixed top-[65px] left-0 w-full text-sm backdrop-filter backdrop-blur-sm bg-opacity-80 border-b-[1px] z-10 lg:hidden ${
+      className={`fixed top-0 left-0 w-full text-sm backdrop-filter backdrop-blur-sm bg-opacity-80 border-b-[1px] z-10 lg:hidden transition-navbar ${
         theme === "light" ? "bg-white" : "bg-black"
-      }`}
+      } ${isScrollDown ? "-translate-y-0" : "-translate-y-full"}`}
     >
-      <div className="max-container py-2 flex items-center gap-3">
+      <div className="max-container py-2 flex items-center gap-3 h-[65px]">
         <Button
           variant="outline"
           className="font-normal"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsNavbarOpen(!isNavbarOpen)}
         >
           <span>在此貼文</span>
-          {isOpen ? (
+          {isNavbarOpen ? (
             <FaAngleDown className="ml-2" />
           ) : (
             <FaAngleRight className="ml-2" />
@@ -44,10 +43,11 @@ const TableOfContentsNavbar = ({ headings }: Props) => {
         </Button>
         <span>{intersectHeadingId}</span>
       </div>
-      <div className={`max-container pt-1 pb-2 ${!isOpen && "hidden"}`}>
+      <div className={`max-container pt-1 pb-2 ${!isNavbarOpen && "hidden"}`}>
         <TableOfContents
           headings={headings}
           intersectHeadingId={intersectHeadingId}
+          setIsNavbarOpen={setIsNavbarOpen}
         />
       </div>
     </nav>

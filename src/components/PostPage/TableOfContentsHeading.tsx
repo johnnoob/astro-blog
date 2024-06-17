@@ -1,11 +1,16 @@
 import type { TocItem } from "./utils.ts";
 
-type Prop = {
+type Props = {
   heading: TocItem;
   intersectHeadingId: string;
+  setIsNavbarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const TableOfContentsHeading = ({ heading, intersectHeadingId }: Prop) => {
+const TableOfContentsHeading = ({
+  heading,
+  intersectHeadingId,
+  setIsNavbarOpen,
+}: Props) => {
   return (
     <li className="flex flex-col gap-1">
       <a
@@ -19,12 +24,13 @@ const TableOfContentsHeading = ({ heading, intersectHeadingId }: Prop) => {
           e.preventDefault();
           const targetSection = document.getElementById(heading.slug);
           if (targetSection) {
-            const top = targetSection.getBoundingClientRect().top;
+            const top = targetSection.offsetTop;
             window.scrollTo({
-              top: top - 65,
+              top,
               behavior: "smooth",
             });
           }
+          setIsNavbarOpen(false);
         }}
       >
         {heading.text}
@@ -36,6 +42,7 @@ const TableOfContentsHeading = ({ heading, intersectHeadingId }: Prop) => {
               key={index}
               heading={subheading}
               intersectHeadingId={intersectHeadingId}
+              setIsNavbarOpen={setIsNavbarOpen}
             />
           ))}
         </ul>

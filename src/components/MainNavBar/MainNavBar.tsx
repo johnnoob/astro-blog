@@ -1,15 +1,24 @@
+// utils
 import { useTheme } from "./utils.ts";
+import { useScrollDirection } from "../PostPage/utils.ts";
+// constants
 import { navLinks } from "@/constants/links";
+// shadCN
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+// react icons
 import { FaRss, FaBars } from "react-icons/fa6";
+// reacr components
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
 import Logo from "./Logo.tsx";
+// nano store
 import { useStore } from "@nanostores/react";
 import { isSidebarOpenStore } from "@/store/isSidebarOpenStore.ts";
+import { useEffect } from "react";
 
 const MainNavNar = () => {
   const [theme, setThemeState] = useTheme();
+  const isScrollDown = useScrollDirection();
   const isSidebarOpen = useStore(isSidebarOpenStore);
 
   const handleThemeChange = (e: boolean): void => {
@@ -18,9 +27,9 @@ const MainNavNar = () => {
   return (
     <nav
       id="main-navbar"
-      className={`fixed w-full py-3 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-10 h-[65px] ${
+      className={`fixed w-full py-3 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-10 h-[65px] transition-navbar ${
         theme === "light" ? "bg-white" : "bg-black"
-      }`}
+      } ${isScrollDown ? "-translate-y-full" : "-translate-y-0"}`}
     >
       <div className="max-container">
         <div className="flex items-center justify-between">

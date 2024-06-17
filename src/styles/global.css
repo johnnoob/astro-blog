@@ -95,6 +95,10 @@
   .padding-b {
       @apply sm:pb-24 pb-12;
     }
+
+  .transition-navbar {
+    @apply transition-transform duration-500 ease-in-out ;
+  }
 }
 
 iframe {

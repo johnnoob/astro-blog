@@ -27,13 +27,16 @@ export function buildToc(headings: MarkdownHeading[]) {
 
 export function useScrollDirection() {
   const prevScrollY = useRef<number>(0);
-  const isScrollDown = useRef<boolean>(false);
+  // const isScrollDown = useRef<boolean>(false);
+  const [isScrollDown, setIsScrollDown] = useState<boolean>(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > prevScrollY.current) {
-        isScrollDown.current = true;
+        // isScrollDown.current = true;
+        setIsScrollDown(true);
       } else if (window.scrollY <= prevScrollY.current) {
-        isScrollDown.current = false;
+        // isScrollDown.current = false;
+        setIsScrollDown(false);
       }
       prevScrollY.current = window.scrollY;
     };
@@ -45,9 +48,7 @@ export function useScrollDirection() {
   return isScrollDown;
 }
 
-export function useHeadingObserver(
-  isScrollDown: React.MutableRefObject<boolean>
-) {
+export function useHeadingObserver(isScrollDown: boolean) {
   const [intersectHeadingId, setIntersectHeadingId] = useState<string>("");
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export function useHeadingObserver(
         if (entry.isIntersecting) {
           setIntersectHeadingId(target.id);
         } else {
-          if (target.id === firstHeadingId && !isScrollDown.current) {
+          if (target.id === firstHeadingId && !isScrollDown) {
             setIntersectHeadingId("");
           }
         }
