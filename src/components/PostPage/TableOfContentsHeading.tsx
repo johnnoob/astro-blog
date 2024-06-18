@@ -3,7 +3,7 @@ import type { TocItem } from "./utils.ts";
 type Props = {
   heading: TocItem;
   intersectHeadingId: string;
-  setIsNavbarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNavbarOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TableOfContentsHeading = ({
@@ -30,7 +30,9 @@ const TableOfContentsHeading = ({
               behavior: "smooth",
             });
           }
-          setIsNavbarOpen(false);
+          if (setIsNavbarOpen !== undefined) {
+            setIsNavbarOpen(false);
+          }
         }}
       >
         {heading.text}
