@@ -110,7 +110,7 @@ span[aria-hidden="true"] {
 }
 
 span.katex {
-  @apply text-base
+  @apply text-xs
 }
 
 
