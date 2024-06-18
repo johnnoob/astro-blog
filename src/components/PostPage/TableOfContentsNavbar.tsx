@@ -43,7 +43,11 @@ const TableOfContentsNavbar = ({ headings }: Props) => {
         </Button>
         <span>{intersectHeadingId}</span>
       </div>
-      <div className={`max-container pt-1 pb-2 ${!isNavbarOpen && "hidden"}`}>
+      <div
+        className={`max-container pt-1 pb-2 text-base ${
+          !isNavbarOpen && "hidden"
+        }`}
+      >
         <TableOfContents
           headings={headings}
           intersectHeadingId={intersectHeadingId}

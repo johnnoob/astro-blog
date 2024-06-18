@@ -21,7 +21,7 @@ const TableOfContents = ({
   const toc = buildToc(headings);
   return (
     <nav>
-      <ScrollArea className="max-h-[380px]">
+      <ScrollArea className="max-h-[380px] overflow-y-auto">
         <ul className="flex flex-col gap-1 pr-4">
           {toc.map((heading, index) => (
             <TableOfContentsHeading
