@@ -10,7 +10,7 @@ import { ScrollArea } from "../ui/scroll-area";
 type Props = {
   headings: MarkdownHeading[];
   intersectHeadingId: string;
-  setIsNavbarOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNavbarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TableOfContents = ({
