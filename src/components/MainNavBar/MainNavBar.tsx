@@ -16,7 +16,11 @@ import { useStore } from "@nanostores/react";
 import { isSidebarOpenStore } from "@/store/isSidebarOpenStore.ts";
 import { useEffect } from "react";
 
-const MainNavNar = () => {
+type Props = {
+  rootPath: string;
+};
+
+const MainNavNar = ({ rootPath }: Props) => {
   const [theme, setThemeState] = useTheme();
   const isScrollDown = useScrollDirection();
   const isSidebarOpen = useStore(isSidebarOpenStore);
@@ -45,20 +49,24 @@ const MainNavNar = () => {
           <div className="flex items-center gap-3 text-sm">
             <div className="flex items-center space-x-3 max-lg:hidden">
               {navLinks.map((link) => (
-                <div className="h-6 flex space-x-3" key={link.label}>
-                  <a
-                    className="text-foreground hover:text-muted-foreground"
-                    href={link.url}
+                <div
+                  className="h-6 flex space-x-3 items-center"
+                  key={link.label}
+                >
+                  <Button
+                    variant="link"
+                    className={`p-0 ${
+                      rootPath === link.url.split("/")[1] && "underline"
+                    }`}
                   >
-                    {link.label}
-                  </a>
+                    <a href={link.url}>{link.label}</a>
+                  </Button>
                   <Separator orientation="vertical" />
                 </div>
               ))}
             </div>
-            <Button className="max-lg:hidden">
-              <FaRss size={20} className="mr-1" />
-              <span>訂閱RSS</span>
+            <Button className="max-lg:hidden" variant="ghost" size="icon">
+              <FaRss size={20} />
             </Button>
             <ThemeModeSwitch
               theme={theme}

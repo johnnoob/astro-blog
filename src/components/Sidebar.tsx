@@ -1,11 +1,21 @@
+// constants
 import { navLinks } from "@/constants/links";
+// nano store
 import { useStore } from "@nanostores/react";
 import { isSidebarOpenStore } from "@/store/isSidebarOpenStore";
 import { themeStore } from "@/store/contextStore";
+// react components
 import Logo from "./MainNavBar/Logo";
+// react
 import { useEffect } from "react";
+// shadCN
+import { Button } from "./ui/button";
 
-const Sidebar = () => {
+type Props = {
+  rootPath: string;
+};
+
+const Sidebar = ({ rootPath }: Props) => {
   const isSidrbarOpen = useStore(isSidebarOpenStore);
   const theme = useStore(themeStore);
   useEffect(() => {
@@ -30,15 +40,22 @@ const Sidebar = () => {
             <div>
               <div className="flex flex-col items-center gap-3 text-lg">
                 {navLinks.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    onClick={() => {
-                      isSidebarOpenStore.set(false);
-                    }}
+                  <Button
+                    variant="link"
+                    className={`p-0 text-base ${
+                      rootPath === link.url.split("/")[1] && "underline"
+                    }`}
                   >
-                    {link.label}
-                  </a>
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      onClick={() => {
+                        isSidebarOpenStore.set(false);
+                      }}
+                    >
+                      {link.label}
+                    </a>
+                  </Button>
                 ))}
               </div>
             </div>

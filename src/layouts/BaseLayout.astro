@@ -21,6 +21,10 @@ interface Props {
   pageTitle: string;
 }
 const { pageTitle } = Astro.props;
+const {
+  url: { pathname },
+} = Astro;
+const rootPath = pathname.split("/")[1];
 ---
 
 <html lang="zh-hant">
@@ -35,8 +39,8 @@ const { pageTitle } = Astro.props;
   </head>
   <body>
     <CategoryNavBar uniqueCategories={uniqueCategories} client:only="react" />
-    <MainNavBar client:only="react" />
-    <Sidebar client:only="react" />
+    <MainNavBar client:only="react" rootPath={rootPath} />
+    <Sidebar client:only="react" rootPath={rootPath} />
     <main id="main" class="max-container pt-[65px]">
       <slot />
     </main>
