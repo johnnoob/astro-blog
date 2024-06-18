@@ -1,0 +1,61 @@
+---
+title: "迎戰未來，AI 量子計算基礎篇 (2)，Multiple Systems"
+category: "量子計算宇宙"
+subcategory: "量子計算基礎"
+date: "2024/06/17"
+heroImage: {
+    src: "./hero.jpg",
+    alt: "量子計算",
+    }
+tags: ["QuantumComputing", "Qiskit", "braket", "CartesianProduct", "TensorProduct", "ProbabilityState", "independent", "AI量子計算", "量子計算基礎", "3C"]
+author: "Tim Chen"
+isDraft: false
+---
+# 導言:
+量子計算是最終的計算形式，熟悉量子計算的各種概念與演算法，在未來，可用來模擬宇宙的運行，生命的繁衍，全社會的複雜系統運作，也能做出更為自然與高效率的人工智慧。在量子計算準備大行其道的八年前 (西元2024年)，我將帶著大家，按部就班地掌握量子計算，正如同10年前提早準備人工智慧一樣，善用原子習慣 + 超前學習，通往成功就是輕鬆且愉快的事情。
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/DfZZS8Spe7U?si=Z-dNOSkTdrBPlTh8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+# 傳統位元信息:
+- 多個傳統位元訊息表達 Compound System，寫作 $$ (X, Y) $$ 或是 $$ XY $$ ，其中 $$ X $$ 代表一個擁有傳統位元集合 $$ \Sigma $$ 的系統，其中 $$ Y $$ 代表一個擁有傳統位元集合 $$ \Gamma $$ 的系統
+- $$ \Sigma \times \Gamma $$，又稱為笛卡爾積，直積 (cartesian product)，完整定義如下所示:
+  - $$ \Sigma \times \Gamma = \{(a, b) : a \in \Sigma, b \in \Gamma \} $$
+- If $$ \Sigma_{1} = \Sigma_{2} = \Sigma_{3} = {0, 1} $$, then the classical state set of $$ \{X_{1}, X_{2}, X_{3}\} $$ is:
+
+- N-tuple $$ (a_{1}, a_{2}, ..., a_{n}) $$ 可以寫成 $$ a_{1}a_{2}...a_{n} $$, cartesian product 可寫成如下形式:
+  - $$ \Sigma_{1} \times \Sigma_{2} \times ... \times \Sigma_{n} = (0, 1)^n $$
+- Tensor Product of two vectors $$ \ket{\phi} = \sum_{a \in \Sigma} \alpha_a \ket{a} $$, $$ \ket{\psi} = \sum_{b \in \Gamma} \beta_b \ket{b} $$
+  - $$ \ket{\phi} \otimes \ket{\psi} = \sum_{(a,b) \in \Sigma \times \Gamma} \alpha_a \beta_b \ket{ab} $$
+- 給定一個 $$ (X, Y) $$ 的機率狀態，我們稱 $$ X $$ 和 $$ Y $$ 為獨立事件 (Independent)，如果滿足以下規則:
+  - $$ P_{r}((X, Y) = (a, b)) = P_{r}(X = a) P_{r}(Y = b) $$ for all $$ a \in \Sigma $$ and $$ b \in \Gamma $$
+  - For example, 以下 probability state of $$ \{X, Y\} $$ 是 independent:
+    - $$ \ket{\pi} = \frac{1}{6} \ket{00} + \frac{1}{12} \ket{01} + \frac{1}{2} \ket{10} + \frac{1}{4} \ket{11} $$
+    - $$ \ket{\phi} = \frac{1}{4} \ket{0} + \frac{3}{4} \ket{1} $$, $$ \ket{\psi} = \frac{2}{3} \ket{0} + \frac{1}{3} \ket{1} $$ 可以做Tensor Product組合得 $$ \ket{\pi} $$
+    - 故 $$ \ket{\pi} $$ 為independent
+  - For example, 以下 probability state of $$ \{X, Y\} $$ "不是" independent:
+    - $$ \frac{1}{2} \ket{00} + \frac{1}{2} \ket{11} $$
+    - 由於 $$ \ket{01} $$,  $$ \ket{10} $$ 機率為0，如果要 independent，意味著 $$ \ket{0} $$, $$ \ket{1} $$ 其中一個機率是0，就會和 $$ \ket{00} $$, $$ \ket{11} $$ 機率為 $$ \frac{1}{2} $$ 矛盾
+
+# 量子位元信息:
+- To be continued
+
+# 先驗知識:
+[台大線性代數課程](https://ocw.aca.ntu.edu.tw/ntu-ocw/ocw/cou/102S207)
+
+[複數課程第一課](https://ocw.nthu.edu.tw/ocw/index.php?page=chapter&cid=289&chid=6153)
+
+# 引用:
+```markdown
+@article{
+
+  author       = {Jeng-Ting, Chen},
+
+  title        = {迎戰未來，AI 量子計算基礎篇 (2)，Multiple Systems},  
+
+  year         = {2024},
+
+  url          = {https://infinite-wisdom.vercel.app/blog/post-240617},  
+
+  timestamp    = {Mon, 17 June 2024 23:06:00 +0800},
+}
+```

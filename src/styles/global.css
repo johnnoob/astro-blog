@@ -102,11 +102,15 @@
 }
 
 iframe {
-  @apply max-w-[560px]
+  @apply max-w-[560px] mx-auto
 }
 
 span[aria-hidden="true"] {
   @apply hidden
+}
+
+span.katex {
+  @apply text-base
 }
 
 
