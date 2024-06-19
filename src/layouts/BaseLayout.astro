@@ -38,8 +38,8 @@ const rootPath = pathname.split("/")[1];
     <ViewTransitions />
   </head>
   <body>
-    <CategoryNavBar uniqueCategories={uniqueCategories} client:only="react" />
-    <MainNavBar client:only="react" rootPath={rootPath} />
+    <!-- <CategoryNavBar uniqueCategories={uniqueCategories} client:only="react" /> -->
+    <MainNavBar client:only="react" rootPath={rootPath} posts={posts} />
     <Sidebar client:only="react" rootPath={rootPath} />
     <main id="main" class="max-container pt-[65px]">
       <slot />

@@ -164,7 +164,6 @@ export const useFilteredAndSortedPosts = (
 
     filteredPosts = filteredPosts.filter((post) => {
       const postDatetime = post.data.date.getTime();
-      console.log(post.data.date);
 
       if (dateRange && dateRange.from && dateRange.to) {
         return (

@@ -39,15 +39,15 @@ const Sidebar = ({ rootPath }: Props) => {
             </div>
             <div>
               <div className="flex flex-col items-center gap-3 text-lg">
-                {navLinks.map((link) => (
+                {navLinks.map((link, index) => (
                   <Button
+                    key={index}
                     variant="link"
                     className={`p-0 text-base ${
                       rootPath === link.url.split("/")[1] && "underline"
                     }`}
                   >
                     <a
-                      key={link.url}
                       href={link.url}
                       onClick={() => {
                         isSidebarOpenStore.set(false);

@@ -52,7 +52,11 @@ type NavLink = {
 };
 
 export const navLinks: NavLink[] = [
-  { label: "首頁", url: "/" },
+  // { label: "財經資訊宇宙", url: "/" },
+  // { label: "量子計算宇宙", url: "/" },
+  // { label: "人工智慧宇宙", url: "/" },
+  // { label: "易經推演宇宙", url: "/" },
+  // { label: "首頁", url: "/" },
   { label: "全部貼文", url: "/blog" },
   { label: "關於筆者", url: "/about" },
 ];
