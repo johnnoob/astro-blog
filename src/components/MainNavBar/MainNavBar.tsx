@@ -73,90 +73,86 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
   };
 
   return (
-    <>
-      <nav
-        id="main-navbar"
-        className={`fixed w-full py-3 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-10 h-[65px] transition-navbar ${
-          theme === "light" ? "bg-white" : "bg-black"
-        } ${isScrollDown ? "-translate-y-full" : "-translate-y-0"}`}
-      >
-        <div className="max-container">
-          <div className="flex items-center justify-between">
-            <div>
-              <a
-                href="/"
-                className="flex items-center space-x-2 text-primary font-bold"
-              >
-                <Logo size={30} />
-                <span>John's Script</span>
-              </a>
-            </div>
-            <div className="flex items-center gap-3 text-sm">
-              <div className="flex gap-2 items-center max-lg:hidden">
-                {categories.map((category, index) => (
-                  <>
-                    <div
-                      className="flex items-center"
-                      key={index}
-                      data-category={category}
-                      onMouseEnter={handleCategoryEnter}
-                      onMouseLeave={handleCategoryLeave}
-                    >
-                      <Button variant="link" className="p-0">
-                        <a
-                          href="/blog"
-                          className={`${
-                            targetCategory === category && "underline"
-                          }`}
-                        >
-                          {category}
-                        </a>
-                      </Button>
-                    </div>
-                    <Separator orientation="vertical" className="h-6" />
-                  </>
-                ))}
-                {navLinks.map((link, index) => (
-                  <>
-                    <div className="flex items-center" key={index}>
-                      <Button
-                        variant="link"
-                        className={`p-0 ${
-                          rootPath === link.url.split("/")[1] && "underline"
+    <nav
+      id="main-navbar"
+      className={`fixed w-full border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-10 transition-navbar ${
+        theme === "light" ? "bg-white" : "bg-black"
+      } ${isScrollDown ? "-translate-y-full" : "-translate-y-0"}`}
+    >
+      <div className="max-container h-[65px] py-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <a
+              href="/"
+              className="flex items-center space-x-2 text-primary font-bold"
+            >
+              <Logo size={30} />
+              <span>John's Script</span>
+            </a>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <div className="flex gap-2 items-center max-lg:hidden">
+              {categories.map((category, index) => (
+                <>
+                  <div
+                    className="flex items-center"
+                    key={index}
+                    data-category={category}
+                    onMouseEnter={handleCategoryEnter}
+                    onMouseLeave={handleCategoryLeave}
+                  >
+                    <Button variant="link" className="p-0">
+                      <a
+                        href="/blog"
+                        className={`${
+                          targetCategory === category && "underline"
                         }`}
                       >
-                        <a href={link.url}>{link.label}</a>
-                      </Button>
-                    </div>
-                    <Separator orientation="vertical" className="h-6" />
-                  </>
-                ))}
-              </div>
-              <Button className="max-lg:hidden" variant="ghost" size="icon">
-                <FaRss size={20} />
-              </Button>
-              <ThemeModeSwitch
-                theme={theme}
-                handleThemeChange={handleThemeChange}
-              />
-              <Button
-                id="sidebar-button"
-                variant={"ghost"}
-                className="lg:hidden"
-                onClick={() => {
-                  isSidebarOpenStore.set(!isSidebarOpen);
-                }}
-              >
-                <FaBars size={20} />
-              </Button>
+                        {category}
+                      </a>
+                    </Button>
+                  </div>
+                  <Separator orientation="vertical" className="h-6" />
+                </>
+              ))}
+              {navLinks.map((link, index) => (
+                <>
+                  <div className="flex items-center" key={index}>
+                    <Button
+                      variant="link"
+                      className={`p-0 ${
+                        rootPath === link.url.split("/")[1] && "underline"
+                      }`}
+                    >
+                      <a href={link.url}>{link.label}</a>
+                    </Button>
+                  </div>
+                  <Separator orientation="vertical" className="h-6" />
+                </>
+              ))}
             </div>
+            <Button className="max-lg:hidden" variant="ghost" size="icon">
+              <FaRss size={20} />
+            </Button>
+            <ThemeModeSwitch
+              theme={theme}
+              handleThemeChange={handleThemeChange}
+            />
+            <Button
+              id="sidebar-button"
+              variant={"ghost"}
+              className="lg:hidden"
+              onClick={() => {
+                isSidebarOpenStore.set(!isSidebarOpen);
+              }}
+            >
+              <FaBars size={20} />
+            </Button>
           </div>
         </div>
-      </nav>
+      </div>
       <div
-        id="category-navbar"
-        className={`fixed w-full top-[65px] py-3 flex justify-center items-start gap-5 border-b-[1px] backdrop-filter backdrop-blur-sm bg-opacity-80 z-10 transition-navbar ${
-          theme === "light" ? "bg-white" : "bg-black"
+        className={`py-3 flex justify-center items-start gap-5
         } ${targetCategory === "" && "hidden"}`}
         onMouseEnter={handleNavbarEnter}
         onMouseLeave={handleNavbarLeave}
@@ -178,7 +174,7 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
             <CardContent className="px-0 py-2 grid gap-1 text-sm text-center">
               <a
                 href={`/blog/${post.slug}`}
-                className="line-clamp-2 hover:underline underline-offset-3"
+                className=" font-semibold line-clamp-2 hover:underline underline-offset-3"
               >
                 {post.data.title}
               </a>
@@ -196,7 +192,7 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
           </Card>
         ))}
       </div>
-    </>
+    </nav>
   );
 };
 
