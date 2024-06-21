@@ -10,7 +10,7 @@ import { Card, CardHeader, CardContent } from "../ui/card.tsx";
 // type
 import type { CollectionEntry } from "astro:content";
 // react
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // react icons
 import { FaRss, FaBars } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";
@@ -93,10 +93,9 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
           <div className="flex items-center gap-3 text-sm">
             <div className="flex gap-2 items-center max-lg:hidden">
               {categories.map((category, index) => (
-                <>
+                <React.Fragment key={index}>
                   <div
                     className="flex items-center"
-                    key={index}
                     data-category={category}
                     onMouseEnter={handleCategoryEnter}
                     onMouseLeave={handleCategoryLeave}
@@ -113,10 +112,10 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
                     </Button>
                   </div>
                   <Separator orientation="vertical" className="h-6" />
-                </>
+                </React.Fragment>
               ))}
               {navLinks.map((link, index) => (
-                <>
+                <React.Fragment key={index}>
                   <div className="flex items-center" key={index}>
                     <Button
                       variant="link"
@@ -128,7 +127,7 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
                     </Button>
                   </div>
                   <Separator orientation="vertical" className="h-6" />
-                </>
+                </React.Fragment>
               ))}
             </div>
             <Button className="max-lg:hidden" variant="ghost" size="icon">
