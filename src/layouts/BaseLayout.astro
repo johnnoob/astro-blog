@@ -6,7 +6,6 @@ import Footer from "@/components/Footer/Footer.astro";
 import { getCollection } from "astro:content";
 // react components
 import MainNavBar from "@/components/MainNavBar/MainNavBar";
-import CategoryNavBar from "@/components/MainNavBar/CategoryNavBar";
 import Sidebar from "@/components/Sidebar";
 // view transitions
 import { ViewTransitions } from "astro:transitions";
@@ -15,7 +14,6 @@ const posts = await getCollection(
   "posts",
   (post) => post.data.isDraft !== true
 );
-const uniqueCategories = [...new Set(posts.map((post) => post.data.category))];
 
 interface Props {
   pageTitle: string;
@@ -38,7 +36,6 @@ const rootPath = pathname.split("/")[1];
     <ViewTransitions />
   </head>
   <body>
-    <!-- <CategoryNavBar uniqueCategories={uniqueCategories} client:only="react" /> -->
     <MainNavBar client:only="react" rootPath={rootPath} posts={posts} />
     <Sidebar client:only="react" rootPath={rootPath} />
     <main id="main" class="max-container pt-[65px]">
