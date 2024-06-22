@@ -41,7 +41,7 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
   const filteredPosts = posts
     .filter((post) => post.data.category === targetCategory)
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-    .slice(0, 5);
+    .slice(0, 3);
 
   const handleCategoryEnter = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>

@@ -1,5 +1,5 @@
 // react
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 // react components
 import PostSection from "./PostSection";
 import FilterSidebar from "./FilterSidebar";
@@ -25,6 +25,12 @@ type Props = {
 };
 
 const FilterAndPostSection = ({ allPosts }: Props) => {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
+  useEffect(() => {
+    filterStore.setKey("categoryFilters", [params.category]);
+  }, []);
+
   // filter to number of posts map
   const categoryToNumOfPostsMap = useMemo(
     () =>
