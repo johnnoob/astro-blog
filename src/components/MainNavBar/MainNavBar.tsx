@@ -102,7 +102,7 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
                   >
                     <Button variant="link" className="p-0">
                       <a
-                        href="/blog"
+                        href={`/blog?category=${category}`}
                         className={`${
                           targetCategory === category && "underline"
                         }`}

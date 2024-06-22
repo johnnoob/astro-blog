@@ -28,7 +28,9 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   useEffect(() => {
-    filterStore.setKey("categoryFilters", [params.category]);
+    if (params.category) {
+      filterStore.setKey("categoryFilters", [params.category]);
+    }
   }, []);
 
   // filter to number of posts map
