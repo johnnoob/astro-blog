@@ -23,10 +23,11 @@ import db from "@astrojs/db";
 // adaptor
 import vercel from "@astrojs/vercel/serverless";
 
+// https://astro.build/config
 export default defineConfig({
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "viewport",
+    defaultStrategy: "hover",
   },
   integrations: [
     mdx(),

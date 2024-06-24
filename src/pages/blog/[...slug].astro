@@ -3,7 +3,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Prose from "@/components/PostPage/Prose.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import ViewsCounter from "@/components/PostPage/ViewsCounter.astro";
+import ViewsCounter from "@/components/PostPage/ViewsCounter.tsx";
 // shadCN
 import { Separator } from "@/components/ui/separator";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -47,7 +47,7 @@ const slug = Astro.params.slug;
 ---
 
 <BaseLayout pageTitle={title}>
-  <ViewsCounter slug={slug} />
+  <ViewsCounter slug={slug} client:only="react" />
   <TableOfContentsNavbar headings={headings} client:only="react" />
   <div class="max-w-[768px] mx-auto pb-8">
     <aside class="fixed right-0 top-[150px] z-10">
