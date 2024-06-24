@@ -3,6 +3,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Prose from "@/components/PostPage/Prose.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
+import ViewsCounter from "@/components/PostPage/ViewsCounter.astro";
 // shadCN
 import { Separator } from "@/components/ui/separator";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -42,9 +43,11 @@ const {
   },
 } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
+const slug = Astro.params.slug;
 ---
 
 <BaseLayout pageTitle={title}>
+  <ViewsCounter slug={slug} />
   <TableOfContentsNavbar headings={headings} client:only="react" />
   <div class="max-w-[768px] mx-auto pb-8">
     <aside class="fixed right-0 top-[150px] z-10">

@@ -1,16 +1,15 @@
 import { defineDb, column, defineTable } from "astro:db";
 
-const Link = defineTable({
+const Views = defineTable({
   columns: {
-    id: column.number({ primaryKey: true }),
-    title: column.text(),
-    url: column.text(),
-    description: column.text(),
-    isRead: column.boolean({ default: false }),
+    slug: column.text({ primaryKey: true }),
+    count: column.number({
+      default: 1,
+    }),
   },
 });
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Link },
+  tables: { Views },
 });
