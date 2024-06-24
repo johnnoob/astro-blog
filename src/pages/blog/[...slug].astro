@@ -44,7 +44,6 @@ const {
 } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const slug = Astro.params.slug;
-export const prerender = false;
 ---
 
 <BaseLayout pageTitle={title}>
