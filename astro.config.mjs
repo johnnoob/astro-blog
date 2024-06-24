@@ -70,7 +70,7 @@ export default defineConfig({
       ],
     },
   },
-  output: "static",
-  // output: "hybrid",
-  // adapter: vercel(),
+  // output: "static",
+  output: "hybrid",
+  adapter: vercel(),
 });
