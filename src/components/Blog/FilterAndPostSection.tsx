@@ -29,6 +29,7 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
   const params = Object.fromEntries(urlSearchParams.entries());
   useEffect(() => {
     if (params.category) {
+      handleResetFilters();
       filterStore.setKey("categoryFilters", [params.category]);
     }
   }, []);

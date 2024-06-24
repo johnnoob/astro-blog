@@ -1,8 +1,10 @@
 import { defineConfig } from "astro/config";
+// astro
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
+// markdown shiki transformer
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -18,7 +20,7 @@ import rehypeKatex from "rehype-katex"; // relevant
 import remarkMath from "remark-math"; // relevant
 // astro db
 import db from "@astrojs/db";
-
+// adaptor
 import vercel from "@astrojs/vercel/serverless";
 
 export default defineConfig({
@@ -68,6 +70,7 @@ export default defineConfig({
       ],
     },
   },
-  output: "static",
+  // output: "static",
+  output: "hybrid",
   // adapter: vercel(),
 });

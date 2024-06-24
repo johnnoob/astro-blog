@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Link } from "astro:db";
+import { db } from "astro:db";
+
+const links = await db.select().from(Link);
+export const prerender = false;
+---
+
+<BaseLayout pageTitle="測試">
+  <section class="flex flex-col justify-center items-center">
+    {links.map((link) => <div>{link.title}</div>)}
+  </section>
+</BaseLayout>
