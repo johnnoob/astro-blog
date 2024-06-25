@@ -27,7 +27,7 @@ import vercel from "@astrojs/vercel/serverless";
 export default defineConfig({
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "hover",
+    defaultStrategy: "viewport",
   },
   integrations: [
     mdx(),
