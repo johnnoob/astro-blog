@@ -1,12 +1,11 @@
 import type { APIRoute } from "astro";
-import { db, Views, sql, eq } from "astro:db";
+import { db, Views, sql } from "astro:db";
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
-
   const slug = params.get("slug");
 
   if (!slug) {
@@ -15,13 +14,6 @@ export const GET: APIRoute = async ({ request }) => {
 
   let item;
   try {
-    // const views = await db
-    //   .select({
-    //     count: Views.count,
-    //   })
-    //   .from(Views)
-    //   .where(eq(Views.slug, slug));
-
     item = await db
       .insert(Views)
       .values({
@@ -47,7 +39,8 @@ export const GET: APIRoute = async ({ request }) => {
     status: 200,
     headers: {
       "content-type": "application/json",
-      "cache-control": "public, s-maxage=1, stale-while-revalidate=1",
+      // "cache-control": "public, s-maxage=1, stale-while-revalidate=1",
+      "cache-control": "no-store",
     },
   });
 };
