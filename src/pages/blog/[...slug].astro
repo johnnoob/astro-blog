@@ -6,8 +6,6 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import ViewsCounter from "@/components/PostPage/ViewsCounter.tsx";
 // shadCN
 import { Separator } from "@/components/ui/separator";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 //react icons
 import { LuCalendarDays } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
@@ -97,7 +95,7 @@ const slug = Astro.params.slug;
         <Separator orientation="vertical" className="h-6" />
         <div class="flex items-center space-x-1">
           <FaRegClock size={15} />
-          <span>{Math.ceil(remarkPluginFrontmatter.minutes)} mins</span>
+          <span>{Math.ceil(remarkPluginFrontmatter.minutes)} 分鐘</span>
         </div>
         <Separator orientation="vertical" className="h-6" />
         <ViewsCounter slug={slug} client:only="react" />

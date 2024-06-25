@@ -1,10 +1,13 @@
 ---
+// layout
 import BaseLayout from "@/layouts/BaseLayout.astro";
+// astro collection
 import { getCollection } from "astro:content";
-
+// types
 import { type Post, type ClassifiedPosts } from "@/types/home";
+// react components
 import CategorySection from "@/components/Home/CategorySection";
-//self portrait
+// assets
 import selfPortrait from "../images/self-portrait.gif";
 
 const allPosts = await getCollection("posts", ({ data }) => {
