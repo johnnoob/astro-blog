@@ -15,12 +15,12 @@ export const GET: APIRoute = async ({ request }) => {
 
   let item;
   try {
-    const views = await db
-      .select({
-        count: Views.count,
-      })
-      .from(Views)
-      .where(eq(Views.slug, slug));
+    // const views = await db
+    //   .select({
+    //     count: Views.count,
+    //   })
+    //   .from(Views)
+    //   .where(eq(Views.slug, slug));
 
     item = await db
       .insert(Views)
