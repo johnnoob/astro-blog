@@ -4,11 +4,14 @@ import { type AugmentedPost } from "@/types.ts";
 import PostCard from "./PostCard.tsx";
 
 type Props = {
-  allPosts: AugmentedPost[];
+  // allPosts: AugmentedPost[];
   posts: AugmentedPost[];
+  slugToViewsMap: {
+    [slug: string]: number;
+  };
 };
 
-const PostSection = ({ posts }: Props) => {
+const PostSection = ({ posts, slugToViewsMap }: Props) => {
   return (
     <section className="py-3 grid gap-5 grid-cols-4 max-lg:grid-cols-3 max-sm:grid-cols-1">
       {posts.map((post) => (
@@ -24,6 +27,7 @@ const PostSection = ({ posts }: Props) => {
           slug={post.slug}
           body={post.body}
           minutes={post.minutes}
+          slugToViewsMap={slugToViewsMap}
         />
       ))}
     </section>

@@ -23,4 +23,5 @@ export type PostCardProps = {
   slug: string;
   body: string;
   minutes: number;
+  slugToViewsMap: { [slug: string]: number };
 };

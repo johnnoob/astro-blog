@@ -14,14 +14,14 @@ const Tags = ({ tags }: TagsProps) => {
   const [isShowTags, setIsShowTags] = useState<boolean>(false);
   const tagsLengthLimit = 3;
   return (
-    <div className="flex items-start gap-2 text-sm max-sm:flex-col max-sm:items-start">
+    <div className="flex items-start gap-3 text-sm max-sm:flex-col max-sm:items-start">
       {tags.length > tagsLengthLimit && (
         <button
-          className="flex items-center space-x-1 rounded-md px-2 py-1 bg-muted-foreground text-muted min-w-fit"
+          className="flex items-center gap-1 rounded-md px-2 py-1 bg-muted-foreground text-muted min-w-fit"
           onClick={() => setIsShowTags(!isShowTags)}
         >
           <div className="flex items-center gap-1">
-            <FaTag size={21} />
+            <FaTag size={20} />
             <span>{tags.length}</span>
           </div>
           {isShowTags ? <FaCaretDown /> : <FaCaretRight />}

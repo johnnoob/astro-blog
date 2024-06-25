@@ -1,0 +1,24 @@
+---
+// astro db
+import { db, Views, eq } from "astro:db";
+// react icons
+import { FaEye } from "react-icons/fa6";
+
+type Props = {
+  slug: string;
+};
+
+const { slug }: Props = Astro.props;
+const found = await db
+  .select({
+    count: Views.count,
+  })
+  .from(Views)
+  .where(eq(Views.slug, slug));
+const count = found[0]?.count || 0;
+---
+
+<div>
+  <FaEye />
+  <span>{count}</span>
+</div>

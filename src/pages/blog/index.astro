@@ -1,6 +1,8 @@
 ---
 // astro components
 import BaseLayout from "@/layouts/BaseLayout.astro";
+// astro db
+import { db, Views } from "astro:db";
 // react components
 import FilterAndPostSection from "@/components/Blog/FilterAndPostSection";
 // content collection
@@ -23,9 +25,30 @@ const fetchPostDetails = async () => {
   );
   return details;
 };
+
+type FoundView = {
+  slug: string;
+  count: number;
+};
+const foundViews: FoundView[] = await db.select().from(Views);
+type SlugToViewsMap = {
+  [slug: string]: number;
+};
+const slugToViewsMap: SlugToViewsMap = foundViews.reduce(
+  (acc: SlugToViewsMap, { slug, count }) => {
+    acc[slug] = count;
+    return acc;
+  },
+  {}
+);
+
 const augmentedAllPosts = await fetchPostDetails();
 ---
 
 <BaseLayout pageTitle="Blog"
-  ><FilterAndPostSection allPosts={augmentedAllPosts} client:only="react" />
+  ><FilterAndPostSection
+    allPosts={augmentedAllPosts}
+    slugToViewsMap={slugToViewsMap}
+    client:only="react"
+  />
 </BaseLayout>

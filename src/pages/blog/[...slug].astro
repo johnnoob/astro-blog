@@ -47,7 +47,6 @@ const slug = Astro.params.slug;
 ---
 
 <BaseLayout pageTitle={title}>
-  <ViewsCounter slug={slug} client:only="react" />
   <TableOfContentsNavbar headings={headings} client:only="react" />
   <div class="max-w-[768px] mx-auto pb-8">
     <aside class="fixed right-0 top-[150px] z-10">
@@ -80,11 +79,11 @@ const slug = Astro.params.slug;
         </h1>
       </div>
       <div
-        class="flex items-center space-x-2 text-muted-foreground text-sm flex-wrap"
+        class="flex items-center gap-3 text-muted-foreground text-sm flex-wrap"
       >
-        <div>{author}</div>
-        <Separator orientation="vertical" className="h-7" />
-        <div class="flex items-center space-x-1">
+        <div class="max-sm:hidden">{author}</div>
+        <Separator orientation="vertical" className="h-6 max-sm:hidden" />
+        <div class="flex items-center gap-1">
           <LuCalendarDays size={15} /><span
             >{
               date.toLocaleDateString("zh-TW", {
@@ -95,11 +94,13 @@ const slug = Astro.params.slug;
             }</span
           >
         </div>
-        <Separator orientation="vertical" className="h-7" />
+        <Separator orientation="vertical" className="h-6" />
         <div class="flex items-center space-x-1">
           <FaRegClock size={15} />
-          <span>{Math.ceil(remarkPluginFrontmatter.minutes)} 分鐘</span>
+          <span>{Math.ceil(remarkPluginFrontmatter.minutes)} mins</span>
         </div>
+        <Separator orientation="vertical" className="h-6" />
+        <ViewsCounter slug={slug} client:only="react" />
       </div>
       <Tags tags={tags} client:load />
       <Prose><Content /></Prose>

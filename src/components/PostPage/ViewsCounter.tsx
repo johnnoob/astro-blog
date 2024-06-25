@@ -1,19 +1,23 @@
+// react
 import React, { useState, useEffect } from "react";
+// react icons
+import { FaEye } from "react-icons/fa6";
 
-interface ViewCountProps {
+type Props = {
   slug: string;
-}
+};
 
-interface ViewCountData {
+type ViewCountData = {
+  slug: string;
   count: number;
-}
+};
 
-const ViewCount: React.FC<ViewCountProps> = ({ slug }) => {
+const ViewCount = ({ slug }: Props) => {
   const [data, setData] = useState<ViewCountData | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchImage = async () => {
+    const fetchViews = async () => {
       try {
         const response = await fetch(
           `/api/views?${new URLSearchParams({ slug })}`
@@ -21,7 +25,7 @@ const ViewCount: React.FC<ViewCountProps> = ({ slug }) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const result: ViewCountData = await response.json();
+        const result = await response.json();
         setData(result);
       } catch (err) {
         if (err instanceof Error) {
@@ -31,19 +35,30 @@ const ViewCount: React.FC<ViewCountProps> = ({ slug }) => {
         }
       }
     };
-
-    fetchImage();
+    fetchViews();
   }, [slug]);
 
   if (error) {
-    return <span>1</span>;
+    return (
+      <div className="flex items-center gap-1">
+        <FaEye size={15} />
+        <span>0</span>
+      </div>
+    );
   }
-
   if (!data) {
-    return <span>Loading...</span>;
+    return (
+      <div className="flex items-center gap-1">
+        <FaEye size={15} />
+      </div>
+    );
   }
-
-  return <span>{data.count}</span>;
+  return (
+    <div className="flex items-center gap-1">
+      <FaEye size={15} />
+      <span>{data.count}</span>
+    </div>
+  );
 };
 
 export default ViewCount;

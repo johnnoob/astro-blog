@@ -1,6 +1,9 @@
+// types
 import type { APIRoute } from "astro";
+// astro db
 import { db, Views, sql } from "astro:db";
 
+// set api prerender to be false
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
@@ -39,7 +42,7 @@ export const GET: APIRoute = async ({ request }) => {
     status: 200,
     headers: {
       "content-type": "application/json",
-      // "cache-control": "public, s-maxage=1, stale-while-revalidate=1",
+      // The cache should not store anything about the server response to let this api trigger everytime.
       "cache-control": "no-store",
     },
   });

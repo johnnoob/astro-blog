@@ -5,7 +5,8 @@ import { Card, CardTitle, CardHeader, CardContent } from "../ui/card";
 import { Separator } from "../ui/separator";
 // react icons
 import { LuCalendarDays } from "react-icons/lu";
-import { FaRegClock } from "react-icons/fa6";
+import { FaRegClock, FaEye } from "react-icons/fa6";
+
 // react components
 import Link from "../Link";
 
@@ -20,7 +21,10 @@ const PostCard = ({
   slug,
   body,
   minutes,
+  slugToViewsMap,
 }: PostCardProps) => {
+  console.log(slugToViewsMap);
+
   const url = `/blog/${slug}`;
   const excerpt = body.replace(/[\r\n]/g, "");
   const minutesCeil = Math.ceil(minutes);
@@ -72,10 +76,13 @@ const PostCard = ({
               })}
             </span>
           </div>
-          <Separator orientation="vertical" />
           <div className="flex gap-1 items-center text-muted-foreground">
             <FaRegClock size={14} />
             <span>{minutesCeil} 分鐘</span>
+          </div>
+          <div className="flex gap-1 items-center text-muted-foreground">
+            <FaEye />
+            <span>{slugToViewsMap[slug] ? slugToViewsMap[slug] : 0}</span>
           </div>
         </div>
       </CardContent>

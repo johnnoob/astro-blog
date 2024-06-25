@@ -22,9 +22,12 @@ import { filterStore } from "@/store/filterStore";
 
 type Props = {
   allPosts: AugmentedPost[];
+  slugToViewsMap: {
+    [slug: string]: number;
+  };
 };
 
-const FilterAndPostSection = ({ allPosts }: Props) => {
+const FilterAndPostSection = ({ allPosts, slugToViewsMap }: Props) => {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   useEffect(() => {
@@ -241,7 +244,11 @@ const FilterAndPostSection = ({ allPosts }: Props) => {
             size={17}
           />
         </div>
-        <PostSection allPosts={allPosts} posts={filteredPosts} />
+        <PostSection
+          // allPosts={allPosts}
+          posts={filteredPosts}
+          slugToViewsMap={slugToViewsMap}
+        />
       </div>
     </div>
   );
