@@ -16,7 +16,7 @@ const ViewCount: React.FC<ViewCountProps> = ({ slug }) => {
     const fetchImage = async () => {
       try {
         const response = await fetch(
-          `/api/views?${new URLSearchParams({ slug })}`, { cache: 'no-store' }
+          `/api/views?${new URLSearchParams({ slug })}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
