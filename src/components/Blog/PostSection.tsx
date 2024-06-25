@@ -4,7 +4,6 @@ import { type AugmentedPost } from "@/types.ts";
 import PostCard from "./PostCard.tsx";
 
 type Props = {
-  // allPosts: AugmentedPost[];
   posts: AugmentedPost[];
   slugToViewsMap: {
     [slug: string]: number;

@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 // react icon
-import { FaFilter } from "react-icons/fa6";
+import { FaFilter, FaMinus } from "react-icons/fa6";
 
 type Props = {
   filterType: "category" | "subcategory" | "tag";
@@ -53,13 +53,17 @@ const FilterTabsCard = ({
               >
                 {filter}
                 <span
-                  className={`rounded-full w-5 h-5 grid place-content-center ${
-                    filters.includes(filter)
-                      ? "bg-muted text-primary"
-                      : "bg-primary text-muted"
+                  // className={`rounded-full w-5 h-5 grid place-content-center ${
+                  //   filters.includes(filter)
+                  //     ? "bg-muted text-primary"
+                  //     : "bg-primary text-muted"
+                  // }`}
+                  className={`rounded-full w-4 h-4 grid place-content-center bg-muted text-primary ${
+                    !filters.includes(filter) && "hidden"
                   }`}
                 >
-                  {filterToNumOfPostsMap[filter]}
+                  {/* {filterToNumOfPostsMap[filter]}  */}
+                  <FaMinus />
                 </span>
               </button>
             ))}

@@ -244,11 +244,7 @@ const FilterAndPostSection = ({ allPosts, slugToViewsMap }: Props) => {
             size={17}
           />
         </div>
-        <PostSection
-          // allPosts={allPosts}
-          posts={filteredPosts}
-          slugToViewsMap={slugToViewsMap}
-        />
+        <PostSection posts={filteredPosts} slugToViewsMap={slugToViewsMap} />
       </div>
     </div>
   );

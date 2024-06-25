@@ -8,6 +8,8 @@ import FilterAndPostSection from "@/components/Blog/FilterAndPostSection";
 // content collection
 import { getCollection } from "astro:content";
 
+export const prerender = false;
+
 const posts = await getCollection(
   "posts",
   (post) => post.data.isDraft === false
@@ -17,6 +19,7 @@ const fetchPostDetails = async () => {
   const details = await Promise.all(
     posts.map(async (post) => {
       const renderedPost = await post.render();
+      console.log(renderedPost);
       return {
         ...post,
         minutes: renderedPost.remarkPluginFrontmatter.minutes,
@@ -30,10 +33,10 @@ type FoundView = {
   slug: string;
   count: number;
 };
-const foundViews: FoundView[] = await db.select().from(Views);
 type SlugToViewsMap = {
   [slug: string]: number;
 };
+const foundViews: FoundView[] = await db.select().from(Views);
 const slugToViewsMap: SlugToViewsMap = foundViews.reduce(
   (acc: SlugToViewsMap, { slug, count }) => {
     acc[slug] = count;
@@ -41,9 +44,7 @@ const slugToViewsMap: SlugToViewsMap = foundViews.reduce(
   },
   {}
 );
-
 const augmentedAllPosts = await fetchPostDetails();
-// export const prerender = false;
 ---
 
 <BaseLayout pageTitle="Blog"

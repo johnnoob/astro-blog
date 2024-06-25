@@ -23,8 +23,6 @@ const PostCard = ({
   minutes,
   slugToViewsMap,
 }: PostCardProps) => {
-  console.log(slugToViewsMap);
-
   const url = `/blog/${slug}`;
   const excerpt = body.replace(/[\r\n]/g, "");
   const minutesCeil = Math.ceil(minutes);
@@ -41,7 +39,7 @@ const PostCard = ({
           </div>
         </a>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2 p-0 max-sm:gap-1">
+      <CardContent className="flex flex-col gap-1 p-0 max-sm:gap-1">
         <div className="text-muted-foreground text-sm">
           <Link
             filterType="categoryFilters"
@@ -77,11 +75,11 @@ const PostCard = ({
             </span>
           </div>
           <div className="flex gap-1 items-center text-muted-foreground">
-            <FaRegClock size={14} />
+            <FaRegClock size={15} />
             <span>{minutesCeil} 分鐘</span>
           </div>
           <div className="flex gap-1 items-center text-muted-foreground">
-            <FaEye />
+            <FaEye size={15} />
             <span>{slugToViewsMap[slug] ? slugToViewsMap[slug] : 0}</span>
           </div>
         </div>
