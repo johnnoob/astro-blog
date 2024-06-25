@@ -43,6 +43,7 @@ const slugToViewsMap: SlugToViewsMap = foundViews.reduce(
 );
 
 const augmentedAllPosts = await fetchPostDetails();
+export const prerender = false;
 ---
 
 <BaseLayout pageTitle="Blog"
