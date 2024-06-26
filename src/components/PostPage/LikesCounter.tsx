@@ -38,24 +38,39 @@ const LikeCounter = ({ slug }: Props) => {
     fetchLikes();
   }, [slug]);
   const handleLike = async () => {
-    try {
-      const response = await fetch(
-        `/api/likes?${new URLSearchParams({ slug })}`,
-        {
-          method: "POST",
+    const sendLikeRequest = async () => {
+      try {
+        const response = await fetch(
+          `/api/likes?${new URLSearchParams({ slug })}`,
+          {
+            method: "POST",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error("Unknown error"));
+        }
       }
-      const result = await response.json();
-      setData(result);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err);
-      } else {
-        setError(new Error("Unknown error"));
-      }
+    };
+    const updateLocalStorage = (slugs: string[]) => {
+      window.localStorage.setItem("likedSlugs", JSON.stringify(slugs));
+    };
+    const getLikedSlugsFromLocalStorage = () => {
+      const likedSlugs = window.localStorage.getItem("likedSlugs");
+      return likedSlugs ? JSON.parse(likedSlugs) : [];
+    };
+    const likedSlugs = getLikedSlugsFromLocalStorage();
+    if (!likedSlugs.includes(slug)) {
+      await sendLikeRequest();
+      likedSlugs.push(slug);
+      updateLocalStorage(likedSlugs);
     }
   };
 
