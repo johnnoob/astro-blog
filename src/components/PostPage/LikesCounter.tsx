@@ -38,10 +38,11 @@ const LikeCounter = ({ slug }: Props) => {
     fetchLikes();
   }, [slug]);
   const handleLike = async () => {
-    const sendLikeRequest = async () => {
+    type Action = "give" | "retrieve";
+    const sendLikeRequest = async (action: Action) => {
       try {
         const response = await fetch(
-          `/api/likes?${new URLSearchParams({ slug })}`,
+          `/api/likes?${new URLSearchParams({ slug, action })}`,
           {
             method: "POST",
           }
@@ -62,14 +63,18 @@ const LikeCounter = ({ slug }: Props) => {
     const updateLocalStorage = (slugs: string[]) => {
       window.localStorage.setItem("likedSlugs", JSON.stringify(slugs));
     };
-    const getLikedSlugsFromLocalStorage = () => {
+    const getLikedSlugsFromLocalStorage = (): string[] => {
       const likedSlugs = window.localStorage.getItem("likedSlugs");
       return likedSlugs ? JSON.parse(likedSlugs) : [];
     };
-    const likedSlugs = getLikedSlugsFromLocalStorage();
+    let likedSlugs = getLikedSlugsFromLocalStorage();
     if (!likedSlugs.includes(slug)) {
-      await sendLikeRequest();
+      await sendLikeRequest("give");
       likedSlugs.push(slug);
+      updateLocalStorage(likedSlugs);
+    } else {
+      await sendLikeRequest("retrieve");
+      likedSlugs = likedSlugs.filter((s) => s !== slug);
       updateLocalStorage(likedSlugs);
     }
   };
