@@ -107,8 +107,10 @@ const slug = Astro.params.slug;
         />
       </div>
       <Tags tags={tags} client:load />
-      <LikeCounter slug={slug} client:only="react" />
       <Prose><Content /></Prose>
+      <div class="w-fit mx-auto mt-5">
+        <LikeCounter slug={slug} client:only="react" />
+      </div>
     </section>
   </div>
 </BaseLayout>

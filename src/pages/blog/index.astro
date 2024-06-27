@@ -19,7 +19,6 @@ const fetchPostDetails = async () => {
   const details = await Promise.all(
     posts.map(async (post) => {
       const renderedPost = await post.render();
-      console.log(renderedPost);
       return {
         ...post,
         minutes: renderedPost.remarkPluginFrontmatter.minutes,

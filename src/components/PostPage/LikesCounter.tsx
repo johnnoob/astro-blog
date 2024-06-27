@@ -15,6 +15,16 @@ type LikeCountData = {
 const LikeCounter = ({ slug }: Props) => {
   const [data, setData] = useState<LikeCountData | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [isLike, setIsLike] = useState<boolean>(false);
+
+  const getLikedSlugsFromLocalStorage = (): string[] => {
+    const likedSlugs = window.localStorage.getItem("likedSlugs");
+    return likedSlugs ? JSON.parse(likedSlugs) : [];
+  };
+  useEffect(() => {
+    const likedSlugs = getLikedSlugsFromLocalStorage();
+    likedSlugs.includes(slug) ? setIsLike(true) : setIsLike(false);
+  });
 
   useEffect(() => {
     const fetchLikes = async () => {
@@ -63,10 +73,6 @@ const LikeCounter = ({ slug }: Props) => {
     const updateLocalStorage = (slugs: string[]) => {
       window.localStorage.setItem("likedSlugs", JSON.stringify(slugs));
     };
-    const getLikedSlugsFromLocalStorage = (): string[] => {
-      const likedSlugs = window.localStorage.getItem("likedSlugs");
-      return likedSlugs ? JSON.parse(likedSlugs) : [];
-    };
     let likedSlugs = getLikedSlugsFromLocalStorage();
     if (!likedSlugs.includes(slug)) {
       await sendLikeRequest("give");
@@ -100,12 +106,14 @@ const LikeCounter = ({ slug }: Props) => {
     );
   }
   return (
-    <div className="flex items-center gap-1">
-      <button onClick={handleLike}>
-        <FaThumbsUp size={15} />
-        <FaRegThumbsUp size={15} />
+    <div className="flex items-center gap-2">
+      <button
+        onClick={handleLike}
+        className="p-3 rounded-full border-[1px] hover:border-primary"
+      >
+        {isLike ? <FaThumbsUp size={25} /> : <FaRegThumbsUp size={25} />}
       </button>
-      <span>{data.count}</span>
+      <span>{data.count}個人推！</span>
     </div>
   );
 };

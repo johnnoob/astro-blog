@@ -1,7 +1,7 @@
 // types
 import type { APIRoute } from "astro";
 // astro db
-import { db, eq, Likes, sql } from "astro:db";
+import { db, eq, PostLikes, sql } from "astro:db";
 
 // set api prerender to be false
 export const prerender = false;
@@ -18,20 +18,20 @@ export const GET: APIRoute = async ({ request }) => {
   let item;
   try {
     item = await db
-      .insert(Likes)
+      .insert(PostLikes)
       .values({
         slug: slug,
         count: 0,
       })
       .onConflictDoUpdate({
-        target: Likes.slug,
+        target: PostLikes.slug,
         set: {
-          count: sql`${Likes.count}`,
+          count: sql`${PostLikes.count}`,
         },
       })
       .returning({
-        slug: Likes.slug,
-        count: Likes.count,
+        slug: PostLikes.slug,
+        count: PostLikes.count,
       })
       .then((res) => res[0]);
   } catch (error) {
@@ -61,20 +61,20 @@ export const POST: APIRoute = async ({ request }) => {
   if (action === "give") {
     try {
       item = await db
-        .insert(Likes)
+        .insert(PostLikes)
         .values({
           slug: slug,
           count: 1,
         })
         .onConflictDoUpdate({
-          target: Likes.slug,
+          target: PostLikes.slug,
           set: {
             count: sql`count + 1`,
           },
         })
         .returning({
-          slug: Likes.slug,
-          count: Likes.count,
+          slug: PostLikes.slug,
+          count: PostLikes.count,
         })
         .then((res) => res[0]);
     } catch (error) {
@@ -83,20 +83,20 @@ export const POST: APIRoute = async ({ request }) => {
   } else {
     try {
       item = await db
-        .insert(Likes)
+        .insert(PostLikes)
         .values({
           slug: slug,
           count: 1,
         })
         .onConflictDoUpdate({
-          target: Likes.slug,
+          target: PostLikes.slug,
           set: {
-            count: sql`count - 1`,
+            count: sql`CASE WHEN count > 0 THEN count - 1 ELSE 0 END`,
           },
         })
         .returning({
-          slug: Likes.slug,
-          count: Likes.count,
+          slug: PostLikes.slug,
+          count: PostLikes.count,
         })
         .then((res) => res[0]);
     } catch (error) {

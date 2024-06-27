@@ -12,7 +12,7 @@ const PostViews = defineTable({
   },
 });
 
-const Likes = defineTable({
+const PostLikes = defineTable({
   columns: {
     slug: column.text({ primaryKey: true }),
     count: column.number({
@@ -23,5 +23,5 @@ const Likes = defineTable({
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: { PostViews, Likes },
+  tables: { PostViews, PostLikes },
 });
