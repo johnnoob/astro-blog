@@ -1,7 +1,7 @@
 // types
 import type { APIRoute } from "astro";
 // astro db
-import { db, Views, PostViews, sql, eq, and } from "astro:db";
+import { db, PostViews, sql, eq, and } from "astro:db";
 
 // set api prerender to be false
 export const prerender = false;
