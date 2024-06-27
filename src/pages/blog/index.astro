@@ -2,7 +2,7 @@
 // astro components
 import BaseLayout from "@/layouts/BaseLayout.astro";
 // astro db
-import { db, Views } from "astro:db";
+import { db, PostViews, sql } from "astro:db";
 // react components
 import FilterAndPostSection from "@/components/Blog/FilterAndPostSection";
 // content collection
@@ -36,7 +36,19 @@ type FoundView = {
 type SlugToViewsMap = {
   [slug: string]: number;
 };
-const foundViews: FoundView[] = await db.select().from(Views);
+const foundViews: FoundView[] = await db
+  .select({
+    slug: PostViews.slug,
+    count: sql`SUM(${PostViews.viewCount})`.as("totalViews"),
+  })
+  .from(PostViews)
+  .groupBy(PostViews.slug)
+  .then((rows) =>
+    rows.map((row) => ({
+      slug: row.slug,
+      count: Number(row.count),
+    }))
+  );
 const slugToViewsMap: SlugToViewsMap = foundViews.reduce(
   (acc: SlugToViewsMap, { slug, count }) => {
     acc[slug] = count;
