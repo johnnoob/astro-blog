@@ -99,7 +99,12 @@ const slug = Astro.params.slug;
           <span>{Math.ceil(remarkPluginFrontmatter.minutes)} 分鐘</span>
         </div>
         <Separator orientation="vertical" className="h-6" />
-        <ViewsCounter slug={slug} client:only="react" />
+        <ViewsCounter
+          slug={slug}
+          title={title}
+          category={category}
+          client:only="react"
+        />
       </div>
       <Tags tags={tags} client:load />
       <LikeCounter slug={slug} client:only="react" />

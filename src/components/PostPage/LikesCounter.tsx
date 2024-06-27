@@ -1,7 +1,7 @@
 // react
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 // react icons
-import { FaThumbsUp } from "react-icons/fa6";
+import { FaThumbsUp, FaRegThumbsUp } from "react-icons/fa6";
 
 type Props = {
   slug: string;
@@ -83,6 +83,7 @@ const LikeCounter = ({ slug }: Props) => {
     return (
       <div className="flex items-center gap-1">
         <FaThumbsUp size={15} />
+        <FaRegThumbsUp size={15} />
         <span>0</span>
       </div>
     );
@@ -92,6 +93,7 @@ const LikeCounter = ({ slug }: Props) => {
       <div className="flex items-center gap-1">
         <button onClick={handleLike}>
           <FaThumbsUp size={15} />
+          <FaRegThumbsUp size={15} />
         </button>
         <span>0</span>
       </div>
@@ -101,6 +103,7 @@ const LikeCounter = ({ slug }: Props) => {
     <div className="flex items-center gap-1">
       <button onClick={handleLike}>
         <FaThumbsUp size={15} />
+        <FaRegThumbsUp size={15} />
       </button>
       <span>{data.count}</span>
     </div>
