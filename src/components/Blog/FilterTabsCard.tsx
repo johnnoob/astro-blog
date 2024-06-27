@@ -52,19 +52,15 @@ const FilterTabsCard = ({
                 onClick={handleFilterSelect}
               >
                 {filter}
-                <span
-                  // className={`rounded-full w-5 h-5 grid place-content-center ${
-                  //   filters.includes(filter)
-                  //     ? "bg-muted text-primary"
-                  //     : "bg-primary text-muted"
-                  // }`}
-                  className={`rounded-full w-4 h-4 grid place-content-center bg-muted text-primary ${
-                    !filters.includes(filter) && "hidden"
+                {/* <span
+                  className={`rounded-full w-5 h-5 grid place-content-center ${
+                    filters.includes(filter)
+                      ? "bg-muted text-primary"
+                      : "bg-primary text-muted"
                   }`}
                 >
-                  {/* {filterToNumOfPostsMap[filter]}  */}
-                  <FaMinus />
-                </span>
+                  {filterToNumOfPostsMap[filter]} 
+                </span> */}
               </button>
             ))}
           </div>
