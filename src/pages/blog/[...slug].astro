@@ -16,6 +16,8 @@ import TableOfContentsSidebar from "@/components/PostPage/TableOfContentsSidebar
 import TableOfContentsNavbar from "@/components/PostPage/TableOfContentsNavbar";
 import ViewsCounter from "@/components/PostPage/ViewsCounter.tsx";
 import LikeCounter from "@/components/PostPage/LikesCounter";
+import Feedback from "@/components/PostPage/Feedback";
+import FeedbackInfo from "@/components/PostPage/FeedbackInfo";
 
 export const getStaticPaths = async () => {
   const posts = await getCollection("posts");
@@ -77,6 +79,12 @@ const slug = Astro.params.slug;
           {title}
         </h1>
       </div>
+      <FeedbackInfo
+        slug={slug}
+        title={title}
+        category={category}
+        client:only="react"
+      />
       <div
         class="flex items-center gap-3 text-muted-foreground text-sm flex-wrap"
       >
@@ -108,18 +116,24 @@ const slug = Astro.params.slug;
       </div>
       <Tags tags={tags} client:load />
       <Prose><Content /></Prose>
-      <div class="w-fit mx-auto mt-5">
-        <LikeCounter slug={slug} client:only="react" />
+      <div class="w-full mx-auto mt-5">
+        <!-- <LikeCounter slug={slug} client:only="react" /> -->
+        <Feedback
+          slug={slug}
+          title={title}
+          category={category}
+          client:only="react"
+        />
       </div>
     </section>
-  </div>
-</BaseLayout>
 
-<script>
-  function goBack() {
-    window.history.back();
-  }
-  document.addEventListener("astro:page-load", () => {
-    document.getElementById("back-btn")?.addEventListener("click", goBack);
-  });
-</script>
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+      document.addEventListener("astro:page-load", () => {
+        document.getElementById("back-btn")?.addEventListener("click", goBack);
+      });
+    </script>
+  </div></BaseLayout
+>

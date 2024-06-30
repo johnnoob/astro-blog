@@ -1,8 +1,8 @@
-import { defineDb, column, defineTable } from "astro:db";
+import { defineDb, column, defineTable, NOW } from "astro:db";
 
 const PostViews = defineTable({
   columns: {
-    slug: column.text({ primaryKey: true }),
+    slug: column.text(),
     title: column.text(),
     category: column.text(),
     viewDate: column.text(),
@@ -21,7 +21,19 @@ const PostLikes = defineTable({
   },
 });
 
+const PostFeedBacks = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    slug: column.text(),
+    title: column.text(),
+    category: column.text(),
+    rating: column.number(),
+    comment: column.text({ optional: true }),
+    createdAt: column.date({ default: NOW }),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
-  tables: { PostViews, PostLikes },
+  tables: { PostViews, PostLikes, PostFeedBacks },
 });

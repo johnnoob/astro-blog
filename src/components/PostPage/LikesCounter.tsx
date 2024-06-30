@@ -109,7 +109,9 @@ const LikeCounter = ({ slug }: Props) => {
     <div className="flex items-center gap-2">
       <button
         onClick={handleLike}
-        className="p-3 rounded-full border-[1px] hover:border-primary"
+        className={`p-3 rounded-full border-[1px] hover:border-primary ${
+          isLike && "border-primary"
+        }`}
       >
         {isLike ? <FaThumbsUp size={25} /> : <FaRegThumbsUp size={25} />}
       </button>
