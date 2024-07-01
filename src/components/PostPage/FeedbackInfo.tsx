@@ -1,7 +1,10 @@
 // react
 import { useEffect, useState } from "react";
+// shadCN
+import { Skeleton } from "../ui/skeleton";
 // react icons
 import { FaRegStar, FaRegStarHalfStroke, FaStar } from "react-icons/fa6";
+import { FaSpinner } from "react-icons/fa6";
 
 type FeedbackInfo = {
   msg: string;
@@ -44,7 +47,14 @@ const FeedbackInfo = ({ slug, title, category }: Props) => {
   }, [slug, title, category]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center gap-2">
+        <span className="animate-spin">
+          <FaSpinner size={20} />
+        </span>
+        讀者評分讀取中
+      </div>
+    );
   }
 
   if (error) {
