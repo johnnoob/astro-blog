@@ -61,7 +61,7 @@ const FeedbackInfo = ({ slug, title, category }: Props) => {
             "haha"
           ) : data?.avgRating >= rating ? (
             <FaStar size={20} className="text-yellow-500" />
-          ) : data?.avgRating >= rating - 1 ? (
+          ) : data?.avgRating > rating - 1 ? (
             <FaRegStarHalfStroke size={20} className="text-yellow-500" />
           ) : (
             <FaRegStar size={20} />
