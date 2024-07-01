@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 // react icons
 import { FaSpinner } from "react-icons/fa6";
-import { FaRegStar, FaRegStarHalfStroke, FaStar } from "react-icons/fa6";
+import { FaRegStar, FaStar } from "react-icons/fa6";
+import { FaRegCircleCheck } from "react-icons/fa6";
 // shadCN
 import { Card, CardFooter, CardContent, CardDescription } from "../ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -41,7 +42,7 @@ const Feedback = ({ slug, title, category }: Props) => {
     likedSlugs.includes(slug) ? setIsCommented(true) : setIsCommented(false);
   });
   useEffect(() => {
-    const fetchAverageRating = async () => {
+    const fetchFeedbackStats = async () => {
       try {
         const response = await fetch(
           `/api/feedbacks?${new URLSearchParams({ slug, title, category })}`
@@ -59,8 +60,8 @@ const Feedback = ({ slug, title, category }: Props) => {
         }
       }
     };
-    fetchAverageRating();
-  }, [slug]);
+    fetchFeedbackStats();
+  }, [slug, category, title]);
 
   const handleFeedback = async () => {
     const sendFeedback = async () => {
@@ -103,18 +104,23 @@ const Feedback = ({ slug, title, category }: Props) => {
     }
   };
 
-  const ratings = [1, 2, 3, 4, 5];
+  const defaultRatings = [1, 2, 3, 4, 5];
   return (
-    <Card className="w-full">
+    <Card id="feedback" className="w-full">
       <CardContent className="pt-4 flex flex-col gap-5">
-        <CardDescription className="flex justify-center items-center gap-2">
+        <CardDescription className="flex justify-center items-center gap-2 text-base">
           {isCommented ? (
-            "已對此文章評論，感謝回饋！"
+            <div className="flex items-center gap-3">
+              <span>
+                <FaRegCircleCheck size={25} />
+              </span>
+              已對此文章評論，感謝回饋！
+            </div>
           ) : (
-            <>
+            <div className="flex items-center gap-3">
               這文章如何？
               <span className="flex items-center gap-1">
-                {ratings.map((rating, index) => (
+                {defaultRatings.map((rating, index) => (
                   <button
                     key={index}
                     onClick={() => {
@@ -127,7 +133,7 @@ const Feedback = ({ slug, title, category }: Props) => {
                   >
                     {ratingSelected ? (
                       ratingSelected >= rating ? (
-                        <FaStar size={25} />
+                        <FaStar size={25} className="text-yellow-300" />
                       ) : (
                         <FaRegStar size={25} />
                       )
@@ -137,11 +143,11 @@ const Feedback = ({ slug, title, category }: Props) => {
                   </button>
                 ))}
               </span>
-            </>
+            </div>
           )}
         </CardDescription>
         <Textarea
-          className={`w-full mx-auto ${!ratingSelected && "hidden"}`}
+          className={`w-full mx-auto text-base ${!ratingSelected && "hidden"}`}
           placeholder="分享你的回饋(可不填寫)..."
           onChange={(e) => setCommentTyped(e.target.value)}
         />

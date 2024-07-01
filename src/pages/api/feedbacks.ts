@@ -1,7 +1,7 @@
 // types
 import type { APIRoute } from "astro";
 // astro db
-import { db, PostFeedBacks, eq, avg } from "astro:db";
+import { db, PostFeedBacks, eq, avg, count } from "astro:db";
 
 // set api prerender to be false
 export const prerender = false;
@@ -15,31 +15,36 @@ export const GET: APIRoute = async ({ request }) => {
   if (!slug || !title || !category) {
     return new Response("Not found", { status: 404 });
   }
-  const averageRatingForSlug = await db
+  const slugFeedbackStats = await db
     .select({
       slug: PostFeedBacks.slug,
       avgRating: avg(PostFeedBacks.rating),
+      count: count(PostFeedBacks.id),
     })
     .from(PostFeedBacks)
-    .where(eq(PostFeedBacks.slug, slug)) // Add the where clause to filter by slug
+    .where(eq(PostFeedBacks.slug, slug))
     .groupBy(PostFeedBacks.slug);
-  if (
-    averageRatingForSlug.length === 0 ||
-    averageRatingForSlug[0].avgRating === null
-  ) {
-    return new Response(JSON.stringify({ msg: "No rating" }), {
-      status: 200,
-      headers: {
-        "content-type": "application/json",
-        "cache-control": "no-store",
-      },
-    });
-  }
 
+  if (
+    slugFeedbackStats.length === 0 ||
+    slugFeedbackStats[0].avgRating === null
+  ) {
+    return new Response(
+      JSON.stringify({ msg: "No feedback", avgRating: 0, count: 0 }),
+      {
+        status: 200,
+        headers: {
+          "content-type": "application/json",
+          "cache-control": "no-store",
+        },
+      }
+    );
+  }
   return new Response(
     JSON.stringify({
       msg: "success",
-      avgRating: averageRatingForSlug[0]["avgRating"],
+      avgRating: Number(slugFeedbackStats[0]["avgRating"]),
+      count: Number(slugFeedbackStats[0]["count"]),
     }),
     {
       status: 200,
@@ -71,32 +76,35 @@ export const POST: APIRoute = async ({ request }) => {
     comment,
   });
 
-  const averageRatingForSlug = await db
+  const slugFeedbackStats = await db
     .select({
       slug: PostFeedBacks.slug,
       avgRating: avg(PostFeedBacks.rating),
-      // count: sql`SUM(${PostViews.viewCount})`.as("totalViews"),
+      count: count(PostFeedBacks.id),
     })
     .from(PostFeedBacks)
-    .where(eq(PostFeedBacks.slug, slug)) // Add the where clause to filter by slug
+    .where(eq(PostFeedBacks.slug, slug))
     .groupBy(PostFeedBacks.slug);
   if (
-    averageRatingForSlug.length === 0 ||
-    averageRatingForSlug[0].avgRating === null
+    slugFeedbackStats.length === 0 ||
+    slugFeedbackStats[0].avgRating === null
   ) {
-    return new Response(JSON.stringify({ msg: "No rating" }), {
-      status: 200,
-      headers: {
-        "content-type": "application/json",
-        "cache-control": "no-store",
-      },
-    });
+    return new Response(
+      JSON.stringify({ msg: "No feedback", avgRating: 0, count: 0 }),
+      {
+        status: 200,
+        headers: {
+          "content-type": "application/json",
+          "cache-control": "no-store",
+        },
+      }
+    );
   }
-
   return new Response(
     JSON.stringify({
       msg: "success",
-      avgRating: averageRatingForSlug[0]["avgRating"],
+      avgRating: Number(slugFeedbackStats[0]["avgRating"]),
+      count: Number(slugFeedbackStats[0]["count"]),
     }),
     {
       status: 200,
