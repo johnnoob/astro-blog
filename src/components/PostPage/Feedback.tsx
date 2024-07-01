@@ -133,7 +133,7 @@ const Feedback = ({ slug, title, category }: Props) => {
                   >
                     {ratingSelected ? (
                       ratingSelected >= rating ? (
-                        <FaStar size={25} className="text-yellow-300" />
+                        <FaStar size={25} className="text-yellow-500" />
                       ) : (
                         <FaRegStar size={25} />
                       )

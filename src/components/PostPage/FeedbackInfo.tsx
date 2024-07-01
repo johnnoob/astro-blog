@@ -60,9 +60,9 @@ const FeedbackInfo = ({ slug, title, category }: Props) => {
           {typeof data?.avgRating === "undefined" ? (
             "haha"
           ) : data?.avgRating >= rating ? (
-            <FaStar size={20} className="text-yellow-300" />
+            <FaStar size={20} className="text-yellow-500" />
           ) : data?.avgRating >= rating - 0.5 ? (
-            <FaRegStarHalfStroke size={20} className="text-yellow-300" />
+            <FaRegStarHalfStroke size={20} className="text-yellow-500" />
           ) : (
             <FaRegStar size={20} />
           )}
