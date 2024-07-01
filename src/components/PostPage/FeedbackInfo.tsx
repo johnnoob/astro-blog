@@ -48,7 +48,7 @@ const FeedbackInfo = ({ slug, title, category }: Props) => {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <span className="animate-spin">
           <FaSpinner size={20} />
         </span>
