@@ -71,7 +71,9 @@ export default defineConfig({
       ],
     },
   },
-  // output: "static",
   output: "hybrid",
+  experimental: {
+    actions: true,
+  },
   adapter: vercel(),
 });

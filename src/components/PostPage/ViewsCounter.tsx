@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 // react icons
 import { FaEye } from "react-icons/fa6";
+// actions
+import { actions } from "astro:actions";
 
 type Props = {
   slug: string;
@@ -11,53 +13,25 @@ type Props = {
 
 type ViewsCountData = {
   slug: string;
-  count: number;
+  count: string | null;
 };
 
 const ViewsCounter = ({ slug, title, category }: Props) => {
   const [data, setData] = useState<ViewsCountData | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  // useEffect(() => {
-  //   const fetchViews = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `/api/views?${new URLSearchParams({ slug })}`
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       const result = await response.json();
-  //       setData(result);
-  //     } catch (err) {
-  //       if (err instanceof Error) {
-  //         setError(err);
-  //       } else {
-  //         setError(new Error("Unknown error"));
-  //       }
-  //     }
-  //   };
-  //   fetchViews();
-  // }, [slug]);
   useEffect(() => {
     const fetchViews = async () => {
-      try {
-        const response = await fetch(
-          `/api/views?${new URLSearchParams({ slug, title, category })}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-
-        setData(result);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("Unknown error"));
-        }
+      const { data, error } = await actions.views.safe({
+        slug,
+        title,
+        category,
+      });
+      if (error) {
+        setError(error);
+        return;
       }
+      setData(data[0]);
     };
     fetchViews();
   }, [slug]);
