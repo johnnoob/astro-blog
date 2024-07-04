@@ -22,12 +22,20 @@ import Google from "../Auth/Google.tsx";
 import { useStore } from "@nanostores/react";
 import { isSidebarOpenStore } from "@/store/isSidebarOpenStore.ts";
 
+type User = {
+  id: string;
+  name: string;
+  picture: string | undefined;
+  email: string | undefined;
+};
+
 type Props = {
   rootPath: string;
   posts: CollectionEntry<"posts">[];
+  user: User | undefined;
 };
 
-const MainNavNar = ({ rootPath, posts }: Props) => {
+const MainNavNar = ({ rootPath, posts, user }: Props) => {
   const [theme, setThemeState] = useTheme();
   const isScrollDown = useScrollDirection();
   const isSidebarOpen = useStore(isSidebarOpenStore);
@@ -131,7 +139,7 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
                 </React.Fragment>
               ))}
             </div>
-            <Google />
+            <Google user={user} />
             <Button className="max-lg:hidden" variant="ghost" size="icon">
               <FaRss size={20} />
             </Button>

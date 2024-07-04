@@ -6,7 +6,20 @@ import { app } from "@/firebase/client";
 // shadCN
 import { Button } from "../ui/button";
 
-const Google = () => {
+type User = {
+  id: string;
+  name: string;
+  picture: string | undefined;
+  email: string | undefined;
+};
+
+type Props = {
+  user: User | undefined;
+};
+
+const Google = ({ user }: Props) => {
+  console.log(user);
+
   const handleLogin = async () => {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -17,14 +30,23 @@ const Google = () => {
         Authorization: `Bearer ${idToken}`,
       },
     });
-    if (response.redirected) {
-      window.location.assign(response.url);
-    }
+    window.location.reload();
   };
   const handleLogout = async () => {
     await fetch("/api/auth/logout");
+    window.location.reload();
   };
-  return <Button onClick={handleLogin}>登入</Button>;
+  if (user) {
+    return (
+      <Button onClick={handleLogout} variant="ghost">
+        {user.picture && (
+          <img src={user.picture} className="rounded-full h-9 w-9" />
+        )}
+      </Button>
+    );
+  } else {
+    return <Button onClick={handleLogin}>登入</Button>;
+  }
 };
 
 export default Google;

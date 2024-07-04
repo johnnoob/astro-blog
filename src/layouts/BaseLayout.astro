@@ -14,11 +14,17 @@ const posts = await getCollection(
   "posts",
   (post) => post.data.isDraft !== true
 );
-
-interface Props {
+type User = {
+  id: string;
+  name: string;
+  picture: string;
+  email: string;
+};
+type Props = {
   pageTitle: string;
-}
+};
 const { pageTitle } = Astro.props;
+const user = Astro.locals.user;
 const {
   url: { pathname },
 } = Astro;
@@ -36,7 +42,12 @@ const rootPath = pathname.split("/")[1];
     <ViewTransitions />
   </head>
   <body>
-    <MainNavBar client:only="react" rootPath={rootPath} posts={posts} />
+    <MainNavBar
+      client:only="react"
+      rootPath={rootPath}
+      posts={posts}
+      user={user}
+    />
     <Sidebar client:only="react" rootPath={rootPath} />
     <main id="main" class="max-container pt-[65px]">
       <slot />

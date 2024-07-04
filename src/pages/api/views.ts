@@ -3,9 +3,6 @@ import type { APIRoute } from "astro";
 // astro db
 import { db, PostViews, sql, eq, and } from "astro:db";
 
-// set api prerender to be false
-export const prerender = false;
-
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);

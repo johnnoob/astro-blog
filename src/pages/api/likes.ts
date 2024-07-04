@@ -1,10 +1,7 @@
 // types
 import type { APIRoute } from "astro";
 // astro db
-import { db, eq, PostLikes, sql } from "astro:db";
-
-// set api prerender to be false
-export const prerender = false;
+import { db, PostLikes, sql } from "astro:db";
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);

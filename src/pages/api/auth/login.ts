@@ -4,8 +4,6 @@ import type { APIRoute } from "astro";
 import { app } from "../../../firebase/server";
 import { getAuth } from "firebase-admin/auth";
 
-export const prerender = false;
-
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   const auth = getAuth(app);
 
@@ -17,7 +15,6 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
 
   try {
     const result = await auth.verifyIdToken(idToken);
-    console.log(result);
   } catch (error: any) {
     return new Response(JSON.stringify(error), { status: 500 });
   }
@@ -30,6 +27,6 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   cookies.set("__session", sessionCookie, {
     path: "/",
   });
-
+  // return new Response(JSON.stringify({ status: "login" }), { status: 200 });
   return redirect("/");
 };

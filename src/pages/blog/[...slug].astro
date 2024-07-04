@@ -19,20 +19,6 @@ import LikeCounter from "@/components/PostPage/LikesCounter";
 import Feedback from "@/components/PostPage/Feedback";
 import FeedbackInfo from "@/components/PostPage/FeedbackInfo";
 
-// export const getStaticPaths = async () => {
-//   const posts = await getCollection("posts");
-//   const paths = posts.map((post) => {
-//     return {
-//       params: {
-//         slug: post.slug,
-//       },
-//       props: {
-//         post,
-//       },
-//     };
-//   });
-//   return paths;
-// };
 type Props = {
   post: CollectionEntry<"posts">;
 };
@@ -43,17 +29,13 @@ const post = posts.find((post) => post.slug === slug);
 if (!post) {
   return Astro.redirect("/404");
 }
-const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const {
   data: { title, category, subcategory, date, tags, author },
 } = post;
-
-// const {
-//   post,
-//   post: {
-//     data: { title, category, subcategory, date, tags, author },
-//   },
-// } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await post.render();
+// auth
+const user = Astro.locals.user;
+console.log(user);
 ---
 
 <BaseLayout pageTitle={title}>
