@@ -17,6 +17,7 @@ import { LuCalendarDays } from "react-icons/lu";
 // reacr components
 import { ThemeModeSwitch } from "./ThemeModeSwitch.tsx";
 import Logo from "./Logo.tsx";
+import Google from "../Auth/Google.tsx";
 // nano store
 import { useStore } from "@nanostores/react";
 import { isSidebarOpenStore } from "@/store/isSidebarOpenStore.ts";
@@ -130,6 +131,7 @@ const MainNavNar = ({ rootPath, posts }: Props) => {
                 </React.Fragment>
               ))}
             </div>
+            <Google />
             <Button className="max-lg:hidden" variant="ghost" size="icon">
               <FaRss size={20} />
             </Button>
