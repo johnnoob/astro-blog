@@ -30,12 +30,19 @@ if (!post) {
   return Astro.redirect("/404");
 }
 const {
-  data: { title, category, subcategory, date, tags, author },
+  data: { title, category, subcategory, date, tags, author, isLocked },
 } = post;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 // auth
 const user = Astro.locals.user;
-console.log(user);
+
+let isAuth: boolean = true;
+console.log(isLocked, !user);
+
+if (isLocked && !user) {
+  isAuth = false;
+}
+console.log(isAuth);
 ---
 
 <BaseLayout pageTitle={title}>
@@ -106,7 +113,7 @@ console.log(user);
         />
       </div>
       <Tags tags={tags} client:load />
-      <Prose><Content /></Prose>
+      <Prose isAuth={isAuth}><Content /></Prose>
       <div class="w-full mx-auto mt-5">
         <!-- <LikeCounter slug={slug} client:only="react" /> -->
         <Feedback

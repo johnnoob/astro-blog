@@ -1,11 +1,14 @@
 ---
-
+type Props = {
+  isAuth: boolean;
+};
+const { isAuth } = Astro.props;
 ---
 
 <article
-  class="prose prose-stone prose-lg max-w-none mx-auto dark:prose-invert
+  class={`${!isAuth && "overflow-hidden h-8"} prose prose-stone prose-lg max-w-none mx-auto dark:prose-invert
   prose-h1:font-bold prose-h1:text-2xl prose-h2:text-xl
-  prose-a:text-blue-600 prose-img:rounded-lg prose-img:mx-auto prose-figcaption:text-center"
+  prose-a:text-blue-600 prose-img:rounded-lg prose-img:mx-auto prose-figcaption:text-center`}
 >
   <slot />
 </article>

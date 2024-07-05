@@ -19,6 +19,7 @@ const postsCollection = defineCollection({
       }),
       tags: z.array(z.string()),
       author: z.string(),
+      isLocked: z.boolean(),
       isDraft: z.boolean(),
     }),
 });
