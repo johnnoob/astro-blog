@@ -13,6 +13,15 @@ import {
   HoverCardTrigger,
   HoverCardContent,
 } from "../ui/hover-card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuItem,
+  DropdownMenuGroup,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 
@@ -48,40 +57,41 @@ const Google = ({ user }: Props) => {
   };
   if (user) {
     return (
-      <HoverCard>
-        <HoverCardTrigger asChild>
-          <div className="hover:cursor-pointer">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full">
             {user.picture ? (
               <img src={user.picture} className="rounded-full h-7 w-7" />
             ) : (
               <FaUser size={20} />
             )}
-          </div>
-        </HoverCardTrigger>
-        <HoverCardContent className="w-fit">
-          <div className="flex flex-col gap-3">
-            <div className="flex justify-between space-x-4">
-              <Avatar>
-                <AvatarImage src={user.picture} />
-                <AvatarFallback>VC</AvatarFallback>
-              </Avatar>
-              <div className="space-y-2">
-                <h4 className="text-sm font-semibold">{user.name}</h4>
-                <p className="text-sm">{user.email}</p>
-              </div>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>
+            <div className="flex flex-col gap-1">
+              {user.name}
+              <span className="text-muted-foreground font-normal">
+                {user.email}
+              </span>
             </div>
-            <Separator />
-            <button className="mx-auto w-fit flex gap-1" onClick={handleLogout}>
-              <FaRightFromBracket size={20} />
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <button
+              className="w-fit mx-auto flex gap-2 items-center py-1"
+              onClick={handleLogout}
+            >
+              <FaRightFromBracket size={15} />
               <span className="text-sm">登出</span>
             </button>
-          </div>
-        </HoverCardContent>
-      </HoverCard>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   } else {
     return (
-      <Button onClick={handleLogin} variant="secondary">
+      <Button onClick={handleLogin} variant="ghost">
         <span className="mr-1">
           <FcGoogle size={20} />
         </span>

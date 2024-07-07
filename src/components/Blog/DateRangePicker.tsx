@@ -1,5 +1,6 @@
 // react
 import * as React from "react";
+import { useState, useRef } from "react";
 // date-fns
 import { format, subDays, subQuarters, subYears } from "date-fns";
 import { zhTW } from "date-fns/locale";
@@ -16,6 +17,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Label } from "../ui/label";
 // nono store
 import { filterStore } from "@/store/filterStore";
 
@@ -89,9 +92,33 @@ export default function DateRangePicker({
   className,
   date,
 }: React.HTMLAttributes<HTMLDivElement> & { date: DateRange }) {
+  const dateOption = useRef("");
+  console.log(dateOption.current);
+
   return (
     <div className={cn("grid gap-2", className)}>
-      <Popover>
+      <RadioGroup
+        value={dateOption.current}
+        onValueChange={(e) => {
+          const dateRange = defaultDateRangeOptions.find(
+            (option) => option.value === e
+          )?.dateRange;
+          dateOption.current = e;
+
+          filterStore.setKey("dateRange", {
+            from: dateRange?.from,
+            to: dateRange?.to,
+          });
+        }}
+      >
+        {defaultDateRangeOptions.map((option) => (
+          <div className="flex items-center gap-1" key={option.value}>
+            <RadioGroupItem value={option.value} id={option.value} />
+            <Label htmlFor={option.value}>{option.label}</Label>
+          </div>
+        ))}
+      </RadioGroup>
+      {/* <Popover>
         <PopoverTrigger asChild>
           <Button
             id="date"
@@ -132,7 +159,7 @@ export default function DateRangePicker({
             numberOfMonths={2}
           />
         </PopoverContent>
-      </Popover>
+      </Popover> */}
     </div>
   );
 }

@@ -37,12 +37,9 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const user = Astro.locals.user;
 
 let isAuth: boolean = true;
-console.log(isLocked, !user);
-
 if (isLocked && !user) {
   isAuth = false;
 }
-console.log(isAuth);
 ---
 
 <BaseLayout pageTitle={title}>
