@@ -3,6 +3,8 @@ import type { APIRoute } from "astro";
 // firebase server auth
 import { app } from "../../../firebase/server";
 import { getAuth } from "firebase-admin/auth";
+// astro db
+import { db, eq, User } from "astro:db";
 
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   const auth = getAuth(app);
@@ -15,6 +17,24 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
 
   try {
     const result = await auth.verifyIdToken(idToken);
+    const foundUser = await db
+      .select()
+      .from(User)
+      .where(eq(User.id, result.uid));
+    if (
+      foundUser.length === 0 &&
+      result.uid &&
+      result.name &&
+      result.email &&
+      result.picture
+    ) {
+      await db.insert(User).values({
+        id: result.uid,
+        name: result.name,
+        email: result.email,
+        pictureUrl: result.picture,
+      });
+    }
   } catch (error: any) {
     return new Response(JSON.stringify(error), { status: 500 });
   }
@@ -27,6 +47,5 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   cookies.set("__session", sessionCookie, {
     path: "/",
   });
-  // return new Response(JSON.stringify({ status: "login" }), { status: 200 });
   return redirect("/");
 };

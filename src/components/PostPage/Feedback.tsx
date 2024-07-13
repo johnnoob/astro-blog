@@ -5,7 +5,13 @@ import { FaSpinner } from "react-icons/fa6";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { FaRegCircleCheck } from "react-icons/fa6";
 // shadCN
-import { Card, CardFooter, CardContent, CardDescription } from "../ui/card";
+import {
+  Card,
+  CardFooter,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "../ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
@@ -108,7 +114,7 @@ const Feedback = ({ slug, title, category }: Props) => {
   return (
     <Card id="feedback" className="w-full">
       <CardContent className="pt-4 flex flex-col gap-5">
-        <CardDescription className="flex justify-center items-center gap-2 text-base">
+        <CardHeader className="flex justify-center items-center gap-2 text-base">
           {isCommented ? (
             <div className="flex items-center gap-3">
               <span>
@@ -145,7 +151,7 @@ const Feedback = ({ slug, title, category }: Props) => {
               </span>
             </div>
           )}
-        </CardDescription>
+        </CardHeader>
         <Textarea
           className={`w-full mx-auto text-base ${!ratingSelected && "hidden"}`}
           placeholder="分享你的回饋(可不填寫)..."

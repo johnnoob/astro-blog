@@ -33,7 +33,50 @@ const PostFeedBacks = defineTable({
   },
 });
 
+// Post Comment
+type Identity = "guest" | "member" | "admin";
+const User = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    name: column.text(),
+    email: column.text(),
+    pictureUrl: column.text(),
+    identity: column.text({ default: "guest" }),
+    createdAt: column.date({ default: NOW }),
+  },
+});
+
+const PostComment = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    slug: column.text(),
+    title: column.text(),
+    content: column.text(),
+    createdAt: column.date({ default: NOW }),
+    updatedAt: column.date({ default: NOW }),
+    userId: column.text({ references: () => User.columns.id }),
+    parentId: column.number({
+      optional: true,
+    }),
+  },
+});
+
+const PostCommentLike = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    userId: column.text({ references: () => User.columns.id }),
+    commentId: column.number({ references: () => PostComment.columns.id }),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
-  tables: { PostViews, PostLikes, PostFeedBacks },
+  tables: {
+    PostViews,
+    PostLikes,
+    PostFeedBacks,
+    PostComment,
+    PostCommentLike,
+    User,
+  },
 });

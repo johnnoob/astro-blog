@@ -18,6 +18,8 @@ import ViewsCounter from "@/components/PostPage/ViewsCounter.tsx";
 import LikeCounter from "@/components/PostPage/LikesCounter";
 import Feedback from "@/components/PostPage/Feedback";
 import FeedbackInfo from "@/components/PostPage/FeedbackInfo";
+import CommentForm from "@/components/Comment/CommentForm";
+import CommentList from "@/components/Comment/CommentList";
 
 type Props = {
   post: CollectionEntry<"posts">;
@@ -37,7 +39,7 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const user = Astro.locals.user;
 
 let isAuth: boolean = true;
-if (isLocked && !user) {
+if (isLocked && (!user || user.identity === "guest")) {
   isAuth = false;
 }
 ---
@@ -117,6 +119,22 @@ if (isLocked && !user) {
           slug={slug}
           title={title}
           category={category}
+          client:only="react"
+        />
+      </div>
+      <div class="w-full">
+        <CommentForm
+          userId={user?.id}
+          slug={slug}
+          title={title}
+          parentId={null}
+          initialContent=""
+          client:only="react"
+        />
+        <CommentList
+          replyUserId={user?.id}
+          slug={slug}
+          title={title}
           client:only="react"
         />
       </div>

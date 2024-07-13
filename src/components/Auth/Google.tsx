@@ -30,6 +30,7 @@ type User = {
   name: string;
   picture: string | undefined;
   email: string | undefined;
+  identity: "guest" | "member" | "admin";
 };
 
 type Props = {
@@ -37,8 +38,6 @@ type Props = {
 };
 
 const Google = ({ user }: Props) => {
-  console.log(user);
-
   const handleLogin = async () => {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();

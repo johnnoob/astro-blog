@@ -27,6 +27,7 @@ type User = {
   name: string;
   picture: string | undefined;
   email: string | undefined;
+  identity: "guest" | "member" | "admin";
 };
 
 type Props = {
