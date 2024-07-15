@@ -23,7 +23,7 @@ const CommentForm = ({
   userId,
   slug,
   title,
-  parentId,
+  parentId = null,
   initialContent = "",
 }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

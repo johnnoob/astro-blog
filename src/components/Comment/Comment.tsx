@@ -12,6 +12,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 // react components
 import CommentForm from "./CommentForm";
+import CommentList from "./CommentList";
 // react icons
 import {
   FaPen,
@@ -25,6 +26,27 @@ import { actions } from "astro:actions";
 // date-fns
 import { format } from "date-fns";
 
+type Comment = {
+  PostComment: {
+    id: number;
+    slug: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    userId: string;
+    parentId: number | null;
+  };
+  User: {
+    id: string;
+    name: string;
+    email: string;
+    pictureUrl: string;
+    identity: "guest" | "member" | "admin";
+    createdAt: string;
+  };
+};
+
 type Props = {
   commentId: number;
   userPicture: string;
@@ -32,9 +54,22 @@ type Props = {
   commentContent: string;
   commentCreatedAt: string;
   commentParentId: number | null;
-  replyUserId: string;
+  userId: string;
   slug: string;
   title: string;
+  parentIdtoCommentsMap: { [parentId: number]: Comment[] };
+};
+
+const getReplies = (
+  commentParentId: number | null,
+  parentIdtoCommentsMap: { [parentId: number]: Comment[] }
+) => {
+  console.log(commentParentId);
+
+  if (commentParentId && parentIdtoCommentsMap[commentParentId]) {
+    return parentIdtoCommentsMap[commentParentId];
+  }
+  return [];
 };
 
 const Comment = ({
@@ -44,11 +79,14 @@ const Comment = ({
   commentContent,
   commentCreatedAt,
   commentParentId,
-  replyUserId,
+  userId,
   slug,
   title,
+  parentIdtoCommentsMap,
 }: Props) => {
   const [isReplying, setIsReplying] = useState<boolean>(false);
+  const replyComments = getReplies(commentId, parentIdtoCommentsMap);
+
   return (
     <>
       <Card key={commentId}>
@@ -81,13 +119,22 @@ const Comment = ({
       {isReplying && (
         <div>
           <CommentForm
-            userId={replyUserId}
+            userId={userId}
             slug={slug}
             title={title}
             parentId={commentId}
             initialContent=""
           />
         </div>
+      )}
+      {replyComments.length > 0 && (
+        <CommentList
+          userId={userId}
+          slug={slug}
+          title={title}
+          comments={replyComments}
+          parentIdtoCommentsMap={parentIdtoCommentsMap}
+        />
       )}
     </>
   );

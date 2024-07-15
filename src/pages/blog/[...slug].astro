@@ -19,6 +19,7 @@ import LikeCounter from "@/components/PostPage/LikesCounter";
 import Feedback from "@/components/PostPage/Feedback";
 import FeedbackInfo from "@/components/PostPage/FeedbackInfo";
 import CommentForm from "@/components/Comment/CommentForm";
+import CommentSection from "@/components/Comment/CommentSection";
 import CommentList from "@/components/Comment/CommentList";
 
 type Props = {
@@ -123,16 +124,8 @@ if (isLocked && (!user || user.identity === "guest")) {
         />
       </div>
       <div class="w-full">
-        <CommentForm
+        <CommentSection
           userId={user?.id}
-          slug={slug}
-          title={title}
-          parentId={null}
-          initialContent=""
-          client:only="react"
-        />
-        <CommentList
-          replyUserId={user?.id}
           slug={slug}
           title={title}
           client:only="react"
