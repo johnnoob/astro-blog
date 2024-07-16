@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
+import { Separator } from "../ui/separator";
 // react components
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
@@ -25,6 +26,7 @@ import {
 import { actions } from "astro:actions";
 // date-fns
 import { format } from "date-fns";
+import { Button } from "../ui/button";
 
 type Comment = {
   PostComment: {
@@ -85,12 +87,13 @@ const Comment = ({
   parentIdtoCommentsMap,
 }: Props) => {
   const [isReplying, setIsReplying] = useState<boolean>(false);
+  const [areChildrenHidden, setAreChildrenHidden] = useState<boolean>(false);
   const replyComments = getReplies(commentId, parentIdtoCommentsMap);
 
   return (
     <>
-      <Card key={commentId}>
-        <CardContent className="flex gap-3 py-3">
+      <Card key={commentId} className="border-none shadow-none ">
+        <CardContent className="flex gap-3 py-1 px-0">
           <Avatar>
             <AvatarImage src={userPicture} />
           </Avatar>
@@ -128,13 +131,29 @@ const Comment = ({
         </div>
       )}
       {replyComments.length > 0 && (
-        <CommentList
-          userId={userId}
-          slug={slug}
-          title={title}
-          comments={replyComments}
-          parentIdtoCommentsMap={parentIdtoCommentsMap}
-        />
+        <>
+          <div className={`flex ${areChildrenHidden && "hidden"}`}>
+            <button
+              className="relative w-[20px] -translate-x-1/2 before:absolute before:top-0 before:bottom-0 before:left-1/2 before:w-[1px] before:content-[''] before:bg-muted-foreground"
+              onClick={() => setAreChildrenHidden(true)}
+            />
+            <div className="w-full">
+              <CommentList
+                userId={userId}
+                slug={slug}
+                title={title}
+                comments={replyComments}
+                parentIdtoCommentsMap={parentIdtoCommentsMap}
+              />
+            </div>
+          </div>
+          <Button
+            className={`w-fit ${!areChildrenHidden && "hidden"}`}
+            onClick={() => setAreChildrenHidden(false)}
+          >
+            顯示回覆
+          </Button>
+        </>
       )}
     </>
   );
