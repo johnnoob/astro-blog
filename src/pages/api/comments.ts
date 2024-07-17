@@ -31,6 +31,26 @@ export const GET: APIRoute = async ({ request }) => {
   });
 };
 
+export const DELETE: APIRoute = async ({ request }) => {
+  const url = new URL(request.url);
+  const params = new URLSearchParams(url.search);
+  const commentId = params.get("commentId");
+  if (commentId) {
+    await db.delete(PostComment).where(eq(PostComment.id, Number(commentId)));
+    await db
+      .delete(PostComment)
+      .where(eq(PostComment.parentId, Number(commentId)));
+  }
+
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+};
+// JSON.stringify({ msg: "Deleted" });
+
 // export const POST: APIRoute = async ({ request }) => {
 //   const url = new URL(request.url);
 //   const params = new URLSearchParams(url.search);

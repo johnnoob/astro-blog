@@ -22,6 +22,7 @@ import {
   FaRegThumbsUp,
   FaThumbsUp,
 } from "react-icons/fa6";
+import { CiCirclePlus } from "react-icons/ci";
 // astro actions
 import { actions } from "astro:actions";
 // date-fns
@@ -66,8 +67,6 @@ const getReplies = (
   commentParentId: number | null,
   parentIdtoCommentsMap: { [parentId: number]: Comment[] }
 ) => {
-  console.log(commentParentId);
-
   if (commentParentId && parentIdtoCommentsMap[commentParentId]) {
     return parentIdtoCommentsMap[commentParentId];
   }
@@ -89,6 +88,26 @@ const Comment = ({
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [areChildrenHidden, setAreChildrenHidden] = useState<boolean>(false);
   const replyComments = getReplies(commentId, parentIdtoCommentsMap);
+  const handleDelete = async (commentId: number) => {
+    try {
+      const response = await fetch(
+        `/api/comments?${new URLSearchParams({
+          commentId: commentId.toString(),
+        })}`,
+        { method: "DELETE" }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    } catch (err) {
+      // if (err instanceof Error) {
+      //   setError(err);
+      // } else {
+      //   setError(new Error("Unknown error"));
+      // }
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -110,7 +129,9 @@ const Comment = ({
                   <span>0</span>
                 </div>
                 <FaPen />
-                <FaTrash className=" text-destructive" />
+                <button onClick={() => handleDelete(commentId)}>
+                  <FaTrash className="text-destructive" />
+                </button>
                 <button onClick={() => setIsReplying((prev) => !prev)}>
                   <FaReply />
                 </button>
@@ -147,12 +168,17 @@ const Comment = ({
               />
             </div>
           </div>
-          <Button
-            className={`w-fit ${!areChildrenHidden && "hidden"}`}
+          <button
+            className={`flex items-center text-sm gap-1 ${
+              !areChildrenHidden && "hidden"
+            }`}
             onClick={() => setAreChildrenHidden(false)}
           >
-            顯示回覆
-          </Button>
+            <CiCirclePlus size={21} />
+            <span className="text-muted-foreground">
+              {replyComments.length} 則回覆
+            </span>
+          </button>
         </>
       )}
     </>
