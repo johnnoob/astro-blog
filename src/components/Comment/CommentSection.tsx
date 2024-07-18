@@ -34,29 +34,50 @@ const CommentSection = ({ userId, slug, title }: Props) => {
   const [data, setData] = useState<Comment[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  useEffect(() => {
-    const handleGetComments = async (slug: string) => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          `/api/comments?${new URLSearchParams({ slug })}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("Unknown error"));
-        }
-      } finally {
-        setIsLoading(false);
+  const getComments = async (slug: string) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `/api/comments?${new URLSearchParams({ slug })}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
-    handleGetComments(slug);
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err);
+      } else {
+        setError(new Error("Unknown error"));
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    // const getComments = async (slug: string) => {
+    //   setIsLoading(true);
+    //   try {
+    //     const response = await fetch(
+    //       `/api/comments?${new URLSearchParams({ slug })}`
+    //     );
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     const result = await response.json();
+    //     setData(result);
+    //   } catch (err) {
+    //     if (err instanceof Error) {
+    //       setError(err);
+    //     } else {
+    //       setError(new Error("Unknown error"));
+    //     }
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // };
+    getComments(slug);
   }, [slug]);
 
   const rootComments = data.filter(
@@ -82,6 +103,7 @@ const CommentSection = ({ userId, slug, title }: Props) => {
           title={title}
           parentId={null}
           initialContent=""
+          getComments={getComments}
         />
       </div>
       <div>
@@ -91,6 +113,7 @@ const CommentSection = ({ userId, slug, title }: Props) => {
           title={title}
           comments={rootComments}
           parentIdtoCommentsMap={parentIdtoCommentsMap}
+          getComments={getComments}
         />
       </div>
     </>

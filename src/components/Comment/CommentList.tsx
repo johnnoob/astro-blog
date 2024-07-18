@@ -9,6 +9,7 @@ type Props = {
   title: string;
   comments: Comment[];
   parentIdtoCommentsMap: { [parentId: number]: Comment[] };
+  getComments: (slug: string) => Promise<void>;
 };
 
 const CommentList = ({
@@ -17,6 +18,7 @@ const CommentList = ({
   title,
   comments,
   parentIdtoCommentsMap,
+  getComments,
 }: Props) => {
   return (
     <div className="grid gap-3">
@@ -34,6 +36,7 @@ const CommentList = ({
               slug={slug}
               title={title}
               parentIdtoCommentsMap={parentIdtoCommentsMap}
+              getComments={getComments}
             />
           ))
         : "loading"}

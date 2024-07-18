@@ -3,8 +3,6 @@ import React, { useState } from "react";
 // shadCN
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 // react icon
 import { BsFillSendFill } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa6";
@@ -17,6 +15,7 @@ type Props = {
   title: string;
   parentId: number | null;
   initialContent: string;
+  getComments: (slug: string) => Promise<void>;
 };
 
 const CommentForm = ({
@@ -25,6 +24,7 @@ const CommentForm = ({
   title,
   parentId = null,
   initialContent = "",
+  getComments,
 }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [content, setContent] = useState<string>(initialContent);
@@ -36,6 +36,7 @@ const CommentForm = ({
     const result = await actions.comments(formData);
     setIsLoading(false);
     setContent("");
+    await getComments(slug);
   };
 
   if (userId) {

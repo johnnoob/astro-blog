@@ -61,6 +61,7 @@ type Props = {
   slug: string;
   title: string;
   parentIdtoCommentsMap: { [parentId: number]: Comment[] };
+  getComments: (slug: string) => Promise<void>;
 };
 
 const getReplies = (
@@ -84,6 +85,7 @@ const Comment = ({
   slug,
   title,
   parentIdtoCommentsMap,
+  getComments,
 }: Props) => {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [areChildrenHidden, setAreChildrenHidden] = useState<boolean>(false);
@@ -99,12 +101,8 @@ const Comment = ({
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      await getComments(slug);
     } catch (err) {
-      // if (err instanceof Error) {
-      //   setError(err);
-      // } else {
-      //   setError(new Error("Unknown error"));
-      // }
       console.log(err);
     }
   };
@@ -148,6 +146,7 @@ const Comment = ({
             title={title}
             parentId={commentId}
             initialContent=""
+            getComments={getComments}
           />
         </div>
       )}
@@ -165,19 +164,18 @@ const Comment = ({
                 title={title}
                 comments={replyComments}
                 parentIdtoCommentsMap={parentIdtoCommentsMap}
+                getComments={getComments}
               />
             </div>
           </div>
           <button
-            className={`flex items-center text-sm gap-1 ${
+            className={`flex items-center text-sm gap-1 text-muted-foreground ${
               !areChildrenHidden && "hidden"
             }`}
             onClick={() => setAreChildrenHidden(false)}
           >
             <CiCirclePlus size={21} />
-            <span className="text-muted-foreground">
-              {replyComments.length} 則回覆
-            </span>
+            <span>{replyComments.length} 則回覆</span>
           </button>
         </>
       )}
