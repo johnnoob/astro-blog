@@ -56,27 +56,6 @@ const CommentSection = ({ userId, slug, title }: Props) => {
     }
   };
   useEffect(() => {
-    // const getComments = async (slug: string) => {
-    //   setIsLoading(true);
-    //   try {
-    //     const response = await fetch(
-    //       `/api/comments?${new URLSearchParams({ slug })}`
-    //     );
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     const result = await response.json();
-    //     setData(result);
-    //   } catch (err) {
-    //     if (err instanceof Error) {
-    //       setError(err);
-    //     } else {
-    //       setError(new Error("Unknown error"));
-    //     }
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // };
     getComments(slug);
   }, [slug]);
 
@@ -95,14 +74,16 @@ const CommentSection = ({ userId, slug, title }: Props) => {
   });
 
   return (
-    <>
+    <section className="grid gap-3">
       <div>
         <CommentForm
           userId={userId}
           slug={slug}
           title={title}
           parentId={null}
+          commentId={null}
           initialContent=""
+          mode="post"
           getComments={getComments}
         />
       </div>
@@ -116,7 +97,7 @@ const CommentSection = ({ userId, slug, title }: Props) => {
           getComments={getComments}
         />
       </div>
-    </>
+    </section>
   );
 };
 

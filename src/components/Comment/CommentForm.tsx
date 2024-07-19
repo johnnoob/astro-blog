@@ -14,7 +14,9 @@ type Props = {
   slug: string;
   title: string;
   parentId: number | null;
+  commentId: number | null;
   initialContent: string;
+  mode: "post" | "update";
   getComments: (slug: string) => Promise<void>;
 };
 
@@ -23,7 +25,9 @@ const CommentForm = ({
   slug,
   title,
   parentId = null,
+  commentId = null,
   initialContent = "",
+  mode,
   getComments,
 }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -33,7 +37,17 @@ const CommentForm = ({
     setIsLoading(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const result = await actions.comments(formData);
+    const result = await actions.createComment(formData);
+    setIsLoading(false);
+    setContent("");
+    await getComments(slug);
+  };
+
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const result = await actions.updateComment(formData);
     setIsLoading(false);
     setContent("");
     await getComments(slug);
@@ -41,13 +55,30 @@ const CommentForm = ({
 
   if (userId) {
     return (
-      <form className="grid gap-3" onSubmit={handlePost}>
+      <form
+        className="grid gap-3"
+        onSubmit={mode === "post" ? handlePost : handleUpdate}
+      >
         <div className="flex gap-3 h-[60px]">
-          <input type="hidden" defaultValue={userId} name="userId" />
-          <input type="hidden" defaultValue={slug} name="slug" />
-          <input type="hidden" defaultValue={title} name="title" />
-          {parentId && (
-            <input type="hidden" defaultValue={parentId} name="parentId" />
+          {mode === "post" ? (
+            <>
+              <input type="hidden" defaultValue={userId} name="userId" />
+              <input type="hidden" defaultValue={slug} name="slug" />
+              <input type="hidden" defaultValue={title} name="title" />
+              {parentId && (
+                <input type="hidden" defaultValue={parentId} name="parentId" />
+              )}
+            </>
+          ) : (
+            <>
+              {commentId && (
+                <input
+                  type="hidden"
+                  defaultValue={commentId}
+                  name="commentId"
+                />
+              )}
+            </>
           )}
           <Textarea
             className="resize-none h-full"

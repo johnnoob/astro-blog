@@ -114,15 +114,15 @@ if (isLocked && (!user || user.identity === "guest")) {
       </div>
       <Tags tags={tags} client:load />
       <Prose isAuth={isAuth}><Content /></Prose>
-      <div class="w-full mx-auto mt-5">
-        <!-- <LikeCounter slug={slug} client:only="react" /> -->
+      <!-- <div class="w-full mx-auto mt-5">
+        <LikeCounter slug={slug} client:only="react" />
         <Feedback
           slug={slug}
           title={title}
           category={category}
           client:only="react"
         />
-      </div>
+      </div> -->
       <div class="w-full">
         <CommentSection
           userId={user?.id}

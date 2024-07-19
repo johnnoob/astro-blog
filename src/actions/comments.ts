@@ -1,9 +1,9 @@
 // astro actions
 import { defineAction, z } from "astro:actions";
 // astro db
-import { db, PostComment } from "astro:db";
+import { db, PostComment, eq } from "astro:db";
 
-export const comments = defineAction({
+export const createComment = defineAction({
   accept: "form",
   input: z.object({
     userId: z.string(),
@@ -22,7 +22,25 @@ export const comments = defineAction({
       parentId,
     });
 
-    return new Response(JSON.stringify({ msg: "success" }), {
+    return new Response(JSON.stringify({ msg: "create success" }), {
+      status: 200,
+    });
+  },
+});
+
+export const updateComment = defineAction({
+  accept: "form",
+  input: z.object({
+    commentId: z.number(),
+    content: z.string(),
+  }),
+  handler: async ({ commentId, content }) => {
+    await db
+      .update(PostComment)
+      .set({ content })
+      .where(eq(PostComment.id, commentId));
+
+    return new Response(JSON.stringify({ msg: "update success" }), {
       status: 200,
     });
   },

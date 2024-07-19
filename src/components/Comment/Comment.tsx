@@ -88,6 +88,7 @@ const Comment = ({
   getComments,
 }: Props) => {
   const [isReplying, setIsReplying] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [areChildrenHidden, setAreChildrenHidden] = useState<boolean>(false);
   const replyComments = getReplies(commentId, parentIdtoCommentsMap);
   const handleDelete = async (commentId: number) => {
@@ -109,31 +110,48 @@ const Comment = ({
 
   return (
     <>
-      <Card key={commentId} className="border-none shadow-none ">
-        <CardContent className="flex gap-3 py-1 px-0">
-          <Avatar>
+      <Card key={commentId}>
+        <CardContent className="flex gap-3 py-2 px-3">
+          <Avatar className="w-9 h-9">
             <AvatarImage src={userPicture} />
           </Avatar>
           <article className="w-full grid gap-2">
-            <p>
-              <span className="font-bold">{userName}：</span>
-              {commentContent}
-            </p>
-            <div className="text-muted-foreground flex items-center justify-between">
-              <p>{format(commentCreatedAt, "yyyy-MM-dd h:mma")}</p>
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  <FaRegThumbsUp />
-                  <span>0</span>
+            {isEditing ? (
+              <CommentForm
+                userId={userId}
+                slug={slug}
+                title={title}
+                mode="update"
+                parentId={null}
+                commentId={commentId}
+                initialContent={commentContent}
+                getComments={getComments}
+              />
+            ) : (
+              <>
+                <div className="font-bold">
+                  {userName}
+                  <span className="text-muted-foreground font-normal">
+                    •{format(commentCreatedAt, "yyyy-MM-dd h:mma")}
+                  </span>
                 </div>
-                <FaPen />
-                <button onClick={() => handleDelete(commentId)}>
-                  <FaTrash className="text-destructive" />
-                </button>
-                <button onClick={() => setIsReplying((prev) => !prev)}>
-                  <FaReply />
-                </button>
+                <p>{commentContent}</p>
+              </>
+            )}
+            <div className="flex items-center gap-3 text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <FaRegThumbsUp />
+                <span>0</span>
               </div>
+              <button onClick={() => setIsEditing((prev) => !prev)}>
+                <FaPen />
+              </button>
+              <button onClick={() => handleDelete(commentId)}>
+                <FaTrash className="text-destructive" />
+              </button>
+              <button onClick={() => setIsReplying((prev) => !prev)}>
+                <FaReply />
+              </button>
             </div>
           </article>
         </CardContent>
@@ -144,7 +162,9 @@ const Comment = ({
             userId={userId}
             slug={slug}
             title={title}
+            mode="post"
             parentId={commentId}
+            commentId={null}
             initialContent=""
             getComments={getComments}
           />
@@ -154,7 +174,7 @@ const Comment = ({
         <>
           <div className={`flex ${areChildrenHidden && "hidden"}`}>
             <button
-              className="relative w-[20px] -translate-x-1/2 before:absolute before:top-0 before:bottom-0 before:left-1/2 before:w-[1px] before:content-[''] before:bg-muted-foreground"
+              className="relative w-[20px] -translate-x-1/2 before:absolute before:top-0 before:bottom-0 before:left-1/2 before:w-[1px] before:content-[''] before:bg-muted-foreground "
               onClick={() => setAreChildrenHidden(true)}
             />
             <div className="w-full">
