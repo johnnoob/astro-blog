@@ -1,0 +1,71 @@
+---
+// layout
+import BaseLayout from "@/layouts/BaseLayout.astro";
+// assets
+import selfLaugh from "../images/self-laugh.png";
+import selfNormal from "../images/self-normal.png";
+import { Button } from "@/components/ui/button";
+// react icons
+import { FaCheck, FaX } from "react-icons/fa6";
+---
+
+<BaseLayout pageTitle="關於我">
+  <section class="mb-11">
+    <canvas id="confetti"></canvas>
+    <div class="w-fit mx-auto">
+      <img
+        src={selfNormal.src}
+        alt="self portrait normal"
+        id="self-normal"
+        class="w-72"
+      />
+      <img
+        src={selfLaugh.src}
+        alt="self portrait happy"
+        id="self-laugh"
+        class="hidden w-72"
+      />
+    </div>
+    <div class="w-fit flex flex-col items-center mx-auto gap-5">
+      <h1 class="text-4xl font-semibold tracking-wider">
+        哈囉，我叫<strong class="text-red-500">"蘿蔔"</strong>
+      </h1>
+      <p class="text-lg text-center">
+        我是個宅宅公務員，興趣是逛街、吃美食、程式設計、看動畫、打桌球，願意改天喝個咖啡認識一下嗎？
+      </p>
+      <div class="flex gap-7">
+        <Button id="agree" className="text-lg"
+          ><FaCheck /><span class="ml-1">OK</span>
+          <Button id="disagree" className="text-lg" variant="destructive"
+            ><FaX /><span class="ml-1">No</span></Button
+          >
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const selfPortraitNormal = document.getElementById("self-normal");
+    const selfPortraitLaugh = document.getElementById("self-laugh");
+    const agreeBtn = document.getElementById("agree");
+    const disagreeBtn = document.getElementById("disagree");
+
+    import JSConfetti from "js-confetti";
+
+    const jsConfetti = new JSConfetti();
+
+    agreeBtn?.addEventListener("click", () => {
+      selfPortraitNormal?.classList.add("hidden");
+      selfPortraitLaugh?.classList.remove("hidden");
+      jsConfetti
+        .addConfetti({ emojis: ["🌸"], emojiSize: 100, confettiNumber: 50 })
+        .then(() => {
+          setTimeout(() => jsConfetti.addConfetti(), 500);
+        });
+    });
+    disagreeBtn?.addEventListener("click", () => {
+      selfPortraitLaugh?.classList.add("hidden");
+      selfPortraitNormal?.classList.remove("hidden");
+    });
+  </script>
+</BaseLayout>
