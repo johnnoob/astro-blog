@@ -4,15 +4,19 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 // assets
 import selfLaugh from "../images/self-laugh.png";
 import selfNormal from "../images/self-normal.png";
+import qrCode from "../images/qrcode-line.jpg";
+// shadCN
 import { Button } from "@/components/ui/button";
 // react icons
 import { FaCheck, FaX, FaLine } from "react-icons/fa6";
+import { CiChat1 } from "react-icons/ci";
+import { BsChatFill } from "react-icons/bs";
 ---
 
 <BaseLayout pageTitle="關於我">
-  <section class="mb-11">
-    <canvas id="confetti"></canvas>
-    <div class="w-72 h-72 mx-auto">
+  <section class="mb-11 mt-14">
+    <!-- <canvas id="confetti"></canvas> -->
+    <div class="relative w-72 h-72 mx-auto">
       <img
         src={selfNormal.src}
         alt="self portrait normal"
@@ -25,32 +29,50 @@ import { FaCheck, FaX, FaLine } from "react-icons/fa6";
         id="self-laugh"
         class="hidden w-full h-full object-cover"
       />
+      <div
+        id="disagree-comment"
+        class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/4 hidden"
+      >
+        <BsChatFill size={210} />
+        <div
+          class="text-xl absolute top-1/2 left-1/2 text-white -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
+        >
+          <p class="text-center">No worries~</p>
+          <p>
+            祝妳有<strong class="text-red-500">美好</strong>的一天！
+          </p>
+        </div>
+      </div>
     </div>
     <div class="w-fit flex flex-col items-center mx-auto gap-5">
-      <h1 class="text-4xl font-semibold tracking-wider">
+      <h1 class="text-3xl font-semibold tracking-wider">
         哈囉，我叫<strong class="text-red-500">"蘿蔔🥕"</strong>
       </h1>
       <h2 class="text-3xl font-semibold">
         我<span id="typewriter"></span><span id="cursor">|</span>
       </h2>
       <p class="text-lg text-center" id="introduction">
-        我是個宅宅公務員，興趣是逛街、吃美食、程式設計、看動畫、打桌球，願意改天喝個咖啡認識一下嗎？
+        我是個宅宅公務員💼，興趣是逛街、吃美食、程式設計、看動畫、打桌球，願意改天喝個咖啡認識一下嗎？
       </p>
-      <div class="grid gap-2 mt-2 hidden" id="agree-section">
+      <div
+        class="flex flex-col items-center gap-2 mt-2 hidden"
+        id="agree-section"
+      >
         <div class="flex gap-2 items-center justify-center">
           <FaLine className="text-green-400" size={30} /><span
-            class="text-xl font-semibold">johngenius</span
+            class="text-xl font-semibold">Line ID：johngenius</span
           >
         </div>
+        <img src={qrCode.src} alt="line QR code" class="w-52" />
         <p class="text-lg">
-          備註：如果不想來往，請直接將我<strong class="text-red-500"
+          備註：之後覺得不想往來，可以將我<strong class="text-red-500"
             >封鎖</strong
-          >，沒關係的😂
+          >😂
         </p>
       </div>
       <div class="grid gap-2 mt-2 hidden" id="disagree-section">
         <div class="flex gap-2 items-center justify-center">
-          <span class="text-xl">沒關係的～祝你有美好的一天！！！😂</span>
+          <span class="text-lg">祝妳幸運、幸福一輩子～</span>
         </div>
       </div>
       <div class="flex gap-7">
@@ -87,6 +109,7 @@ import { FaCheck, FaX, FaLine } from "react-icons/fa6";
     const introduction = document.getElementById("introduction");
     const agreeSection = document.getElementById("agree-section");
     const disagreeSection = document.getElementById("disagree-section");
+    const disagreeComment = document.getElementById("disagree-comment");
 
     import JSConfetti from "js-confetti";
 
@@ -99,18 +122,25 @@ import { FaCheck, FaX, FaLine } from "react-icons/fa6";
       agreeSection?.classList.remove("hidden");
       disagreeSection?.classList.add("hidden");
       jsConfetti.addConfetti();
+      agreeBtn.classList.add("hidden");
+      disagreeBtn?.classList.add("hidden");
     });
     disagreeBtn?.addEventListener("click", () => {
       selfPortraitLaugh?.classList.add("hidden");
       selfPortraitNormal?.classList.remove("hidden");
+      introduction?.classList.add("hidden");
       disagreeSection?.classList.remove("hidden");
+      jsConfetti.addConfetti({ emojis: ["⚡️"] });
       agreeSection?.classList.add("hidden");
+      agreeBtn?.classList.add("hidden");
+      disagreeBtn?.classList.add("hidden");
+      disagreeComment?.classList.remove("hidden");
     });
 
     const phrases = [
-      "不是怪人",
+      "不是怪人QQ",
       "不花心！",
-      "頗有好奇心～",
+      "對事物頗具好奇心XD",
       "說話很real",
       "常常放空...",
     ];
