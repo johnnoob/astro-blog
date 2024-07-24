@@ -2,8 +2,9 @@
 // layout
 import BaseLayout from "@/layouts/BaseLayout.astro";
 // assets
-import selfLaugh from "../images/self-laugh.png";
-import selfNormal from "../images/self-normal.png";
+import selfCry from "../images/cartoon-cry.png";
+import selfLaugh from "../images/cartoon-shy.png";
+import selfNormal from "../images/cartoon-normal.png";
 import qrCode from "../images/qrcode-line.jpg";
 // shadCN
 import { Button } from "@/components/ui/button";
@@ -11,12 +12,16 @@ import { Button } from "@/components/ui/button";
 import { FaCheck, FaX, FaLine } from "react-icons/fa6";
 import { CiChat1 } from "react-icons/ci";
 import { BsChatFill } from "react-icons/bs";
+// components
+import AboutComponent from "@/components/About/About";
+import "csshake/dist/csshake.css";
 ---
 
 <BaseLayout pageTitle="關於我">
-  <section class="mb-11 mt-14">
+  <section class="mb-20 mt-10">
+    <!-- <AboutComponent /> -->
     <!-- <canvas id="confetti"></canvas> -->
-    <div class="relative w-72 h-72 mx-auto">
+    <div class="relative mx-auto w-36 mb-5">
       <img
         src={selfNormal.src}
         alt="self portrait normal"
@@ -29,18 +34,21 @@ import { BsChatFill } from "react-icons/bs";
         id="self-laugh"
         class="hidden w-full h-full object-cover"
       />
+      <img
+        src={selfCry.src}
+        alt="self portrait cry"
+        id="self-cry"
+        class="w-full h-full object-cover hidden"
+      />
       <div
         id="disagree-comment"
-        class="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 hidden"
+        class="absolute top-0 right-0 translate-x-full -translate-y-1/4 hidden"
       >
         <BsChatFill size={150} />
         <div
           class="text-lg absolute top-1/2 left-1/2 text-white -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
         >
           <p class="text-center">No worries~</p>
-          <p>
-            祝妳<strong class="text-red-500">幸福</strong>一輩子
-          </p>
         </div>
       </div>
     </div>
@@ -48,11 +56,11 @@ import { BsChatFill } from "react-icons/bs";
       <h1 class="text-3xl font-semibold tracking-wider">
         哈囉，我叫<strong class="text-red-500">"蘿蔔🥕"</strong>
       </h1>
-      <h2 class="text-3xl font-semibold">
-        我<span id="typewriter"></span><span id="cursor">|</span>
+      <h2 class="text-3xl font-semibold hidden" id="writer">
+        <span id="typewriter"></span><span id="cursor">|</span>
       </h2>
-      <p class="text-lg text-center" id="introduction">
-        我是個宅宅公務員💼，興趣是逛街、吃美食、程式設計、看動畫、打桌球，願意改天喝個咖啡認識一下嗎？
+      <p class="text-xl text-center" id="introduction">
+        有緣相遇，要不要改天約個咖啡 ☕ ？
       </p>
       <div
         class="flex flex-col items-center gap-2 mt-2 hidden"
@@ -64,22 +72,14 @@ import { BsChatFill } from "react-icons/bs";
           >
         </div>
         <img src={qrCode.src} alt="line QR code" class="w-52" />
-        <p class="text-lg">
-          備註：之後覺得不想往來，可以將我<strong class="text-red-500"
-            >封鎖</strong
-          >😂
-        </p>
-      </div>
-      <div class="grid gap-2 mt-2 hidden" id="disagree-section">
-        <div class="flex gap-2 items-center justify-center">
-          <span class="text-lg">祝妳幸運、幸福一輩子～</span>
-        </div>
       </div>
       <div class="flex gap-7">
         <Button id="agree" className="text-lg"
           ><FaCheck /><span class="ml-1">OK</span>
-          <Button id="disagree" className="text-lg" variant="destructive"
-            ><FaX /><span class="ml-1">No</span></Button
+          <Button
+            id="disagree"
+            className="text-lg shake-constant shake-little hidden"
+            variant="destructive"><FaX /><span class="ml-1">No</span></Button
           >
         </Button>
       </div>
@@ -104,18 +104,21 @@ import { BsChatFill } from "react-icons/bs";
   <script>
     const selfPortraitNormal = document.getElementById("self-normal");
     const selfPortraitLaugh = document.getElementById("self-laugh");
+    const selfPortraitCry = document.getElementById("self-cry");
     const agreeBtn = document.getElementById("agree");
     const disagreeBtn = document.getElementById("disagree");
     const introduction = document.getElementById("introduction");
     const agreeSection = document.getElementById("agree-section");
     const disagreeSection = document.getElementById("disagree-section");
     const disagreeComment = document.getElementById("disagree-comment");
+    const writer = document.getElementById("writer");
 
     import JSConfetti from "js-confetti";
 
     const jsConfetti = new JSConfetti();
 
     agreeBtn?.addEventListener("click", () => {
+      writer?.classList.remove("hidden");
       selfPortraitNormal?.classList.add("hidden");
       selfPortraitLaugh?.classList.remove("hidden");
       introduction?.classList.add("hidden");
@@ -124,43 +127,55 @@ import { BsChatFill } from "react-icons/bs";
       jsConfetti.addConfetti();
       agreeBtn.classList.add("hidden");
       disagreeBtn?.classList.add("hidden");
+      disagreeBtn?.classList.remove("shake-constant", "shake-little");
+      typeLoop(phrasesAgree);
     });
     disagreeBtn?.addEventListener("click", () => {
+      writer?.classList.remove("hidden");
       selfPortraitLaugh?.classList.add("hidden");
-      selfPortraitNormal?.classList.remove("hidden");
+      selfPortraitNormal?.classList.add("hidden");
+      selfPortraitCry?.classList.remove("hidden");
       introduction?.classList.add("hidden");
       disagreeSection?.classList.remove("hidden");
       jsConfetti.addConfetti({ emojis: ["⚡️"] });
       agreeSection?.classList.add("hidden");
       agreeBtn?.classList.add("hidden");
       disagreeBtn?.classList.add("hidden");
+      disagreeBtn?.classList.remove("shake-constant", "shake-little");
       disagreeComment?.classList.remove("hidden");
+      typeLoop(phrasesDisagree);
     });
 
     const phrases = [
       "不是怪人QQ",
-      "不花心！",
       "對事物頗具好奇心XD",
       "說話很real",
       "常常放空...",
     ];
+    const phrasesAgree = [
+      "Nice meeting you~",
+      "Coffee, tea or alcohol?",
+      "But I don't drink alcohol~😂 ",
+    ];
+    const phrasesDisagree = ["No worries!", "Hope you have a nice day!"];
     const typewriter = document.getElementById("typewriter") as HTMLElement;
     const sleep = async (ms: number): Promise<void> => {
       return new Promise((resolve) => setTimeout(resolve, ms));
     };
     const sleepTime = 1000;
     let currentPhraseIndex = 0;
-    const typeLoop = async () => {
+    let typing: number | null = null;
+    const typeLoop = async (phrases: string[]) => {
       while (true) {
         let currentWord = phrases[currentPhraseIndex];
         for (let i = 0; i < currentWord.length; i++) {
           typewriter.innerText = currentWord.substring(0, i + 1);
-          await sleep(200);
+          await sleep(150);
         }
         await sleep(sleepTime);
         for (let i = currentWord.length; i > 0; i--) {
           typewriter.innerText = currentWord.substring(0, i - 1);
-          await sleep(200);
+          await sleep(70);
         }
         currentPhraseIndex += 1;
         if (currentPhraseIndex === phrases.length) {
@@ -168,6 +183,5 @@ import { BsChatFill } from "react-icons/bs";
         }
       }
     };
-    typeLoop();
   </script>
 </BaseLayout>
