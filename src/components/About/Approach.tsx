@@ -28,7 +28,7 @@ const phrasesAgree = [
   "咖啡、茶還是酒？",
   "雖然我不喝酒...😂",
 ];
-const phrasesDisagree = ["沒關係啦～", "祝妳有美好的一天！"];
+const phrasesDisagree = ["謝謝妳願意停下來😂", "祝妳有美好的一天！"];
 
 const Approach = () => {
   const [status, setStatus] = useState<Status>("initial");
