@@ -12,15 +12,14 @@ import { Button } from "@/components/ui/button";
 import { FaCheck, FaX, FaLine } from "react-icons/fa6";
 import { BsChatFill } from "react-icons/bs";
 // components
-import AboutComponent from "@/components/About/About";
+import Approach from "@/components/About/Approach";
 import "csshake/dist/csshake.css";
 ---
 
 <BaseLayout pageTitle="關於我">
   <section class="mb-20 mt-10">
-    <!-- <AboutComponent /> -->
-    <!-- <canvas id="confetti"></canvas> -->
-    <div class="relative mx-auto w-36 mb-5">
+    <Approach client:only="react" />
+    <!-- <div class="relative mx-auto w-36 mb-5">
       <img
         src={selfNormal.src}
         alt="self portrait normal"
@@ -82,7 +81,7 @@ import "csshake/dist/csshake.css";
           >
         </Button>
       </div>
-    </div>
+    </div> -->
   </section>
 
   <style>

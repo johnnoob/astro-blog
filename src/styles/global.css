@@ -110,8 +110,20 @@ span[aria-hidden="true"] {
 }
 
 span.katex {
-  @apply text-xs
+  @apply text-sm
 }
+
+#typewritter-cursor {
+    animation: blink 1s linear infinite;
+  }
+  @keyframes blink {
+    0% {
+      opacity: 100%;
+    }
+    50% {
+      opacity: 0%;
+    }
+  }
 
 
 /* PO文內容的style */
