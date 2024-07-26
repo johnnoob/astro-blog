@@ -67,14 +67,14 @@ const Approach = () => {
     const typeLoop = async (phrases: string[]) => {
       let currentPhrase = phrases[currentPhraseIndex];
       for (let i = 0; i < currentPhrase.length; i++) {
-        setText(currentPhrase.substring(0, i + 1));
         if (isCancelled) return;
+        setText(currentPhrase.substring(0, i + 1));
         await sleep(150);
       }
       await sleep(sleepTime);
       for (let i = currentPhrase.length; i > 0; i--) {
-        setText(currentPhrase.substring(0, i - 1));
         if (isCancelled) return;
+        setText(currentPhrase.substring(0, i - 1));
         await sleep(70);
       }
       if (isCancelled) return;
