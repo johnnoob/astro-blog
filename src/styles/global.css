@@ -125,6 +125,18 @@ span.katex {
     }
   }
 
+.triangle {
+  @apply absolute bottom-full left-1/2
+}
+
+.triangle::before {
+  content: '';
+  @apply absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full;
+  @apply border-l-[5px] border-r-[5px] border-b-[10px] border-b-destructive;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
 
 /* PO文內容的style */
 /* .post-content-content h1,

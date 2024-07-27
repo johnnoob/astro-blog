@@ -1,5 +1,5 @@
 // react
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 // js confetti
 import JSConfetti from "js-confetti";
 // assets
@@ -9,32 +9,42 @@ import cartoonCry from "../../images/cartoon-cry.png";
 import qrCode from "../../images/qrcode-line.jpg";
 // react icons
 import { BsChatFill } from "react-icons/bs";
-import { FaLine, FaCheck, FaX, FaArrowRotateRight } from "react-icons/fa6";
+import {
+  FaLine,
+  FaCheck,
+  FaX,
+  FaArrowRotateRight,
+  FaHeart,
+} from "react-icons/fa6";
 // shadCN
 import { Button } from "../ui/button";
+// frame motion
+import { motion } from "framer-motion";
 
 type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
-const phrasesInitial = [
-  "不是怪人QQ",
-  "對事物頗具好奇心XD",
-  "說話很real",
-  "常常放空...",
-];
+const phrasesInitial = ["但不花心😂", "我說話很real", "我常常放空..."];
 const phrasesAgree = [
-  "很高興認識妳～",
+  "很開心認識妳～",
   "咖啡、茶還是酒？",
   "雖然我不喝酒...😂",
 ];
-const phrasesDisagree = ["謝謝妳願意停下來😂", "祝妳有美好的一天！"];
+const phrasesDisagree = ["No worries~😂", "祝妳有美好的一天！"];
+const bubblePhrases = [
+  "不要選我啦>.<",
+  "沒看到我在發抖嗎？",
+  "No~No~plz!!!",
+  "Help!Help!!!",
+];
 
 const Approach = () => {
   const [status, setStatus] = useState<Status>("initial");
   const [phrases, setPhrases] = useState<string[]>(phrasesInitial);
   const [text, setText] = useState<string>("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState<number>(0);
+  const [btnBubblePhrase, setBtnBubblePhrase] = useState<string>("");
   useEffect(() => {
     switch (status) {
       case "agree":
@@ -53,6 +63,9 @@ const Approach = () => {
     }
   }, [status]);
 
+  const sleep = async (ms: number): Promise<void> => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
   useEffect(() => {
     const statusToPhrasesMap = {
       initial: phrasesInitial,
@@ -60,9 +73,6 @@ const Approach = () => {
       disagree: phrasesDisagree,
     };
     let isCancelled = false;
-    const sleep = async (ms: number): Promise<void> => {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    };
     const sleepTime = 1000;
     const typeLoop = async (phrases: string[]) => {
       let currentPhrase = phrases[currentPhraseIndex];
@@ -85,8 +95,24 @@ const Approach = () => {
       isCancelled = true;
     };
   }, [currentPhraseIndex, status]);
+
+  useEffect(() => {
+    const bubbleLoop = async () => {
+      while (true) {
+        for (let i = 0; i < bubblePhrases.length; i++) {
+          const currentBubblePhrase = bubblePhrases[i];
+          setBtnBubblePhrase(currentBubblePhrase);
+          await sleep(2000);
+        }
+      }
+    };
+    bubbleLoop();
+  }, [bubblePhrases]);
   return (
     <>
+      {/* <motion.div className="w-8 h-8" drag>
+        <FaHeart />
+      </motion.div> */}
       <div className="relative mx-auto w-36 mb-5">
         <img
           src={cartoonNormal.src}
@@ -142,7 +168,7 @@ const Approach = () => {
             <img src={qrCode.src} alt="line QR code" className="w-52" />
           </div>
         </div>
-        <div className="flex gap-7">
+        <div className="flex gap-10">
           <Button
             className={`text-lg ${status !== "initial" && "hidden"}`}
             onClick={() => setStatus("agree")}
@@ -151,7 +177,7 @@ const Approach = () => {
             <span className="ml-2">OK</span>
           </Button>
           <Button
-            className={`text-lg ${
+            className={`relative text-lg ${
               status !== "initial" ? "hidden" : "shake-constant shake-little"
             }`}
             variant="destructive"
@@ -159,7 +185,12 @@ const Approach = () => {
           >
             <FaX />
             <span className="ml-2">No</span>
+            <div className="absolute text-xs top-5 translate-y-full px-3 py-2 rounded-lg border-destructive border text-destructive">
+              {btnBubblePhrase}
+              <span className="triangle" />
+            </div>
           </Button>
+
           <Button
             className={`text-lg ${status !== "disagree" && "hidden"}`}
             onClick={() => setStatus("initial")}
