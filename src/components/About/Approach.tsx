@@ -7,6 +7,8 @@ import cartoonNormal from "../../images/cartoon-normal.png";
 import cartoonShy from "../../images/cartoon-shy.png";
 import cartoonCry from "../../images/cartoon-cry.png";
 import qrCode from "../../images/qrcode-line.jpg";
+// react components
+import VoteSection from "./VoteSection";
 // react icons
 import { BsChatFill } from "react-icons/bs";
 import {
@@ -19,9 +21,9 @@ import {
 // shadCN
 import { Button } from "../ui/button";
 // frame motion
-import { motion } from "framer-motion";
+import { motion, type PanInfo } from "framer-motion";
 
-type Status = "initial" | "agree" | "disagree";
+export type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
@@ -32,19 +34,13 @@ const phrasesAgree = [
   "雖然我不喝酒...😂",
 ];
 const phrasesDisagree = ["No worries~😂", "祝妳有美好的一天！"];
-const bubblePhrases = [
-  "不要選我啦>.<",
-  "沒看到我在發抖嗎？",
-  "No~No~plz!!!",
-  "Help!Help!!!",
-];
 
 const Approach = () => {
   const [status, setStatus] = useState<Status>("initial");
   const [phrases, setPhrases] = useState<string[]>(phrasesInitial);
   const [text, setText] = useState<string>("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState<number>(0);
-  const [btnBubblePhrase, setBtnBubblePhrase] = useState<string>("");
+
   useEffect(() => {
     switch (status) {
       case "agree":
@@ -96,23 +92,8 @@ const Approach = () => {
     };
   }, [currentPhraseIndex, status]);
 
-  useEffect(() => {
-    const bubbleLoop = async () => {
-      while (true) {
-        for (let i = 0; i < bubblePhrases.length; i++) {
-          const currentBubblePhrase = bubblePhrases[i];
-          setBtnBubblePhrase(currentBubblePhrase);
-          await sleep(2000);
-        }
-      }
-    };
-    bubbleLoop();
-  }, [bubblePhrases]);
   return (
     <>
-      {/* <motion.div className="w-8 h-8" drag>
-        <FaHeart />
-      </motion.div> */}
       <div className="relative mx-auto w-36 mb-5">
         <img
           src={cartoonNormal.src}
@@ -157,7 +138,7 @@ const Approach = () => {
         <p
           className={`text-xl text-center ${status !== "initial" && "hidden"}`}
         >
-          要不要改天約個咖啡 ☕ ？
+          改天約個咖啡 ☕ 吧！
         </p>
         <div className={`${status !== "agree" && "hidden"}`}>
           <div className="flex flex-col items-center gap-2 mt-2">
@@ -168,37 +149,14 @@ const Approach = () => {
             <img src={qrCode.src} alt="line QR code" className="w-52" />
           </div>
         </div>
-        <div className="flex gap-10">
-          <Button
-            className={`text-lg ${status !== "initial" && "hidden"}`}
-            onClick={() => setStatus("agree")}
-          >
-            <FaCheck />
-            <span className="ml-2">OK</span>
-          </Button>
-          <Button
-            className={`relative text-lg ${
-              status !== "initial" ? "hidden" : "shake-constant shake-little"
-            }`}
-            variant="destructive"
-            onClick={() => setStatus("disagree")}
-          >
-            <FaX />
-            <span className="ml-2">No</span>
-            <div className="absolute text-xs top-5 translate-y-full px-3 py-2 rounded-lg border-destructive border text-destructive">
-              {btnBubblePhrase}
-              <span className="triangle" />
-            </div>
-          </Button>
-
-          <Button
-            className={`text-lg ${status !== "disagree" && "hidden"}`}
-            onClick={() => setStatus("initial")}
-          >
-            <FaArrowRotateRight />
-            <span className="ml-2">Reset</span>
-          </Button>
-        </div>
+        <VoteSection status={status} setStatus={setStatus} />
+        <Button
+          className={`text-lg ${status !== "disagree" && "hidden"}`}
+          onClick={() => setStatus("initial")}
+        >
+          <FaArrowRotateRight />
+          <span className="ml-2">重新選擇</span>
+        </Button>
       </div>
     </>
   );
