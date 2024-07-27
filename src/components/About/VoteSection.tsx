@@ -135,7 +135,7 @@ const VoteSection = ({ status, setStatus }: Props) => {
           } ${
             activeArea === "disagree" &&
             status === "initial" &&
-            "bg-red-100 shake-constant shake-little"
+            "bg-red-100 shake-constant shake"
           }`}
         >
           <FaX size={20} />
