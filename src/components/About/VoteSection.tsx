@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, type PanInfo } from "framer-motion";
 // react icons
 import { FaHeart, FaCheck, FaX, FaArrowRotateRight } from "react-icons/fa6";
+// react component
 // types
 import { type Status } from "./Approach";
 
@@ -107,7 +108,7 @@ const VoteSection = ({ status, setStatus }: Props) => {
       className="mt-3 flex flex-col items-center gap-5 w-fit mx-auto"
     >
       <motion.div
-        className={`w-8 h-8 cursor-pointer z-20 ${
+        className={`heart cursor-pointer z-20 ${
           status !== "initial" && "hidden"
         }`}
         drag
@@ -115,9 +116,14 @@ const VoteSection = ({ status, setStatus }: Props) => {
         dragSnapToOrigin
         onDragEnd={handleDragEnd}
         onDrag={handleDrag}
-      >
-        <FaHeart size={40} className="text-red-500" />
-      </motion.div>
+        animate={{ scale: [1.06, 1, 1.08], rotate: [-45, -45, -45] }}
+        transition={{
+          duration: activeArea === "disagree" ? 0.1 : 0.6,
+          repeat: Infinity,
+          repeatType: "loop",
+        }}
+        // transition={heartAnimationMap[activeArea || "agree"]}
+      ></motion.div>
       <div className="flex gap-10">
         <div
           ref={agreeAreaRef}

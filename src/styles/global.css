@@ -137,6 +137,30 @@ span.katex {
   border-right-color: transparent;
 }
 
+.heart {
+  @apply relative h-7 w-7 bg-[#f20044] -rotate-45 shadow-[#f20044] shadow-md;
+  /* animation: heart 0.6s linear infinite; */
+}
+/* @keyframes heart {
+  0% {
+    transform: rotate(-45deg) scale(1.07);
+  }
+  70% {
+    transform: rotate(-45deg) scale(1);
+  }
+  100% {
+    transform: rotate(-45deg) scale(1.08);
+  }
+} */
+.heart::before {
+  @apply absolute h-7 w-7 bg-[#f20044] -top-1/2 rounded-full shadow-[#f20044] shadow-md;
+  content: ""
+}
+.heart::after {
+  @apply absolute h-7 w-7 bg-[#f20044] -right-1/2 rounded-full shadow-[#f20044] shadow-md;
+  content: ""
+}
+
 
 /* PO文內容的style */
 /* .post-content-content h1,
