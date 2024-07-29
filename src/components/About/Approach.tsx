@@ -12,6 +12,7 @@ import VoteSection from "./VoteSection";
 // react icons
 import { BsChatFill } from "react-icons/bs";
 import { FaCircleQuestion, FaArrowRotateRight, FaHeart } from "react-icons/fa6";
+import { AiOutlineDrag } from "react-icons/ai";
 // shadCN
 import { Button } from "../ui/button";
 // frame motion
@@ -21,7 +22,7 @@ export type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
-const phrasesInitial = ["但不花心😂", "我說話很real", "我常常放空..."];
+const phrasesInitial = ["但我不花心😂", "我說話很real", "我常常放空..."];
 const phrasesAgree = [
   "很開心認識妳～",
   "咖啡、茶還是酒？",
@@ -125,8 +126,10 @@ const Approach = () => {
         </div>
       </div>
       <div className={`w-fit flex flex-col items-center mx-auto gap-5`}>
-        <h1 className="text-3xl font-semibold tracking-wider">
-          哈囉，我叫<strong className="text-red-500">"蘿蔔🥕"</strong>
+        <h1 className="text-4xl tracking-wider neon-text font-normal">
+          哈<span className="delay-1">囉</span>，我
+          <span className="delay-2">叫</span> "蘿
+          <span className="delay-3">蔔</span>"
         </h1>
         <h2 className={`text-3xl font-semibold`}>
           <span id="typewriter">{text}</span>
@@ -157,7 +160,10 @@ const Approach = () => {
         />
         <Button
           className={`text-lg ${status === "initial" && "hidden"}`}
-          onClick={() => setStatus("initial")}
+          onClick={() => {
+            setStatus("initial");
+            setActiveArea(null);
+          }}
         >
           <FaArrowRotateRight />
           <span className="ml-2">重新選擇</span>

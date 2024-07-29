@@ -17,7 +17,19 @@ export default {
       },
     },
     extend: {
-      fontFamily: { Noto: ["Noto Sans TC", "sans-serif"] },
+      dropShadow: {
+        "neon-text": [
+          "0 0 10px rgba(255,255,255,1)",
+          "0 0 20px rgba(255,255,255,1)",
+          "0 0 40px rgba(255,255,255,1)",
+          "0 0 80px rgba(255,255,255,1)",
+          "0 0 160px rgba(255,255,255,1)",
+        ],
+      },
+      fontFamily: {
+        Noto: ["Noto Sans TC", "sans-serif"],
+        Zoo: ["Zen Tokyo Zoo"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

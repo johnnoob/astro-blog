@@ -27,7 +27,6 @@ const VoteSection = ({
   setActiveArea,
 }: Props) => {
   const [btnBubblePhrase, setBtnBubblePhrase] = useState<string>("");
-  // const [activeArea, setActiveArea] = useState<ActiveArea>(null);
   const voteSectionRef = useRef<HTMLElement>(null);
   const disagreeAreaRef = useRef<HTMLDivElement>(null);
   const agreeAreaRef = useRef<HTMLDivElement>(null);
@@ -100,7 +99,7 @@ const VoteSection = ({
           if (isCanceled) break;
           const currentBubblePhrase = bubblePhrases[i];
           setBtnBubblePhrase(currentBubblePhrase);
-          await sleep(2000);
+          await sleep(1500);
         }
       }
     };
@@ -125,36 +124,35 @@ const VoteSection = ({
         onDrag={handleDrag}
         animate={{ scale: [1.06, 1, 1.08], rotate: [-45, -45, -45] }}
         transition={{
-          duration: activeArea === "disagree" ? 0.1 : 0.6,
+          duration: activeArea !== null ? 0.1 : 0.6,
           repeat: Infinity,
           repeatType: "loop",
         }}
-        // transition={heartAnimationMap[activeArea || "agree"]}
       ></motion.div>
       <div className="flex justify-center gap-14">
         <div
           ref={agreeAreaRef}
-          className={`flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-green-600 text-green-600 neon-shadow-green rounded-lg shadow-sm font-semibold transition-all ${
+          className={`flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-[#3fff2d] text-[#3fff2d] neon-shadow-green rounded-lg shadow-sm font-semibold transition-all ${
             status !== "initial" && "hidden"
-          } ${activeArea === "agree" && "scale-150 bg-green-500 text-primary"}`}
+          } ${activeArea === "agree" && "scale-150 bg-[#3fff2d] text-primary"}`}
         >
           <FaCheck size={20} />
           <span className="text-xl">可以</span>
         </div>
         <div
           ref={disagreeAreaRef}
-          className={`relative flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-red-600 neon-shadow-red rounded-lg shadow-sm font-semibold transition-all ${
+          className={`relative flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-[#ff0677] neon-shadow-red rounded-lg shadow-sm font-semibold transition-all ${
             status !== "initial" && "hidden"
           } ${
             activeArea === "disagree" && status === "initial"
-              ? "bg-red-500 text-primary shake-constant shake"
-              : "text-red-500"
+              ? "bg-[#ff0677] text-primary shake-constant shake"
+              : "text-[#ff0677]"
           }`}
         >
           <FaX size={20} />
           <span className="text-xl">不要</span>
           <div
-            className={`absolute text-nowrap text-primary text-sm top-0 -translate-y-[55px] px-3 py-2 rounded-lg border-destructive bg-red-500 border ${
+            className={`absolute text-nowrap text-primary text-sm top-0 -translate-y-[55px] px-3 py-2 rounded-lg border-destructive bg-[#ff0677] border ${
               activeArea !== "disagree" && "hidden"
             }`}
           >
