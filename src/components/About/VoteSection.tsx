@@ -105,7 +105,7 @@ const VoteSection = ({ status, setStatus }: Props) => {
   return (
     <section
       ref={voteSectionRef}
-      className="mt-3 flex flex-col items-center gap-5 w-fit mx-auto"
+      className="mt-3 flex flex-col items-center gap-7 w-fit mx-auto"
     >
       <motion.div
         className={`heart cursor-pointer z-20 ${
@@ -124,30 +124,30 @@ const VoteSection = ({ status, setStatus }: Props) => {
         }}
         // transition={heartAnimationMap[activeArea || "agree"]}
       ></motion.div>
-      <div className="flex gap-10">
+      <div className="flex justify-center gap-14">
         <div
           ref={agreeAreaRef}
-          className={`flex justify-center items-center gap-3 w-32 h-36 border-[1px] border-green-600 text-green-600 rounded-lg shadow-sm font-semibold transition-all ${
+          className={`flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-green-600 text-green-600 neon-shadow-green rounded-lg shadow-sm font-semibold transition-all ${
             status !== "initial" && "hidden"
-          } ${activeArea === "agree" && "scale-125 bg-green-100"}`}
+          } ${activeArea === "agree" && "scale-150 bg-green-500 text-primary"}`}
         >
           <FaCheck size={20} />
           <span className="text-xl">可以</span>
         </div>
         <div
           ref={disagreeAreaRef}
-          className={`relative flex justify-center items-center gap-3 w-32 h-36 border-[1px] border-red-600 text-red-600 rounded-lg shadow-sm font-semibold transition-all ${
+          className={`relative flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-red-600 neon-shadow-red rounded-lg shadow-sm font-semibold transition-all ${
             status !== "initial" && "hidden"
           } ${
-            activeArea === "disagree" &&
-            status === "initial" &&
-            "bg-red-100 shake-constant shake"
+            activeArea === "disagree" && status === "initial"
+              ? "bg-red-500 text-primary shake-constant shake"
+              : "text-red-500"
           }`}
         >
           <FaX size={20} />
           <span className="text-xl">不要</span>
           <div
-            className={`absolute text-nowrap text-xs bottom-0 translate-y-[50px] px-3 py-2 rounded-lg border-destructive border text-destructive ${
+            className={`absolute text-nowrap text-primary text-sm top-0 -translate-y-[55px] px-3 py-2 rounded-lg border-destructive bg-red-500 border ${
               activeArea !== "disagree" && "hidden"
             }`}
           >

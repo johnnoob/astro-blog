@@ -11,13 +11,7 @@ import qrCode from "../../images/qrcode-line.jpg";
 import VoteSection from "./VoteSection";
 // react icons
 import { BsChatFill } from "react-icons/bs";
-import {
-  FaLine,
-  FaCheck,
-  FaX,
-  FaArrowRotateRight,
-  FaHeart,
-} from "react-icons/fa6";
+import { FaCircleQuestion, FaArrowRotateRight, FaHeart } from "react-icons/fa6";
 // shadCN
 import { Button } from "../ui/button";
 // frame motion
@@ -138,12 +132,15 @@ const Approach = () => {
         <p
           className={`text-xl text-center ${status !== "initial" && "hidden"}`}
         >
-          改天約個咖啡 ☕ 吧！
+          <span>想與妳改天約個咖啡，OK嗎？</span>
         </p>
+        <div className={`${status !== "initial" && "hidden"}`}>
+          --- 拖曳愛心到選擇區域 ---
+        </div>
         <div className={`${status !== "agree" && "hidden"}`}>
-          <div className="flex flex-col items-center gap-2 mt-2">
+          <div className="flex flex-col items-center gap-4 mt-2">
             <div className="flex gap-2 items-center justify-center">
-              <FaLine className="text-green-400" size={30} />
+              {/* <FaLine className="text-green-400" size={30} /> */}
               <span className="text-xl font-semibold">Line ID：johngenius</span>
             </div>
             <img src={qrCode.src} alt="line QR code" className="w-52" />
@@ -151,7 +148,7 @@ const Approach = () => {
         </div>
         <VoteSection status={status} setStatus={setStatus} />
         <Button
-          className={`text-lg ${status !== "disagree" && "hidden"}`}
+          className={`text-lg ${status === "initial" && "hidden"}`}
           onClick={() => setStatus("initial")}
         >
           <FaArrowRotateRight />
