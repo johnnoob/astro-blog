@@ -138,14 +138,14 @@ span.katex {
 }
 
 .heart {
-  @apply relative h-7 w-7 bg-[#f20044] -rotate-45 shadow-[#f20044] shadow-md;
+  @apply relative h-7 w-7 bg-[#f20044] -rotate-45;
 }
 .heart::before {
-  @apply absolute h-7 w-7 bg-[#f20044] -top-1/2 rounded-full shadow-[#f20044] shadow-md;
+  @apply absolute h-7 w-7 bg-[#f20044] -top-1/2 rounded-full;
   content: ""
 }
 .heart::after {
-  @apply absolute h-7 w-7 bg-[#f20044] -right-1/2 rounded-full shadow-[#f20044] shadow-md text-green-500;
+  @apply absolute h-7 w-7 bg-[#f20044] -right-1/2 rounded-full;
   content: ""
 }
 
