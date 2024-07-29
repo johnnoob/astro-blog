@@ -29,11 +29,14 @@ const phrasesAgree = [
 ];
 const phrasesDisagree = ["No worries~😂", "祝妳有美好的一天！"];
 
+type ActiveArea = "agree" | "disagree" | null;
+
 const Approach = () => {
   const [status, setStatus] = useState<Status>("initial");
   const [phrases, setPhrases] = useState<string[]>(phrasesInitial);
   const [text, setText] = useState<string>("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState<number>(0);
+  const [activeArea, setActiveArea] = useState<ActiveArea>(null);
 
   useEffect(() => {
     switch (status) {
@@ -88,26 +91,26 @@ const Approach = () => {
 
   return (
     <>
-      <div className="relative mx-auto w-36 mb-5">
+      <div className="relative mx-auto w-36 h-52 mb-5">
         <img
           src={cartoonNormal.src}
           alt="cartoon-portrait normal"
           className={`w-full h-full object-cover ${
-            status !== "initial" && "hidden"
+            !(activeArea === null) && "hidden"
           }`}
         />
         <img
           src={cartoonShy.src}
           alt="cartoon-portrait happy"
           className={`w-full h-full object-cover ${
-            status !== "agree" && "hidden"
+            !(status === "agree" || activeArea === "agree") && "hidden"
           }`}
         />
         <img
           src={cartoonCry.src}
           alt="cartoon-portrait cry"
           className={`w-full h-full object-cover ${
-            status !== "disagree" && "hidden"
+            !(status === "disagree" || activeArea === "disagree") && "hidden"
           }`}
         />
         <div
@@ -146,7 +149,12 @@ const Approach = () => {
             <img src={qrCode.src} alt="line QR code" className="w-52" />
           </div>
         </div>
-        <VoteSection status={status} setStatus={setStatus} />
+        <VoteSection
+          status={status}
+          activeArea={activeArea}
+          setStatus={setStatus}
+          setActiveArea={setActiveArea}
+        />
         <Button
           className={`text-lg ${status === "initial" && "hidden"}`}
           onClick={() => setStatus("initial")}

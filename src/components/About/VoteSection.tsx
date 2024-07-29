@@ -14,13 +14,20 @@ const sleep = async (ms: number): Promise<void> => {
 };
 type Props = {
   status: Status;
+  activeArea: ActiveArea;
   setStatus: React.Dispatch<React.SetStateAction<Status>>;
+  setActiveArea: React.Dispatch<React.SetStateAction<ActiveArea>>;
 };
 type ActiveArea = "agree" | "disagree" | null;
 
-const VoteSection = ({ status, setStatus }: Props) => {
+const VoteSection = ({
+  status,
+  activeArea,
+  setStatus,
+  setActiveArea,
+}: Props) => {
   const [btnBubblePhrase, setBtnBubblePhrase] = useState<string>("");
-  const [activeArea, setActiveArea] = useState<ActiveArea>(null);
+  // const [activeArea, setActiveArea] = useState<ActiveArea>(null);
   const voteSectionRef = useRef<HTMLElement>(null);
   const disagreeAreaRef = useRef<HTMLDivElement>(null);
   const agreeAreaRef = useRef<HTMLDivElement>(null);
