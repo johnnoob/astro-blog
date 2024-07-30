@@ -123,7 +123,10 @@ const VoteSection = ({
       className="mt-3 flex flex-col items-center gap-7 w-fit mx-auto"
     >
       <div className="w-6 h-6 flex justify-center items-center animate-bounce">
-        <FaArrowDown size={25} className={`${isDrag && "hidden"}`} />
+        <FaArrowDown
+          size={25}
+          className={`${isDrag || (status !== "initial" && "hidden")}`}
+        />
       </div>
       <motion.div
         className={`heart cursor-pointer z-20 ${
