@@ -23,13 +23,13 @@ export type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
-const phrasesInitial = ["但我不花心😂", "我說話很real", "我常常放空..."];
+const phrasesInitial = ["我不花心😂", "我自認說話很real", "我不白目(應該吧?)", "我常常放空..."];
 const phrasesAgree = [
-  "很開心認識妳～",
+  "很開心遇見妳～",
   "咖啡、茶還是酒？",
   "雖然我不喝酒...😂",
 ];
-const phrasesDisagree = ["No worries~😂", "祝妳有美好的一天！"];
+const phrasesDisagree = ["No worries~😂", "謝謝妳願意停下來", "祝妳有美好的一天！"];
 
 type ActiveArea = "agree" | "disagree" | null;
 
