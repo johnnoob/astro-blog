@@ -125,7 +125,7 @@ const VoteSection = ({
       <div className="w-6 h-6 flex justify-center items-center animate-bounce">
         <FaArrowDown
           size={25}
-          className={`${isDrag || (status !== "initial" && "hidden")}`}
+          className={`${(isDrag || status !== "initial") && "hidden"}`}
         />
       </div>
       <motion.div
