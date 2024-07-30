@@ -9,6 +9,7 @@ import cartoonCry from "../../images/cartoon-cry.png";
 import qrCode from "../../images/qrcode-line.jpg";
 // react components
 import VoteSection from "./VoteSection";
+import NeonTitle from "./NeonTitle";
 // react icons
 import { BsChatFill } from "react-icons/bs";
 import { FaCircleQuestion, FaArrowRotateRight, FaHeart } from "react-icons/fa6";
@@ -126,11 +127,12 @@ const Approach = () => {
         </div>
       </div>
       <div className={`w-fit flex flex-col items-center mx-auto gap-5`}>
-        <h1 className="text-4xl tracking-wider neon-text font-normal">
+        <NeonTitle />
+        {/* <h1 className="text-4xl tracking-wider neon-text font-normal">
           哈<span className="delay-1">囉</span>，我
           <span className="delay-2">叫</span> "蘿
           <span className="delay-3">蔔</span>"
-        </h1>
+        </h1> */}
         <h2 className={`text-3xl font-semibold`}>
           <span id="typewriter">{text}</span>
           <span id="typewritter-cursor">|</span>

@@ -3,7 +3,13 @@ import { useState, useEffect, useRef } from "react";
 // motion framer
 import { motion, type PanInfo } from "framer-motion";
 // react icons
-import { FaHeart, FaCheck, FaX, FaArrowRotateRight } from "react-icons/fa6";
+import {
+  FaHeart,
+  FaCheck,
+  FaX,
+  FaArrowRotateRight,
+  FaArrowDown,
+} from "react-icons/fa6";
 // react component
 // types
 import { type Status } from "./Approach";
@@ -27,6 +33,7 @@ const VoteSection = ({
   setActiveArea,
 }: Props) => {
   const [btnBubblePhrase, setBtnBubblePhrase] = useState<string>("");
+  const [isDrag, setIsDrag] = useState<boolean>(false);
   const voteSectionRef = useRef<HTMLElement>(null);
   const disagreeAreaRef = useRef<HTMLDivElement>(null);
   const agreeAreaRef = useRef<HTMLDivElement>(null);
@@ -34,6 +41,7 @@ const VoteSection = ({
     e: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
+    setIsDrag(true);
     const { point } = info;
     const isPointInsideArea = (
       areaRect: DOMRect | undefined,
@@ -65,6 +73,7 @@ const VoteSection = ({
     e: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
+    setIsDrag(false);
     const { point } = info;
     const isPointInsideArea = (
       areaRect: DOMRect | undefined,
@@ -113,6 +122,9 @@ const VoteSection = ({
       ref={voteSectionRef}
       className="mt-3 flex flex-col items-center gap-7 w-fit mx-auto"
     >
+      <div className="w-6 h-6 border flex justify-center items-center animate-bounce">
+        <FaArrowDown size={25} className={`${isDrag && "hidden"}`} />
+      </div>
       <motion.div
         className={`heart cursor-pointer z-20 ${
           status !== "initial" && "hidden"

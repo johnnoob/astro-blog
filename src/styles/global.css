@@ -161,24 +161,15 @@ span.katex {
   text-shadow: 
     0 0 5px #fff,
     0 0 10px #fff,
-    0 0 20px #0ff,
-    0 0 40px #0ff,
-    0 0 80px #0ff,
-    0 0 90px #0ff,
-    0 0 100px #0ff,
-    0 0 150px #0ff;
+    0 0 20px #0abdc6,
+    0 0 40px #0abdc6,
+    0 0 80px #0abdc6,
+    0 0 90px #0abdc6,
+    0 0 100px #0abdc6,
+    0 0 150px #0abdc6;
 }
-.neon-text span {
+.neon-text .flick {
   animation: flicker 500ms linear
-}
-.neon-text .delay-1 {
-  animation-delay: 0.8s;
-}
-.neon-text .delay-2 {
-  animation-delay: 1.4s;
-}
-.neon-text .delay-3 {
-  animation-delay: 1.8s;
 }
 
 @keyframes flicker {
