@@ -24,7 +24,7 @@ type Props = {
   setStatus: React.Dispatch<React.SetStateAction<Status>>;
   setActiveArea: React.Dispatch<React.SetStateAction<ActiveArea>>;
 };
-type ActiveArea = "agree" | "disagree" | null;
+export type ActiveArea = "agree" | "disagree" | null;
 
 const VoteSection = ({
   status,
@@ -137,9 +137,10 @@ const VoteSection = ({
         dragSnapToOrigin
         onDragEnd={handleDragEnd}
         onDrag={handleDrag}
-        animate={{ scale: [1.06, 1, 1.08], rotate: [-45, -45, -45] }}
+        animate={{ scale: [1, 1.15, 1], rotate: [-45, -45, -45] }}
         transition={{
-          duration: activeArea !== null ? 0.1 : 0.6,
+          duration: 0.6,
+          ease: "easeInOut",
           repeat: Infinity,
           repeatType: "loop",
         }}

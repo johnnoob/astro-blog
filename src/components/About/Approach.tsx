@@ -23,13 +23,17 @@ export type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
-const phrasesInitial = ["我不花心😂", "我自認說話很real", "我不白目(應該吧?)", "我常常放空..."];
+const phrasesInitial = ["我很real", "我不白目(應該吧?)", "我常常放空..."];
 const phrasesAgree = [
   "很開心遇見妳～",
   "咖啡、茶還是酒？",
   "雖然我不喝酒...😂",
 ];
-const phrasesDisagree = ["No worries~😂", "謝謝妳願意停下來", "祝妳有美好的一天！"];
+const phrasesDisagree = [
+  "No worries~😂",
+  "謝謝妳願意停下來",
+  "祝妳有美好的一天！",
+];
 
 type ActiveArea = "agree" | "disagree" | null;
 
@@ -128,11 +132,6 @@ const Approach = () => {
       </div>
       <div className={`w-fit flex flex-col items-center mx-auto gap-5`}>
         <NeonTitle />
-        {/* <h1 className="text-4xl tracking-wider neon-text font-normal">
-          哈<span className="delay-1">囉</span>，我
-          <span className="delay-2">叫</span> "蘿
-          <span className="delay-3">蔔</span>"
-        </h1> */}
         <h2 className={`text-3xl font-semibold`}>
           <span id="typewriter">{text}</span>
           <span id="typewritter-cursor">|</span>
