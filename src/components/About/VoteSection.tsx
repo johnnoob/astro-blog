@@ -1,7 +1,12 @@
 // react
 import { useState, useEffect, useRef } from "react";
 // motion framer
-import { motion, type PanInfo } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  type PanInfo,
+} from "framer-motion";
 // react icons
 import {
   FaHeart,
@@ -37,6 +42,7 @@ const VoteSection = ({
   const voteSectionRef = useRef<HTMLElement>(null);
   const disagreeAreaRef = useRef<HTMLDivElement>(null);
   const agreeAreaRef = useRef<HTMLDivElement>(null);
+
   const handleDrag = (
     e: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
@@ -57,13 +63,11 @@ const VoteSection = ({
     };
     const disagreeAreaRect = disagreeAreaRef.current?.getBoundingClientRect();
     if (isPointInsideArea(disagreeAreaRect, point)) {
-      console.log("Dragging over disagree button");
       setActiveArea("disagree");
       return;
     }
     const agreeAreaRect = agreeAreaRef.current?.getBoundingClientRect();
     if (isPointInsideArea(agreeAreaRect, point)) {
-      console.log("Dragging over agree button");
       setActiveArea("agree");
       return;
     }
@@ -89,13 +93,11 @@ const VoteSection = ({
     };
     const disagreeAreaRect = disagreeAreaRef.current?.getBoundingClientRect();
     if (isPointInsideArea(disagreeAreaRect, point)) {
-      console.log("Dragging over disagree button");
       setStatus("disagree");
       return;
     }
     const agreeAreaRect = agreeAreaRef.current?.getBoundingClientRect();
     if (isPointInsideArea(agreeAreaRect, point)) {
-      console.log("Dragging over agree button");
       setStatus("agree");
       return;
     }

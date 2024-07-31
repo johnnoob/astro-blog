@@ -23,8 +23,6 @@ const NeonTitle = () => {
         const indices = _.sampleSize(_.range(title.length), numOfIndices);
         setFlickInices(indices);
         const sleeptime = getSleepTime();
-        console.log(sleeptime);
-
         await sleep(sleeptime);
       }
     };
