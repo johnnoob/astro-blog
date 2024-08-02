@@ -13,7 +13,12 @@ import NeonTitle from "./NeonTitle";
 import GuessSection from "./GuessSection";
 // react icons
 import { BsChatFill } from "react-icons/bs";
-import { FaCircleQuestion, FaArrowRotateRight, FaHeart } from "react-icons/fa6";
+import {
+  FaCircleQuestion,
+  FaArrowRotateRight,
+  FaHeart,
+  FaAnglesDown,
+} from "react-icons/fa6";
 import { AiOutlineDrag } from "react-icons/ai";
 // shadCN
 import { Button } from "../ui/button";
@@ -162,13 +167,16 @@ const Approach = () => {
           setActiveArea={setActiveArea}
         />
         <h3 className={`mt-8 ${status !== "initial" && "hidden"}`}>
-          很難決定嗎？不如玩完“猜猜看”再決定吧！
+          很難決定嗎？不如“猜猜看”我的資訊再決定！
         </h3>
         <motion.button
-          className={`px-2 py-2 rounded-lg ${status !== "initial" && "hidden"}`}
+          className={`px-2 py-2 rounded-lg flex flex-col gap-4 items-center ${
+            status !== "initial" && "hidden"
+          }`}
           onClick={() => setIsGuessOpen(!isGuessOpen)}
         >
-          --- 點我{isGuessOpen ? "關閉" : "打開"}猜猜看 ---
+          <span>--- 點擊{isGuessOpen ? "關閉" : "玩"}猜猜看 ---</span>
+          <FaAnglesDown className="animate-bounce" />
         </motion.button>
         {isGuessOpen && <GuessSection />}
         <Button

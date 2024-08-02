@@ -23,7 +23,7 @@ const CardFlip = ({
       style={{ transformStyle: "preserve-3d" }}
       className={`relative w-[150px] h-[200px] rounded-lg`}
       initial={false}
-      animate={{ rotateY: isFlipped ? 180 : 1800 }}
+      animate={{ rotateY: isFlipped ? 180 : 3600 }}
       transition={{ duration: 1.5 }}
       onAnimationComplete={() => setAnimateOrder((prev) => prev + 1)}
     >
@@ -31,7 +31,7 @@ const CardFlip = ({
         style={{
           backfaceVisibility: "hidden",
           backgroundImage: `url(${questionImg.src})`,
-          boxShadow: `0 0 10px ${color}, 0 0 20px ${color}`,
+          boxShadow: `0 0 30px ${color}, 0 0 40px ${color}`,
         }}
         className={`absolute top-0 left-0 h-full w-full rounded-lg bg-cover bg-center bg-no-repeat bg-opacity-35`}
       >
