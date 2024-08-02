@@ -29,7 +29,7 @@ export type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
-const phrasesInitial = ["我很real", "我不白目(應該吧?)", "我常常放空..."];
+const phrasesInitial = ["我好奇心重(∗ˊωˋ∗)", "我說話很Real", "我常做夢(≧∀≦)", "我不白目(應該吧?)", "我常常放空..."];
 const phrasesAgree = [
   "很開心遇見妳～",
   "咖啡、茶還是酒？",
@@ -167,7 +167,7 @@ const Approach = () => {
           setActiveArea={setActiveArea}
         />
         <h3 className={`mt-8 ${status !== "initial" && "hidden"}`}>
-          很難決定嗎？不如“猜猜看”我的資訊再決定！
+          很難選擇嗎？不如“猜猜看”我的資訊再選擇！
         </h3>
         <motion.button
           className={`px-2 py-2 rounded-lg flex flex-col gap-4 items-center ${
