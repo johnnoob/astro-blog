@@ -53,7 +53,7 @@ const GuessArea = ({
       y: 0,
     },
   };
-  const [guess, setGuess] = useState<string>("");
+  const [guess, setGuess] = useState<string>(options[0]);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [animateOrder, setAnimateOrder] = useState<number>(0);
   return (
