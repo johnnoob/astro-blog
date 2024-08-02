@@ -100,6 +100,7 @@ const GuessArea = ({
         <RadioGroup
           className="grid-flow-col"
           onValueChange={(e) => setGuess(e)}
+          defaultValue={options[0]}
           disabled={isSubmit}
         >
           {options.map((option) => (
