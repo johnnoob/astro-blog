@@ -16,6 +16,7 @@ import {
   FaArrowDown,
 } from "react-icons/fa6";
 // react component
+import VoteArea from "./VoteArea";
 // types
 import { type Status } from "./Approach";
 
@@ -97,6 +98,7 @@ const VoteSection = ({
       return;
     }
     const agreeAreaRect = agreeAreaRef.current?.getBoundingClientRect();
+
     if (isPointInsideArea(agreeAreaRect, point)) {
       setStatus("agree");
       return;
@@ -147,16 +149,36 @@ const VoteSection = ({
           repeatType: "loop",
         }}
       ></motion.div>
+      {/* <div className="flex justify-center gap-14">
+        <VoteAreaRotate
+          ref={agreeAreaRef}
+          status={status}
+          activeArea={activeArea}
+          Icon={FaCheck}
+          label="可以"
+          color="#3fff2d"
+        />
+      </div> */}
       <div className="flex justify-center gap-14">
-        <div
+        <VoteArea
+          ref={agreeAreaRef}
+          status={status}
+          activeArea={activeArea}
+          Icon={FaCheck}
+          label="可以"
+          color="#3fff2d"
+        />
+        {/* <div
           ref={agreeAreaRef}
           className={`flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-[#3fff2d] text-[#3fff2d] neon-shadow-green rounded-lg shadow-sm font-semibold transition-all ${
-            status !== "initial" && "hidden"
-          } ${activeArea === "agree" && "scale-150 bg-[#3fff2d] text-primary"}`}
+            status !== "initial" ? "hidden" : ""
+          } ${
+            activeArea === "agree" ? "scale-150 bg-[#3fff2d] text-primary" : ""
+          }`}
         >
           <FaCheck size={20} />
           <span className="text-xl">可以</span>
-        </div>
+        </div> */}
         <div
           ref={disagreeAreaRef}
           className={`relative flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-[#ff0677] neon-shadow-red rounded-lg shadow-sm font-semibold transition-all ${

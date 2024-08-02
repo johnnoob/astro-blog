@@ -10,6 +10,7 @@ import qrCode from "../../images/qrcode-line.jpg";
 // react components
 import VoteSection from "./VoteSection";
 import NeonTitle from "./NeonTitle";
+import GuessSection from "./GuessSection";
 // react icons
 import { BsChatFill } from "react-icons/bs";
 import { FaCircleQuestion, FaArrowRotateRight, FaHeart } from "react-icons/fa6";
@@ -43,6 +44,7 @@ const Approach = () => {
   const [text, setText] = useState<string>("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState<number>(0);
   const [activeArea, setActiveArea] = useState<ActiveArea>(null);
+  const [isGuessOpen, setIsGuessOpen] = useState<boolean>(false);
 
   useEffect(() => {
     switch (status) {
@@ -159,6 +161,16 @@ const Approach = () => {
           setStatus={setStatus}
           setActiveArea={setActiveArea}
         />
+        <h3 className={`mt-8 ${status !== "initial" && "hidden"}`}>
+          很難決定嗎？不如玩完“猜猜看”再決定吧！
+        </h3>
+        <motion.button
+          className={`px-2 py-2 rounded-lg ${status !== "initial" && "hidden"}`}
+          onClick={() => setIsGuessOpen(!isGuessOpen)}
+        >
+          --- 點我{isGuessOpen ? "關閉" : "打開"}猜猜看 ---
+        </motion.button>
+        {isGuessOpen && <GuessSection />}
         <Button
           className={`text-lg ${status === "initial" && "hidden"}`}
           onClick={() => {

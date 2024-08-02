@@ -183,6 +183,18 @@ span.katex {
   100% {opacity: 1;}
 }
 
+.gradient-animation {
+  animation: animate1 0.5s infinite;
+}
+@keyframes animate1 {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%
+  }
+}
+
 /* PO文內容的style */
 /* .post-content-content h1,
 .post-content h2,
