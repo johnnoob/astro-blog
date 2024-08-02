@@ -178,7 +178,7 @@ const Approach = () => {
           <span>--- 點擊{isGuessOpen ? "關閉" : "玩"}猜猜看 ---</span>
           <FaAnglesDown className="animate-bounce" />
         </motion.button>
-        {isGuessOpen && <GuessSection />}
+        {isGuessOpen && status === "initial" && <GuessSection />}
         <Button
           className={`text-lg ${status === "initial" && "hidden"}`}
           onClick={() => {
