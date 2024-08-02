@@ -29,7 +29,7 @@ export type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
-const phrasesInitial = ["我好奇心重(∗ˊωˋ∗)", "我說話很Real", "我常做夢(≧∀≦)", "我不白目(應該吧?)", "我常常放空..."];
+const phrasesInitial = ["我好奇心重(∗ˊωˋ∗)", "我很Real(ง๑ •̀_•́)ง", "我常做夢(≧∀≦)", "我常常放空..."];
 const phrasesAgree = [
   "很開心遇見妳～",
   "咖啡、茶還是酒？",
