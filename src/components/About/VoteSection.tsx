@@ -149,36 +149,17 @@ const VoteSection = ({
           repeatType: "loop",
         }}
       ></motion.div>
-      {/* <div className="flex justify-center gap-14">
-        <VoteAreaRotate
-          ref={agreeAreaRef}
-          status={status}
-          activeArea={activeArea}
-          Icon={FaCheck}
-          label="可以"
-          color="#3fff2d"
-        />
-      </div> */}
       <div className="flex justify-center gap-14">
         <VoteArea
           ref={agreeAreaRef}
           status={status}
           activeArea={activeArea}
+          areaType="agree"
+          bubblePhrases={["下好離手！", "走過、路過不要錯過！", "Yes~Yes~"]}
           Icon={FaCheck}
           label="可以"
           color="#3fff2d"
         />
-        {/* <div
-          ref={agreeAreaRef}
-          className={`flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-[#3fff2d] text-[#3fff2d] neon-shadow-green rounded-lg shadow-sm font-semibold transition-all ${
-            status !== "initial" ? "hidden" : ""
-          } ${
-            activeArea === "agree" ? "scale-150 bg-[#3fff2d] text-primary" : ""
-          }`}
-        >
-          <FaCheck size={20} />
-          <span className="text-xl">可以</span>
-        </div> */}
         <div
           ref={disagreeAreaRef}
           className={`relative flex justify-center items-center gap-3 w-32 h-24 border-[1px] border-[#ff0677] neon-shadow-red rounded-lg shadow-sm font-semibold transition-all ${

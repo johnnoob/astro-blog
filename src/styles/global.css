@@ -133,9 +133,10 @@ span.katex {
 .triangle::before {
   content: '';
   @apply absolute -top-[10px] left-1/2 transform -translate-x-1/2 translate-y-full;
-  @apply border-l-[5px] border-r-[5px] border-t-[10px] border-t-red-500;
+  @apply border-l-[5px] border-r-[5px] border-t-[10px];
   border-left-color: transparent;
   border-right-color: transparent;
+  border-top-color: var(--triangle-border-top-color);
 }
 
 .heart {

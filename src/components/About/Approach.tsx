@@ -29,7 +29,12 @@ export type Status = "initial" | "agree" | "disagree";
 
 const jsConfetti = new JSConfetti();
 
-const phrasesInitial = ["我好奇心重(∗ˊωˋ∗)", "我很Real(ง๑ •̀_•́)ง", "我常做夢(≧∀≦)", "我常常放空..."];
+const phrasesInitial = [
+  "我好奇心重(∗ˊωˋ∗)",
+  "我很Real",
+  "我常做白日夢(≧∀≦)",
+  "我常常放空...",
+];
 const phrasesAgree = [
   "很開心遇見妳～",
   "咖啡、茶還是酒？",
@@ -176,7 +181,9 @@ const Approach = () => {
           onClick={() => setIsGuessOpen(!isGuessOpen)}
         >
           <span>--- 點擊{isGuessOpen ? "關閉" : "玩"}猜猜看 ---</span>
-          <FaAnglesDown className={`animate-bounce ${isGuessOpen && "hidden"}`} />
+          <FaAnglesDown
+            className={`animate-bounce ${isGuessOpen && "hidden"}`}
+          />
         </motion.button>
         {isGuessOpen && status === "initial" && <GuessSection />}
         <Button

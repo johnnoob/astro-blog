@@ -23,8 +23,8 @@ const CardFlip = ({
       style={{ transformStyle: "preserve-3d" }}
       className={`relative w-[150px] h-[200px] rounded-lg`}
       initial={false}
-      animate={{ rotateY: isFlipped ? 180 : 3600 }}
-      transition={{ duration: 1.5 }}
+      animate={{ rotateY: isFlipped ? 180 : 720 }}
+      transition={{ duration: 1, type: "spring" }}
       onAnimationComplete={() => setAnimateOrder((prev) => prev + 1)}
     >
       <div

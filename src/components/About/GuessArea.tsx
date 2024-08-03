@@ -2,6 +2,7 @@
 import { useState } from "react";
 // react components
 import CardFlip from "./CardFlip";
+import BtnOrbit from "./BtnOrbit";
 // react icons
 import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
 // shadCN
@@ -67,7 +68,7 @@ const GuessArea = ({
         <CardTitle>
           {number}. {question}
         </CardTitle>
-        <CardDescription>提示：{hint}</CardDescription>
+        <CardDescription className="text-base">提示：{hint}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-5">
         <CardFlip
@@ -87,7 +88,7 @@ const GuessArea = ({
               setScore((prev) => prev + 1);
             }
           }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 0.5 }}
         >
           {guess !== "" &&
             (guess === answer ? (
@@ -106,16 +107,17 @@ const GuessArea = ({
           {options.map((option) => (
             <div key={option} className="flex items-center gap-2">
               <RadioGroupItem value={option} id={option} />
-              <Label htmlFor={option}>{option}</Label>
+              <Label htmlFor={option} className="text-base">
+                {option}
+              </Label>
             </div>
           ))}
         </RadioGroup>
       </CardContent>
-      <Separator />
       <CardFooter
-        className={`py-3 flex justify-center ${isSubmit ? "hidden" : ""}`}
+        className={`pt-0 pb-3 flex justify-center ${isSubmit ? "hidden" : ""}`}
       >
-        <Button onClick={() => setIsSubmit(true)}>選定！</Button>
+        <BtnOrbit color={color} setIsSubmit={setIsSubmit} />
       </CardFooter>
     </Card>
   );
