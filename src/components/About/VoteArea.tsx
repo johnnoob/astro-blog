@@ -24,7 +24,6 @@ const VoteArea = forwardRef<
     ref
   ) => {
     const [btnBubblePhrase, setBtnBubblePhrase] = useState<string>("");
-    const [animateOrder, setAnimateOrder] = useState<number>(0);
     const sleep = async (ms: number): Promise<void> => {
       return new Promise((resolve) => setTimeout(resolve, ms));
     };
@@ -57,22 +56,41 @@ const VoteArea = forwardRef<
         className={`relative flex justify-center items-center gap-3 w-32 h-24 rounded-lg font-semibold ${
           status !== "initial" ? "hidden" : ""
         } ${activeArea === "agree" ? `bg-[${color}] text-primary` : ""}`}
-        onAnimationComplete={() => setAnimateOrder((prev) => prev + 1)}
         initial={false}
         animate={{
           scale: activeArea === areaType ? 1.5 : 1,
           color: activeArea === areaType ? "#fff" : "#3fff2d",
           backgroundColor: activeArea === areaType ? "#3fff2d" : "transparent",
         }}
-        transition={{ duration: 0.5, type: "spring", delayChildren: 2 }}
+        transition={{ duration: 0.5, type: "spring" }}
       >
         <Icon size={20} />
         <span className="text-xl">{label}</span>
         <motion.div
-          style={{ backgroundColor: color }}
-          className={`absolute text-nowrap text-primary text-sm top-0 -translate-y-[55px] px-3 py-2 rounded-lg`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: activeArea === areaType ? 1 : 0 }}
+          style={{
+            backgroundColor: color,
+            y: -40,
+            transformOrigin: "50% calc(100% + 10px)",
+          }}
+          className={`absolute text-nowrap text-primary text-sm top-0 px-3 py-2 rounded-lg`}
+          initial={false}
+          animate={{
+            opacity: activeArea === areaType ? 1 : 0,
+            scale: 0.6667,
+            y: activeArea === areaType ? -50 : -40,
+            rotate: activeArea === areaType ? [-10, 10] : 0,
+          }}
+          transition={{
+            rotate: {
+              duration: 0.6,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            },
+            opacity: {
+              duration: 0.5, // Set a duration for opacity transition
+            },
+          }}
         >
           {btnBubblePhrase}
           <span className={`triangle`} />

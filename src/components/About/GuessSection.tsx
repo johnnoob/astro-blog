@@ -1,9 +1,11 @@
 // react
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // react components
 import GuessArea from "./GuessArea";
 // react icons
 import { RiDrinksFill } from "react-icons/ri";
+// framer motion
+import { motion } from "framer-motion";
 // assets
 import careerImg from "../../images/about/career.jpg";
 import publicServantImg from "../../images/about/public-servant.png";
@@ -76,6 +78,20 @@ const guessAreasData: GuessAreaData[] = [
 
 const GuessSection = () => {
   const [score, setScore] = useState<number>(0);
+  const [numOfGuess, setNumOfGuess] = useState<number>(0);
+  const [resultDescription, setResultDescription] = useState<string>("");
+  useEffect(() => {
+    if (numOfGuess === guessAreasData.length) {
+      const correctRatio = score / numOfGuess;
+      if (correctRatio === 1) {
+        setResultDescription("妳真瞭解我～還不加個Line嗎？");
+      } else if (correctRatio >= 0.6) {
+        setResultDescription("有些許神秘，等待妳發掘，不加個Line嗎？");
+      } else {
+        setResultDescription("神秘感Max，不加個Line嗎？");
+      }
+    }
+  });
   return (
     <section className="w-full flex flex-col gap-10">
       <h1 className="flex items-center justify-center gap-2 font-semibold text-xl">
@@ -94,6 +110,7 @@ const GuessSection = () => {
           questionImg={area.questionImg}
           answerImg={area.answerImg}
           setScore={setScore}
+          setNumOfGuess={setNumOfGuess}
         />
       ))}
       <div className="text-center text-xl font-semibold">
@@ -101,9 +118,14 @@ const GuessSection = () => {
           {guessAreasData.length}題中答對
           <span className="text-[#ee27df] text-3xl">{score}</span>題
         </h3>
-        {score === guessAreasData.length && (
-          <h1 className="mt-2">恭喜！妳真瞭解我，還不加個Line嗎？</h1>
-        )}
+        <motion.h1
+          className="mt-2"
+          initial={false}
+          animate={{ opacity: numOfGuess === guessAreasData.length ? 1 : 0 }}
+          transition={{ duration: 0.5, delay: 2 }}
+        >
+          {resultDescription}
+        </motion.h1>
       </div>
     </section>
   );

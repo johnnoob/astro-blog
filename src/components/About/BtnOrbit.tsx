@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 
 type Props = {
   color: string;
-  setIsSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  onClick: () => void;
+  children: React.ReactNode;
 };
 
-const BtnOrbit = ({ color, setIsSubmit }: Props) => {
+const BtnOrbit = ({ color, onClick, children }: Props) => {
   const [animationOrder, setAnimationOrder] = useState<number>(0);
   const handleAnimationComplete = () => {
     setAnimationOrder((prev) => (prev + 1) % 4); // 循環播放動畫
@@ -18,10 +20,11 @@ const BtnOrbit = ({ color, setIsSubmit }: Props) => {
       style={{ color }}
       className={`relative px-4 py-2 overflow-hidden tracking-widest font-semibold text-lg`}
       onClick={() => {
-        setIsSubmit(true);
+        // setIsSubmit(true);
+        onClick();
       }}
     >
-      點擊確認
+      {children}
       {animationOrder === 0 && (
         <motion.span
           style={{

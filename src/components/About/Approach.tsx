@@ -11,6 +11,7 @@ import qrCode from "../../images/qrcode-line.jpg";
 import VoteSection from "./VoteSection";
 import NeonTitle from "./NeonTitle";
 import GuessSection from "./GuessSection";
+import BtnOrbit from "./BtnOrbit";
 // react icons
 import { BsChatFill } from "react-icons/bs";
 import {

@@ -29,6 +29,7 @@ type Props = {
   answer: string;
   color: string;
   setScore: React.Dispatch<React.SetStateAction<number>>;
+  setNumOfGuess: React.Dispatch<React.SetStateAction<number>>;
   questionImg: ImageMetadata;
   answerImg: ImageMetadata;
 };
@@ -41,6 +42,7 @@ const GuessArea = ({
   answer,
   color,
   setScore,
+  setNumOfGuess,
   questionImg,
   answerImg,
 }: Props) => {
@@ -117,7 +119,15 @@ const GuessArea = ({
       <CardFooter
         className={`pt-0 pb-3 flex justify-center ${isSubmit ? "hidden" : ""}`}
       >
-        <BtnOrbit color={color} setIsSubmit={setIsSubmit} />
+        <BtnOrbit
+          color={color}
+          onClick={() => {
+            setIsSubmit(true);
+            setNumOfGuess((prev) => prev + 1);
+          }}
+        >
+          點擊確認
+        </BtnOrbit>
       </CardFooter>
     </Card>
   );
