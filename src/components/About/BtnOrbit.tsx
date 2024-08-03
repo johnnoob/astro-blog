@@ -21,7 +21,7 @@ const BtnOrbit = ({ color, setIsSubmit }: Props) => {
         setIsSubmit(true);
       }}
     >
-      猜此選項
+      點擊確認
       {animationOrder === 0 && (
         <motion.span
           style={{

@@ -54,7 +54,7 @@ const VoteArea = forwardRef<
             "--triangle-border-top-color": color,
           } as React.CSSProperties
         }
-        className={`relative flex justify-center items-center gap-3 w-32 h-24 rounded-lg text-[${color}] font-semibold ${
+        className={`relative flex justify-center items-center gap-3 w-32 h-24 rounded-lg font-semibold ${
           status !== "initial" ? "hidden" : ""
         } ${activeArea === "agree" ? `bg-[${color}] text-primary` : ""}`}
         onAnimationComplete={() => setAnimateOrder((prev) => prev + 1)}
@@ -62,13 +62,15 @@ const VoteArea = forwardRef<
         animate={{
           scale: activeArea === areaType ? 1.5 : 1,
           color: activeArea === areaType ? "#fff" : "#3fff2d",
+          backgroundColor: activeArea === areaType ? "#3fff2d" : "transparent",
         }}
         transition={{ duration: 0.5, type: "spring", delayChildren: 2 }}
       >
         <Icon size={20} />
         <span className="text-xl">{label}</span>
         <motion.div
-          className={`absolute text-nowrap text-primary text-sm top-0 -translate-y-[55px] px-3 py-2 rounded-lg bg-[${color}]`}
+          style={{ backgroundColor: color }}
+          className={`absolute text-nowrap text-primary text-sm top-0 -translate-y-[55px] px-3 py-2 rounded-lg`}
           initial={{ opacity: 0 }}
           animate={{ opacity: activeArea === areaType ? 1 : 0 }}
         >
