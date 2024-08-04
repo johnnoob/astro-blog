@@ -14,13 +14,7 @@ import GuessSection from "./GuessSection";
 import BtnOrbit from "./BtnOrbit";
 // react icons
 import { BsChatFill } from "react-icons/bs";
-import {
-  FaCircleQuestion,
-  FaArrowRotateRight,
-  FaHeart,
-  FaAnglesDown,
-} from "react-icons/fa6";
-import { AiOutlineDrag } from "react-icons/ai";
+import { FaArrowRotateRight, FaAnglesDown } from "react-icons/fa6";
 // shadCN
 import { Button } from "../ui/button";
 // frame motion

@@ -10,7 +10,7 @@ import { Card, CardHeader, CardContent } from "../ui/card.tsx";
 // type
 import type { CollectionEntry } from "astro:content";
 // react
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 // react icons
 import { FaRss, FaBars } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";

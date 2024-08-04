@@ -1,23 +1,23 @@
 ---
 // layout
 import BaseLayout from "@/layouts/BaseLayout.astro";
-// assets
-import selfCry from "../images/cartoon-cry.png";
-import selfLaugh from "../images/cartoon-shy.png";
-import selfNormal from "../images/cartoon-normal.png";
-import qrCode from "../images/qrcode-line.jpg";
-// shadCN
-import { Button } from "@/components/ui/button";
-// react icons
-import { FaCheck, FaX, FaLine } from "react-icons/fa6";
-import { BsChatFill } from "react-icons/bs";
 // components
 import Approach from "@/components/About/Approach";
 import "csshake/dist/csshake.css";
 ---
 
-<BaseLayout pageTitle="關於我">
-  <section class="mb-20 mt-10">
+<BaseLayout pageTitle="關於我" isNavbar={false}>
+  <section class="mb-20">
     <Approach client:only="react" />
   </section>
 </BaseLayout>
+
+<script>
+  // nano store
+  import { themeStore } from "@/store/contextStore";
+
+  themeStore.set("dark");
+  const $theme = themeStore.get();
+  const isDark = $theme === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+</script>

@@ -60,12 +60,7 @@ const GuessArea = ({
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [animateOrder, setAnimateOrder] = useState<number>(0);
   return (
-    <Card
-      style={{
-        boxShadow: `0 0 10px ${color}, 0 0 40px ${color}`,
-      }}
-      className="max-w-[500px] w-full"
-    >
+    <Card className="max-w-[500px] w-full">
       <CardHeader className="text-center">
         <CardTitle>
           {number}. {question}
@@ -76,6 +71,7 @@ const GuessArea = ({
         <CardFlip
           isFlipped={isSubmit}
           setAnimateOrder={setAnimateOrder}
+          animateOrder={animateOrder}
           questionImg={questionImg}
           answerImg={answerImg}
           color={color}
@@ -117,7 +113,7 @@ const GuessArea = ({
         </RadioGroup>
       </CardContent>
       <CardFooter
-        className={`pt-0 pb-3 flex justify-center ${isSubmit ? "hidden" : ""}`}
+        className={`pt-0 flex justify-center ${isSubmit ? "hidden" : ""}`}
       >
         <BtnOrbit
           color={color}

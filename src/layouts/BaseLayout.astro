@@ -22,8 +22,9 @@ type User = {
 };
 type Props = {
   pageTitle: string;
+  isNavbar?: boolean;
 };
-const { pageTitle } = Astro.props;
+const { pageTitle, isNavbar = true } = Astro.props;
 const user = Astro.locals.user;
 const {
   url: { pathname },
@@ -42,12 +43,16 @@ const rootPath = pathname.split("/")[1];
     <ViewTransitions />
   </head>
   <body>
-    <MainNavBar
-      client:only="react"
-      rootPath={rootPath}
-      posts={posts}
-      user={user}
-    />
+    {
+      isNavbar && (
+        <MainNavBar
+          client:only="react"
+          rootPath={rootPath}
+          posts={posts}
+          user={user}
+        />
+      )
+    }
     <Sidebar client:only="react" rootPath={rootPath} />
     <main id="main" class="max-container pt-[65px]">
       <slot />

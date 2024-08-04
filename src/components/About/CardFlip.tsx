@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 type Props = {
   isFlipped: boolean;
+  animateOrder: number;
   setAnimateOrder: React.Dispatch<React.SetStateAction<number>>;
   questionImg: ImageMetadata;
   answerImg: ImageMetadata;
@@ -13,25 +14,36 @@ type Props = {
 
 const CardFlip = ({
   isFlipped,
+  animateOrder,
   setAnimateOrder,
   questionImg,
   answerImg,
   color,
 }: Props) => {
+  const variants = {
+    rotate: {
+      rotateY: isFlipped ? 180 : 720,
+    },
+  };
   return (
     <motion.div
-      style={{ transformStyle: "preserve-3d" }}
+      style={{
+        transformStyle: "preserve-3d",
+        boxShadow: `0 0 20px ${color}, 0 0 40px ${color}`,
+      }}
       className={`relative w-[150px] h-[200px] rounded-lg`}
       initial={false}
-      animate={{ rotateY: isFlipped ? 180 : 720 }}
-      transition={{ duration: 1, type: "spring" }}
-      onAnimationComplete={() => setAnimateOrder((prev) => prev + 1)}
+      animate="rotate"
+      variants={variants}
+      transition={{ duration: 1 }}
+      onAnimationComplete={(definition) => {
+        setAnimateOrder((prev) => prev + 1);
+      }}
     >
       <div
         style={{
           backfaceVisibility: "hidden",
           backgroundImage: `url(${questionImg.src})`,
-          boxShadow: `0 0 30px ${color}, 0 0 40px ${color}`,
         }}
         className={`absolute top-0 left-0 h-full w-full rounded-lg bg-cover bg-center bg-no-repeat bg-opacity-35`}
       >
@@ -42,7 +54,6 @@ const CardFlip = ({
           backfaceVisibility: "hidden",
           transform: "rotateY(180deg)",
           backgroundImage: `url(${questionImg.src})`,
-          boxShadow: `0 0 10px ${color}, 0 0 20px ${color}`,
         }}
         className="absolute top-0 left-0 h-full w-full bg--200 rounded-lg p-3 flex justify-center items-center bg-cover bg-center bg-no-repeat"
       >

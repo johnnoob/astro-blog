@@ -1,4 +1,6 @@
+// react
 import { useEffect } from "react";
+// nano store
 import { useStore } from "@nanostores/react";
 import { themeStore } from "@/store/contextStore";
 
