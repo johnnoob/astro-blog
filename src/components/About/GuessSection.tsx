@@ -123,12 +123,12 @@ const GuessSection = () => {
             {guessAreasData.map((area, index) => (
               <motion.div
                 key={area.question}
-                className={`rounded-full w-[30px] h-[30px] border-[1px] grid place-content-center ${
+                className={`rounded-full w-[30px] h-[30px] text-primary grid place-content-center ${
                   guessMap[index + 1] === "correct"
-                    ? "text-primary bg-green-500"
+                    ? "bg-green-500"
                     : guessMap[index + 1] === "incorrect"
-                    ? "text-primary bg-red-500"
-                    : "text-muted"
+                    ? "bg-red-500"
+                    : "border-[1px] border-primary"
                 }`}
               >
                 {index + 1}
