@@ -1,5 +1,5 @@
 // react
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // react components
 import GuessArea from "./GuessArea";
 // react icons
@@ -93,6 +93,7 @@ const GuessSection = () => {
     (result) => result !== "undone"
   ).length;
   const [resultDescription, setResultDescription] = useState<string>("");
+  const guessAreaRefs = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     if (numOfGuess === guessAreasData.length) {
@@ -106,6 +107,17 @@ const GuessSection = () => {
       }
     }
   });
+  const scrollToElement = (ref: HTMLDivElement, offset = 0) => {
+    if (ref) {
+      const elementPosition = ref.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <section className="w-full flex flex-col gap-4">
@@ -115,14 +127,23 @@ const GuessSection = () => {
       </h1>
       <div className="sticky w-full top-0 z-20 pt-1 pb-3 border-b-[1px] bg-background flex justify-center items-center gap-4">
         <div className="flex flex-col items-center gap-3">
-          <h2 className="text-lg font-semibold tracking-wider">
+          <div className="flex gap-1 items-center text-lg font-semibold tracking-wider">
             {guessAreasData.length}題答對
-            <span className="text-[#ee27df] text-2xl">{numOfCorrect}</span>題
-          </h2>
+            <span className="text-[#ee27df] text-2xl">
+              {/* {Array.from({ length: 99 }, (_, index) => index).map((index) => (
+                <motion.span>{index}</motion.span>
+              ))} */}
+              {numOfGuess}
+            </span>
+            題
+          </div>
           <div className="flex items-center gap-2">
             {guessAreasData.map((area, index) => (
-              <motion.div
+              <motion.button
                 key={area.question}
+                onClick={() => {
+                  scrollToElement(guessAreaRefs.current[index], 150);
+                }}
                 className={`rounded-full w-[30px] h-[30px] text-primary grid place-content-center ${
                   guessMap[index + 1] === "correct"
                     ? "bg-green-500"
@@ -132,7 +153,7 @@ const GuessSection = () => {
                 }`}
               >
                 {index + 1}
-              </motion.div>
+              </motion.button>
             ))}
           </div>
           <motion.h1
@@ -147,8 +168,9 @@ const GuessSection = () => {
       </div>
       {guessAreasData.map((area, index) => (
         <GuessArea
-          number={index + 1}
+          ref={(el) => el && guessAreaRefs.current.push(el)}
           key={area.question}
+          number={index + 1}
           question={area.question}
           hint={area.hint}
           options={area.options}
