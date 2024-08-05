@@ -14,12 +14,12 @@ import {
   CardContent,
   CardDescription,
 } from "../ui/card";
-import { Separator } from "../ui/separator";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Button } from "../ui/button";
 // framer motion
 import { motion } from "framer-motion";
+// types
+import type { GuessToIsCorrectMap } from "./GuessSection";
 
 type Props = {
   number: number;
@@ -28,8 +28,7 @@ type Props = {
   options: string[];
   answer: string;
   color: string;
-  setScore: React.Dispatch<React.SetStateAction<number>>;
-  setNumOfGuess: React.Dispatch<React.SetStateAction<number>>;
+  setGuessMap: React.Dispatch<React.SetStateAction<GuessToIsCorrectMap>>;
   questionImg: ImageMetadata;
   answerImg: ImageMetadata;
 };
@@ -41,8 +40,7 @@ const GuessArea = ({
   options,
   answer,
   color,
-  setScore,
-  setNumOfGuess,
+  setGuessMap,
   questionImg,
   answerImg,
 }: Props) => {
@@ -83,7 +81,9 @@ const GuessArea = ({
           animate={animateOrder === 1 ? "visible" : "hidden"}
           onAnimationComplete={() => {
             if (guess === answer) {
-              setScore((prev) => prev + 1);
+              setGuessMap((prev) => ({ ...prev, [number]: "correct" }));
+            } else {
+              setGuessMap((prev) => ({ ...prev, [number]: "incorrect" }));
             }
           }}
           transition={{ duration: 0.5 }}
@@ -119,7 +119,6 @@ const GuessArea = ({
           color={color}
           onClick={() => {
             setIsSubmit(true);
-            setNumOfGuess((prev) => prev + 1);
           }}
         >
           點擊確認

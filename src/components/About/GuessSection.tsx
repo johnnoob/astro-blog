@@ -75,16 +75,30 @@ const guessAreasData: GuessAreaData[] = [
     answerImg: middleAgeImg,
   },
 ];
+export type GuessToIsCorrectMap = {
+  [key: number]: "correct" | "incorrect" | "undone";
+};
+const guessToIsCorrectMap: GuessToIsCorrectMap = {};
+guessAreasData.map((_, index) => {
+  guessToIsCorrectMap[index + 1] = "undone";
+});
 
 const GuessSection = () => {
-  const [score, setScore] = useState<number>(0);
-  const [numOfGuess, setNumOfGuess] = useState<number>(0);
+  const [guessMap, setGuessMap] =
+    useState<GuessToIsCorrectMap>(guessToIsCorrectMap);
+  const numOfCorrect = Object.values(guessMap).filter(
+    (result) => result === "correct"
+  ).length;
+  const numOfGuess = Object.values(guessMap).filter(
+    (result) => result !== "undone"
+  ).length;
   const [resultDescription, setResultDescription] = useState<string>("");
+
   useEffect(() => {
     if (numOfGuess === guessAreasData.length) {
-      const correctRatio = score / numOfGuess;
+      const correctRatio = numOfCorrect / numOfGuess;
       if (correctRatio === 1) {
-        setResultDescription("妳真瞭解我～還不加個Line嗎？");
+        setResultDescription("妳真瞭解我～請妳喝杯飲料！");
       } else if (correctRatio >= 0.6) {
         setResultDescription("有些許神秘，等待妳發掘，不加個Line嗎？");
       } else {
@@ -92,12 +106,45 @@ const GuessSection = () => {
       }
     }
   });
+
   return (
-    <section className="w-full flex flex-col gap-10">
+    <section className="w-full flex flex-col gap-4">
       <h1 className="flex items-center justify-center gap-2 font-semibold text-xl">
         <RiDrinksFill className="text-[#cfee28]" size={25} />
         <span>總共{guessAreasData.length}題，全猜對我請妳1杯飲料：</span>
       </h1>
+      <div className="sticky w-full top-0 z-20 pt-1 pb-3 border-b-[1px] bg-background flex justify-center items-center gap-4">
+        <div className="flex flex-col items-center gap-3">
+          <h2 className="text-lg font-semibold tracking-wider">
+            {guessAreasData.length}題答對
+            <span className="text-[#ee27df] text-2xl">{numOfCorrect}</span>題
+          </h2>
+          <div className="flex items-center gap-2">
+            {guessAreasData.map((area, index) => (
+              <motion.div
+                key={area.question}
+                className={`rounded-full w-[30px] h-[30px] border-[1px] grid place-content-center ${
+                  guessMap[index + 1] === "correct"
+                    ? "text-primary bg-green-500"
+                    : guessMap[index + 1] === "incorrect"
+                    ? "text-primary bg-red-500"
+                    : "text-muted"
+                }`}
+              >
+                {index + 1}
+              </motion.div>
+            ))}
+          </div>
+          <motion.h1
+            className="font-semibold text-lg"
+            initial={false}
+            animate={{ opacity: numOfGuess === guessAreasData.length ? 1 : 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            {resultDescription}
+          </motion.h1>
+        </div>
+      </div>
       {guessAreasData.map((area, index) => (
         <GuessArea
           number={index + 1}
@@ -109,24 +156,9 @@ const GuessSection = () => {
           color={area.color}
           questionImg={area.questionImg}
           answerImg={area.answerImg}
-          setScore={setScore}
-          setNumOfGuess={setNumOfGuess}
+          setGuessMap={setGuessMap}
         />
       ))}
-      <div className="text-center text-xl font-semibold">
-        <h3 className="tracking-wider">
-          {guessAreasData.length}題中答對
-          <span className="text-[#ee27df] text-3xl">{score}</span>題
-        </h3>
-        <motion.h1
-          className="mt-2"
-          initial={false}
-          animate={{ opacity: numOfGuess === guessAreasData.length ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 2 }}
-        >
-          {resultDescription}
-        </motion.h1>
-      </div>
     </section>
   );
 };
