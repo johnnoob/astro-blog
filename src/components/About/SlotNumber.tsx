@@ -23,7 +23,7 @@ const SlotNumber = ({ numOfCorrect }: Props) => {
             key={numOfCorrect * 100 - 200}
             initial={{ y: 0 }}
             animate={{ y: -30 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1, ease: "backOut" }}
           >
             {numOfCorrect - 1}
           </motion.span>
@@ -31,7 +31,7 @@ const SlotNumber = ({ numOfCorrect }: Props) => {
             key={numOfCorrect}
             initial={{ y: 30 }}
             animate={{ y: -18 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1, ease: "backOut" }}
           >
             {numOfCorrect}
           </motion.span>
