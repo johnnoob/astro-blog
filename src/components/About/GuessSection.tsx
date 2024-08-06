@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 // react components
 import GuessArea from "./GuessArea";
+import SlotNumber from "./SlotNumber";
 // react icons
 import { RiDrinksFill } from "react-icons/ri";
 // framer motion
@@ -125,17 +126,11 @@ const GuessSection = () => {
         <RiDrinksFill className="text-[#cfee28]" size={25} />
         <span>總共{guessAreasData.length}題，全猜對我請妳1杯飲料：</span>
       </h1>
-      <div className="sticky w-full top-0 z-20 pt-1 pb-3 border-b-[1px] bg-background flex justify-center items-center gap-4">
+      <div className="sticky w-full top-0 z-20 pt-2 pb-3 border-b-[1px] bg-background flex justify-center items-center gap-4">
         <div className="flex flex-col items-center gap-3">
           <div className="flex gap-1 items-center text-lg font-semibold tracking-wider">
             {guessAreasData.length}題答對
-            <span className="text-[#ee27df] text-2xl">
-              {/* {Array.from({ length: 99 }, (_, index) => index).map((index) => (
-                <motion.span>{index}</motion.span>
-              ))} */}
-              {numOfGuess}
-            </span>
-            題
+            <SlotNumber numOfCorrect={numOfCorrect} />題
           </div>
           <div className="flex items-center gap-2">
             {guessAreasData.map((area, index) => (
