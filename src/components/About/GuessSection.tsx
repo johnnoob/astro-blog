@@ -129,7 +129,7 @@ const GuessSection = () => {
     if (numOfGuess === guessAreasData.length) {
       const correctRatio = numOfCorrect / numOfGuess;
       if (correctRatio === 1) {
-        setResultDescription("妳真瞭解我～請妳喝杯飲料！");
+        setResultDescription("");
       } else if (correctRatio >= 0.6) {
         setResultDescription("有些許神秘，等待妳發掘，不加個Line嗎？");
       } else {
