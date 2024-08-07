@@ -1,5 +1,7 @@
 // react
 import React, { useState, useEffect } from "react";
+// react icon
+import { FaQuestion } from "react-icons/fa6";
 // framer motion
 import { motion, AnimatePresence } from "framer-motion";
 // lodash
@@ -43,7 +45,7 @@ function weightedChoice(drinkWeights: DrinkWeight[]) {
   }
 }
 
-class Drink {
+export class Drink {
   type: DrinkType;
   img: ImageMetadata;
   constructor() {
@@ -59,75 +61,78 @@ class Drink {
 const drinks = Array.from({ length: 15 }, (_, index) => new Drink());
 
 type Props = {
-  numOfCorrect: number;
+  isActive: boolean;
+  setSlotMachineResult: React.Dispatch<React.SetStateAction<Drink | null>>;
 };
 
 const sleep = async (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-const SlotMachine = ({ numOfCorrect }: Props) => {
-  const [isInitial, setIsInitial] = useState<boolean>(true);
+const SlotMachine = ({ isActive, setSlotMachineResult }: Props) => {
   const [index, setIndex] = useState<number>(1);
-
   useEffect(() => {
+    let isCancelled = false;
     const loop = async () => {
       for (let index = 1; index < drinks.length; index++) {
+        if (isCancelled) break;
         setIndex(index);
         if (index < 12) {
-          await sleep(1000);
+          await sleep(500);
         } else {
           await sleep(2000);
         }
       }
+      setSlotMachineResult(drinks.at(-1) as Drink);
     };
-    loop();
-  }, [numOfCorrect]);
+    if (isActive) loop();
+    return () => {
+      isCancelled = true;
+    };
+  }, [isActive]);
 
   return (
-    <div className="relative border-[1px] w-28 h-36 overflow-hidden">
-      <AnimatePresence>
-        <motion.img
-          key={index - 1}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            translateX: "-50%",
-            translateY: "-50%",
-            height: 112,
-          }}
-          className="h-28"
-          src={drinks[index - 1].img.src}
-          initial={{ y: 0 }}
-          animate={{ y: -300 }}
-          transition={{ duration: index < 12 ? 1 : 2, ease: "backOut" }}
+    <div className="relative border-[1px] w-28 h-36 rounded-md overflow-hidden">
+      {isActive && (
+        <AnimatePresence>
+          <motion.img
+            key={index - 1}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              translateX: "-50%",
+              translateY: "-50%",
+              height: 112,
+            }}
+            className="h-28"
+            src={drinks[index - 1].img.src}
+            initial={{ y: 0 }}
+            animate={{ y: -300 }}
+            transition={{ duration: index < 12 ? 1 : 2, ease: "backOut" }}
+          />
+          <motion.img
+            key={index}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              translateX: "-50%",
+              translateY: "-50%",
+              height: 112,
+            }}
+            src={drinks[index].img.src}
+            initial={{ y: 300 }}
+            animate={{ y: 0 }}
+            transition={{ duration: index < 12 ? 1 : 2, ease: "backOut" }}
+          />
+        </AnimatePresence>
+      )}
+      {!isActive && (
+        <img
+          src={drinks[0].img.src}
+          className="h-28 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         />
-        <motion.img
-          key={index}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            translateX: "-50%",
-            translateY: "-50%",
-            height: 112,
-          }}
-          src={drinks[index].img.src}
-          initial={{ y: 300 }}
-          animate={{ y: 0 }}
-          transition={{ duration: index < 12 ? 1 : 2, ease: "backOut" }}
-        />
-      </AnimatePresence>
-      {/* <img
-        src={drinks[index].img.src}
-        alt=""
-        className="h-28 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-      />
-      <img
-        src={drinks[index - 1].img.src}
-        alt=""
-        className="h-28 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-      /> */}
+      )}
     </div>
   );
 };

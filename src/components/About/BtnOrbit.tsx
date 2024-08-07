@@ -8,9 +8,10 @@ type Props = {
   // setIsSubmit: React.Dispatch<React.SetStateAction<boolean>>;
   onClick: () => void;
   children: React.ReactNode;
+  className?: string;
 };
 
-const BtnOrbit = ({ color, onClick, children }: Props) => {
+const BtnOrbit = ({ color, onClick, children, className }: Props) => {
   const [animationOrder, setAnimationOrder] = useState<number>(0);
   const handleAnimationComplete = () => {
     setAnimationOrder((prev) => (prev + 1) % 4); // 循環播放動畫
@@ -18,7 +19,7 @@ const BtnOrbit = ({ color, onClick, children }: Props) => {
   return (
     <button
       style={{ color }}
-      className={`relative px-4 py-2 overflow-hidden tracking-widest font-semibold text-lg`}
+      className={`relative px-4 py-2 overflow-hidden tracking-widest font-semibold text-lg ${className}`}
       onClick={() => {
         // setIsSubmit(true);
         onClick();

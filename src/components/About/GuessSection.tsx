@@ -4,15 +4,19 @@ import React, { useState, useEffect, useRef } from "react";
 import GuessArea from "./GuessArea";
 import SlotNumber from "./SlotNumber";
 import SlotMachine from "./SlotMachine";
+import BtnOrbit from "./BtnOrbit";
 // react icons
 import { RiDrinksFill } from "react-icons/ri";
 // framer motion
 import { motion } from "framer-motion";
+// class
+import { Drink } from "./SlotMachine";
 // shadCN
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -86,6 +90,15 @@ const guessAreasData: GuessAreaData[] = [
     answerImg: middleAgeImg,
   },
 ];
+
+const drinkTypeToString = {
+  sm: "抽中小杯飲料",
+  md: "抽中中杯飲料",
+  lg: "抽中大杯飲料",
+  bubble: "恭喜！抽中手搖飲",
+  coffee: "恭喜！抽中星巴克咖啡",
+};
+
 export type GuessToIsCorrectMap = {
   [key: number]: "correct" | "incorrect" | "undone";
 };
@@ -104,6 +117,12 @@ const GuessSection = () => {
     (result) => result !== "undone"
   ).length;
   const [resultDescription, setResultDescription] = useState<string>("");
+  const [isSlotMachineOpen, setIsSlotMachineOpen] = useState<boolean>(false);
+  const [isSlotMachineActive, setIsSlotMachineActive] =
+    useState<boolean>(false);
+  const [slotMachineResult, setSlotMachineResult] = useState<Drink | null>(
+    null
+  );
   const guessAreaRefs = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
@@ -170,17 +189,61 @@ const GuessSection = () => {
             {resultDescription}
           </motion.h1>
           <Dialog>
-            <DialogTrigger asChild>
-              <button>打開</button>
-            </DialogTrigger>
+            {slotMachineResult === null &&
+              numOfCorrect === guessAreasData.length && (
+                <DialogTrigger asChild>
+                  <motion.button
+                    className="text-lg"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    onClick={() => setIsSlotMachineOpen(true)}
+                  >
+                    抽飲料
+                  </motion.button>
+                </DialogTrigger>
+              )}
+            {slotMachineResult !== null && (
+              <motion.img
+                style={{ height: 60 }}
+                src={slotMachineResult.img.src}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+              />
+            )}
             <DialogContent className="flex flex-col items-center">
               <DialogHeader className="text-center">
-                <DialogTitle className="text-center">抽選飲料</DialogTitle>
-                <DialogDescription>
+                <DialogTitle className="text-center text-xl">
+                  抽選飲料
+                </DialogTitle>
+                <DialogDescription className="text-base">
                   點擊下方抽選按鈕，有星巴克喔！
                 </DialogDescription>
               </DialogHeader>
-              <SlotMachine numOfCorrect={1} />
+              <SlotMachine
+                isActive={isSlotMachineActive}
+                setSlotMachineResult={setSlotMachineResult}
+              />
+              <DialogFooter>
+                <BtnOrbit
+                  color="#fff"
+                  className={`${isSlotMachineActive ? "hidden" : ""}`}
+                  onClick={() => setIsSlotMachineActive(true)}
+                >
+                  開抽
+                </BtnOrbit>
+                {slotMachineResult !== null && (
+                  <motion.h2
+                    className="text-xl font-semibold"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  >
+                    {drinkTypeToString[slotMachineResult.type]}
+                  </motion.h2>
+                )}
+              </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
