@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 type Props = {
   color: string;
-  // setIsSubmit: React.Dispatch<React.SetStateAction<boolean>>;
   onClick: () => void;
   children: React.ReactNode;
   className?: string;
@@ -19,9 +18,8 @@ const BtnOrbit = ({ color, onClick, children, className }: Props) => {
   return (
     <button
       style={{ color }}
-      className={`relative px-4 py-2 overflow-hidden tracking-widest font-semibold text-lg ${className}`}
+      className={`relative flex justify-center items-center px-4 py-2 overflow-hidden tracking-widest font-semibold text-lg ${className}`}
       onClick={() => {
-        // setIsSubmit(true);
         onClick();
       }}
     >

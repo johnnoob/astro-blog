@@ -1,5 +1,5 @@
 // react
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 // react icon
 import { FaQuestion } from "react-icons/fa6";
 // framer motion
@@ -58,7 +58,6 @@ export class Drink {
     }
   }
 }
-const drinks = Array.from({ length: 15 }, (_, index) => new Drink());
 
 type Props = {
   isActive: boolean;
@@ -69,6 +68,10 @@ const sleep = async (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
 const SlotMachine = ({ isActive, setSlotMachineResult }: Props) => {
+  const drinks = useMemo(
+    () => Array.from({ length: 30 }, (_, index) => new Drink()),
+    []
+  );
   const [index, setIndex] = useState<number>(1);
   useEffect(() => {
     let isCancelled = false;
@@ -77,9 +80,9 @@ const SlotMachine = ({ isActive, setSlotMachineResult }: Props) => {
         if (isCancelled) break;
         setIndex(index);
         if (index < 12) {
-          await sleep(500);
+          await sleep(200);
         } else {
-          await sleep(2000);
+          await sleep(1000);
         }
       }
       setSlotMachineResult(drinks.at(-1) as Drink);
@@ -108,7 +111,7 @@ const SlotMachine = ({ isActive, setSlotMachineResult }: Props) => {
             src={drinks[index - 1].img.src}
             initial={{ y: 0 }}
             animate={{ y: -300 }}
-            transition={{ duration: index < 12 ? 1 : 2, ease: "backOut" }}
+            transition={{ duration: index < 12 ? 0.2 : 1, ease: "easeInOut" }}
           />
           <motion.img
             key={index}
@@ -123,7 +126,7 @@ const SlotMachine = ({ isActive, setSlotMachineResult }: Props) => {
             src={drinks[index].img.src}
             initial={{ y: 300 }}
             animate={{ y: 0 }}
-            transition={{ duration: index < 12 ? 1 : 2, ease: "backOut" }}
+            transition={{ duration: index < 12 ? 0.2 : 1, ease: "easeInOut" }}
           />
         </AnimatePresence>
       )}

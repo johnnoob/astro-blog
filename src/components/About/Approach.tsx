@@ -1,5 +1,5 @@
 // react
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 // js confetti
 import JSConfetti from "js-confetti";
 // assets
@@ -14,9 +14,7 @@ import GuessSection from "./GuessSection";
 import BtnOrbit from "./BtnOrbit";
 // react icons
 import { BsChatFill } from "react-icons/bs";
-import { FaArrowRotateRight, FaAnglesDown } from "react-icons/fa6";
-// shadCN
-import { Button } from "../ui/button";
+import { FaArrowRotateRight, FaAnglesDown, FaAnglesUp } from "react-icons/fa6";
 // frame motion
 import { motion, type PanInfo } from "framer-motion";
 
@@ -146,7 +144,7 @@ const Approach = () => {
         <p
           className={`text-xl text-center ${status !== "initial" && "hidden"}`}
         >
-          <span>想與妳改天約個咖啡，OK嗎？</span>
+          想與妳約喝個咖啡，OK嗎？
         </p>
         <div className={`${status !== "initial" && "hidden"}`}>
           --- 拖曳愛心到選擇區域 ---
@@ -154,7 +152,6 @@ const Approach = () => {
         <div className={`${status !== "agree" && "hidden"}`}>
           <div className="flex flex-col items-center gap-4 mt-2">
             <div className="flex gap-2 items-center justify-center">
-              {/* <FaLine className="text-green-400" size={30} /> */}
               <span className="text-xl font-semibold">Line ID：johngenius</span>
             </div>
             <img src={qrCode.src} alt="line QR code" className="w-52" />
@@ -176,13 +173,16 @@ const Approach = () => {
           onClick={() => setIsGuessOpen(!isGuessOpen)}
         >
           <span>--- 點擊{isGuessOpen ? "關閉" : "玩"}猜猜看 ---</span>
-          <FaAnglesDown
-            className={`animate-bounce ${isGuessOpen && "hidden"}`}
-          />
+          {isGuessOpen ? (
+            <FaAnglesUp />
+          ) : (
+            <FaAnglesDown className={`animate-bounce`} />
+          )}
         </motion.button>
         {isGuessOpen && status === "initial" && <GuessSection />}
-        <Button
-          className={`text-lg ${status === "initial" && "hidden"}`}
+        <BtnOrbit
+          color="#fff"
+          className={`${status === "initial" && "hidden"}`}
           onClick={() => {
             setStatus("initial");
             setActiveArea(null);
@@ -190,7 +190,7 @@ const Approach = () => {
         >
           <FaArrowRotateRight />
           <span className="ml-2">重新選擇</span>
-        </Button>
+        </BtnOrbit>
       </div>
     </>
   );

@@ -150,14 +150,16 @@ const GuessSection = () => {
   };
 
   return (
-    <section className="w-full flex flex-col gap-4">
-      <h1 className="flex items-center justify-center gap-2 font-semibold text-xl">
-        <RiDrinksFill className="text-[#cfee28]" size={25} />
-        <span>總共{guessAreasData.length}題，全猜對我請妳1杯飲料：</span>
-      </h1>
-      <div className="sticky w-full top-0 z-20 pt-2 pb-3 border-b-[1px] bg-background flex justify-center items-center gap-4">
-        <div className="flex flex-col items-center gap-3">
-          <div className="flex gap-1 items-center text-lg font-semibold tracking-wider">
+    <section className="w-full">
+      <div className="text-center">
+        <h1 className="font-semibold text-2xl">猜猜看，全猜對請妳1杯飲料</h1>
+        {/* <p className="text-muted-foreground text-lg">
+          <span>總共{guessAreasData.length}題，全猜對請妳1杯飲料</span>
+        </p> */}
+      </div>
+      <div className="sticky w-full top-0 z-20 pt-1 pb-3 mb-3 border-b-[1px] bg-background">
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex gap-1 items-center text-xl font-semibold tracking-wider">
             {guessAreasData.length}題猜對
             <SlotNumber numOfCorrect={numOfCorrect} />題
           </div>
@@ -168,12 +170,12 @@ const GuessSection = () => {
                 onClick={() => {
                   scrollToElement(guessAreaRefs.current[index], 150);
                 }}
-                className={`rounded-full w-[30px] h-[30px] text-primary grid place-content-center ${
+                className={`rounded-full w-[30px] h-[30px] grid place-content-center ${
                   guessMap[index + 1] === "correct"
-                    ? "bg-green-500"
+                    ? "bg-green-500 text-primary"
                     : guessMap[index + 1] === "incorrect"
-                    ? "bg-red-500"
-                    : "border-[1px] border-primary"
+                    ? "bg-red-500 text-primary"
+                    : "border-[1px] text-muted-foreground border-muted-foreground"
                 }`}
               >
                 {index + 1}
@@ -199,26 +201,32 @@ const GuessSection = () => {
                     transition={{ duration: 1 }}
                     onClick={() => setIsSlotMachineOpen(true)}
                   >
-                    抽飲料
+                    開抽飲料
                   </motion.button>
                 </DialogTrigger>
               )}
             {slotMachineResult !== null && (
-              <motion.img
-                style={{ height: 60 }}
-                src={slotMachineResult.img.src}
-                initial={{ opacity: 0, y: -20 }}
+              <motion.div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 2,
+                }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
-              />
+              >
+                <img style={{ height: 60 }} src={slotMachineResult.img.src} />
+              </motion.div>
             )}
-            <DialogContent className="flex flex-col items-center">
+            <DialogContent className="flex flex-col items-center max-sm:max-w-[320px]">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-center text-xl">
                   抽飲料
                 </DialogTitle>
                 <DialogDescription className="text-base">
-                  點擊下方按鈕開抽，有星巴克喔！
+                  點擊下方按鈕開抽
                 </DialogDescription>
               </DialogHeader>
               <SlotMachine
@@ -248,21 +256,23 @@ const GuessSection = () => {
           </Dialog>
         </div>
       </div>
-      {guessAreasData.map((area, index) => (
-        <GuessArea
-          ref={(el) => el && guessAreaRefs.current.push(el)}
-          key={area.question}
-          number={index + 1}
-          question={area.question}
-          hint={area.hint}
-          options={area.options}
-          answer={area.answer}
-          color={area.color}
-          questionImg={area.questionImg}
-          answerImg={area.answerImg}
-          setGuessMap={setGuessMap}
-        />
-      ))}
+      <div className="flex flex-col gap-3">
+        {guessAreasData.map((area, index) => (
+          <GuessArea
+            ref={(el) => el && guessAreaRefs.current.push(el)}
+            key={area.question}
+            number={index + 1}
+            question={area.question}
+            hint={area.hint}
+            options={area.options}
+            answer={area.answer}
+            color={area.color}
+            questionImg={area.questionImg}
+            answerImg={area.answerImg}
+            setGuessMap={setGuessMap}
+          />
+        ))}
+      </div>
     </section>
   );
 };

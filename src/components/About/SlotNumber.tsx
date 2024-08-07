@@ -16,7 +16,7 @@ const SlotNumber = ({ numOfCorrect }: Props) => {
     }
   }, [numOfCorrect]);
   return (
-    <div className="text-[#ee27df] text-2xl flex flex-col justify-center items-center h-10 overflow-hidden">
+    <div className="text-[#ee27df] text-2xl flex flex-col justify-center items-center h-10 overflow-hidden font-bold">
       {!isInitial && (
         <AnimatePresence>
           <motion.span

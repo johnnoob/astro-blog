@@ -64,7 +64,7 @@ const GuessArea = forwardRef<HTMLDivElement, Props>(
     return (
       <Card ref={ref} className="max-w-[500px] w-full">
         <CardHeader className="text-center">
-          <CardTitle>
+          <CardTitle className="text-lg">
             {number}. {question}
           </CardTitle>
           <CardDescription className="text-base">提示：{hint}</CardDescription>
