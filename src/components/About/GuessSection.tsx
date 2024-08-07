@@ -159,7 +159,7 @@ const GuessSection = () => {
       </div>
       <div className="sticky w-full top-0 z-20 pt-1 pb-3 mb-3 border-b-[1px] bg-background">
         <div className="flex flex-col items-center gap-2">
-          <div className="flex gap-1 items-center text-xl font-semibold tracking-wider">
+          <div className="flex gap-1 items-center text-xl font-semibold">
             {guessAreasData.length}題猜對
             <SlotNumber numOfCorrect={numOfCorrect} />題
           </div>
@@ -195,13 +195,14 @@ const GuessSection = () => {
               numOfCorrect === guessAreasData.length && (
                 <DialogTrigger asChild>
                   <motion.button
-                    className="text-lg"
+                    className="text-lg font-semibold flex items-center justify-center gap-1 px-3 py-1 rounded-lg"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                     onClick={() => setIsSlotMachineOpen(true)}
                   >
-                    開抽飲料
+                    <RiDrinksFill />
+                    <span>抽飲料</span>
                   </motion.button>
                 </DialogTrigger>
               )}
