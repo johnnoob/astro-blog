@@ -218,7 +218,7 @@ const GuessSection = () => {
                   抽選飲料
                 </DialogTitle>
                 <DialogDescription className="text-base">
-                  點擊下方抽選按鈕，有星巴克喔！
+                  點擊下方按鈕開抽，有星巴克喔！
                 </DialogDescription>
               </DialogHeader>
               <SlotMachine
