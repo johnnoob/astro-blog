@@ -158,7 +158,7 @@ const GuessSection = () => {
       <div className="sticky w-full top-0 z-20 pt-2 pb-3 border-b-[1px] bg-background flex justify-center items-center gap-4">
         <div className="flex flex-col items-center gap-3">
           <div className="flex gap-1 items-center text-lg font-semibold tracking-wider">
-            {guessAreasData.length}題答對
+            {guessAreasData.length}題猜對
             <SlotNumber numOfCorrect={numOfCorrect} />題
           </div>
           <div className="flex items-center gap-2">
@@ -215,7 +215,7 @@ const GuessSection = () => {
             <DialogContent className="flex flex-col items-center">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-center text-xl">
-                  抽選飲料
+                  抽飲料
                 </DialogTitle>
                 <DialogDescription className="text-base">
                   點擊下方按鈕開抽，有星巴克喔！
