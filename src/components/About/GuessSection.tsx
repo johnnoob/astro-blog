@@ -3,10 +3,20 @@ import React, { useState, useEffect, useRef } from "react";
 // react components
 import GuessArea from "./GuessArea";
 import SlotNumber from "./SlotNumber";
+import SlotMachine from "./SlotMachine";
 // react icons
 import { RiDrinksFill } from "react-icons/ri";
 // framer motion
 import { motion } from "framer-motion";
+// shadCN
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 // assets
 import careerImg from "../../images/about/career.jpg";
 import publicServantImg from "../../images/about/public-servant.png";
@@ -159,6 +169,20 @@ const GuessSection = () => {
           >
             {resultDescription}
           </motion.h1>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button>打開</button>
+            </DialogTrigger>
+            <DialogContent className="flex flex-col items-center">
+              <DialogHeader className="text-center">
+                <DialogTitle className="text-center">抽選飲料</DialogTitle>
+                <DialogDescription>
+                  點擊下方抽選按鈕，有星巴克喔！
+                </DialogDescription>
+              </DialogHeader>
+              <SlotMachine numOfCorrect={1} />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       {guessAreasData.map((area, index) => (
