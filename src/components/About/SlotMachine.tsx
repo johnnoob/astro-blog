@@ -111,7 +111,7 @@ const SlotMachine = ({ isActive, setSlotMachineResult }: Props) => {
             src={drinks[index - 1].img.src}
             initial={{ y: 0 }}
             animate={{ y: -300 }}
-            transition={{ duration: index < 12 ? 0.2 : 0.8, ease: "linear" }}
+            transition={{ duration: index < 12 ? 0.2 : 0.8, ease: "easeOut" }}
           />
           <motion.img
             key={index}
@@ -126,7 +126,7 @@ const SlotMachine = ({ isActive, setSlotMachineResult }: Props) => {
             src={drinks[index].img.src}
             initial={{ y: 300 }}
             animate={{ y: 0 }}
-            transition={{ duration: index < 12 ? 0.2 : 0.8, ease: "linear" }}
+            transition={{ duration: index < 12 ? 0.2 : 0.8, ease: "easeOut" }}
           />
         </AnimatePresence>
       )}

@@ -170,11 +170,20 @@ const GuessSection = () => {
                 onClick={() => {
                   scrollToElement(guessAreaRefs.current[index], 150);
                 }}
+                animate={{
+                  backgroundColor:
+                    guessMap[index + 1] === "correct"
+                      ? "rgb(34,197,94)"
+                      : guessMap[index + 1] === "incorrect"
+                      ? "rgb(239,68,68)"
+                      : "rgb(0,0,0)",
+                }}
+                transition={{ duration: 0.5 }}
                 className={`rounded-full w-[30px] h-[30px] grid place-content-center ${
                   guessMap[index + 1] === "correct"
-                    ? "bg-green-500 text-primary"
+                    ? "text-primary"
                     : guessMap[index + 1] === "incorrect"
-                    ? "bg-red-500 text-primary"
+                    ? "text-primary"
                     : "border-[1px] text-muted-foreground border-muted-foreground"
                 }`}
               >
@@ -226,9 +235,11 @@ const GuessSection = () => {
                 <DialogTitle className="text-center text-xl">
                   抽飲料
                 </DialogTitle>
-                <DialogDescription className="text-base">
-                  點擊下方按鈕開抽
-                </DialogDescription>
+                {!isSlotMachineActive && (
+                  <DialogDescription className="text-base">
+                    點擊下方按鈕開抽
+                  </DialogDescription>
+                )}
               </DialogHeader>
               <SlotMachine
                 isActive={isSlotMachineActive}
