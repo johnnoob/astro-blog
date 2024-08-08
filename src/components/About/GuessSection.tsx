@@ -157,7 +157,7 @@ const GuessSection = () => {
           <span>總共{guessAreasData.length}題，全猜對請妳1杯飲料</span>
         </p> */}
       </div>
-      <motion.div className="sticky w-full top-0 z-20 pt-1 pb-3 mb-3 border-b-[1px] bg-background" layout>
+      <motion.div className="sticky w-full top-0 z-20 pt-1 pb-3 mb-3 border-b-[1px] bg-background" layout="position">
         <div className="flex flex-col items-center gap-2">
           <div className="flex gap-1 items-center text-xl font-semibold">
             {guessAreasData.length}題猜對
