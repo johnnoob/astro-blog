@@ -3,14 +3,17 @@ import React, { useState, useEffect, useRef } from "react";
 // react components
 import GuessArea from "./GuessArea";
 import SlotNumber from "./SlotNumber";
-import SlotMachine from "./SlotMachine";
+import SlotMachineDrinkType from "./SlotMachineDrinkType";
+import SlotMachineDetail from "./SlotMachineDetail";
 import BtnOrbit from "./BtnOrbit";
 // react icons
 import { RiDrinksFill } from "react-icons/ri";
+import { FaCaretRight } from "react-icons/fa6";
 // framer motion
 import { motion } from "framer-motion";
 // class
-import { Drink } from "./SlotMachine";
+import { Drink } from "./SlotMachineDrinkType";
+import { DrinkDetail } from "./SlotMachineDetail";
 // shadCN
 import {
   Dialog,
@@ -118,13 +121,18 @@ const GuessSection = () => {
   ).length;
   const [resultDescription, setResultDescription] = useState<string>("");
   const [isSlotMachineOpen, setIsSlotMachineOpen] = useState<boolean>(false);
-  const [isSlotMachineActive, setIsSlotMachineActive] =
+  const [isSlotMachineTypeActive, setIsSlotMachineTypeActive] =
     useState<boolean>(false);
-  const [slotMachineResult, setSlotMachineResult] = useState<Drink | null>(
-    null
-  );
+  const [slotMachineTypeResult, setSlotMachineTypeResult] =
+    useState<Drink | null>(null);
+  const [isSlotMachineDetailActive, setIsSlotMachineDetailActive] =
+    useState<boolean>(false);
+  const [slotMachineDetailResult, setSlotMachineDetailResult] =
+    useState<DrinkDetail | null>(null);
   const guessAreaRefs = useRef<HTMLDivElement[]>([]);
 
+  const sleep = async (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
   useEffect(() => {
     if (numOfGuess === guessAreasData.length) {
       const correctRatio = numOfCorrect / numOfGuess;
@@ -148,14 +156,20 @@ const GuessSection = () => {
       });
     }
   };
+  useEffect(() => {
+    const slotMachineDetailActivate = async () => {
+      await sleep(2000);
+      setIsSlotMachineDetailActive(true);
+    };
+    if (slotMachineTypeResult !== null) {
+      slotMachineDetailActivate();
+    }
+  }, [slotMachineTypeResult]);
 
   return (
     <section className="w-full">
       <div className="text-center">
         <h1 className="font-semibold text-2xl">猜猜看，全猜對請妳1杯飲料</h1>
-        {/* <p className="text-muted-foreground text-lg">
-          <span>總共{guessAreasData.length}題，全猜對請妳1杯飲料</span>
-        </p> */}
       </div>
       <div className="sticky w-full top-0 z-20 pt-1 pb-3 mb-3 border-b-[1px] bg-background">
         <div className="flex flex-col items-center gap-2">
@@ -200,7 +214,7 @@ const GuessSection = () => {
             {resultDescription}
           </motion.h1>
           <Dialog>
-            {slotMachineResult === null &&
+            {slotMachineTypeResult === null &&
               numOfCorrect === guessAreasData.length && (
                 <DialogTrigger asChild>
                   <motion.button
@@ -215,52 +229,86 @@ const GuessSection = () => {
                   </motion.button>
                 </DialogTrigger>
               )}
-            {slotMachineResult !== null && (
-              <motion.div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-              >
-                <img style={{ height: 60 }} src={slotMachineResult.img.src} />
-              </motion.div>
+            {slotMachineTypeResult !== null && (
+              <div className="flex justify-center items-center gap-2">
+                <motion.img
+                  style={{ height: 60 }}
+                  src={slotMachineTypeResult.img.src}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1 }}
+                />
+                {slotMachineDetailResult !== null && (
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1 }}
+                    >
+                      <FaCaretRight />
+                    </motion.div>
+                    <motion.img
+                      style={{ height: 60 }}
+                      src={slotMachineDetailResult.img.src}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1 }}
+                    />
+                  </>
+                )}
+              </div>
             )}
             <DialogContent className="flex flex-col items-center max-sm:max-w-[320px]">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-center text-xl">
                   抽飲料
                 </DialogTitle>
-                {!isSlotMachineActive && (
+                {!isSlotMachineTypeActive && (
                   <DialogDescription className="text-base">
                     點擊下方按鈕開抽
                   </DialogDescription>
                 )}
               </DialogHeader>
-              <SlotMachine
-                isActive={isSlotMachineActive}
-                setSlotMachineResult={setSlotMachineResult}
-              />
+              <motion.div
+                style={{ display: "flex", alignItems: "center", gap: 15 }}
+              >
+                <SlotMachineDrinkType
+                  isActive={isSlotMachineTypeActive}
+                  setSlotMachineResult={setSlotMachineTypeResult}
+                />
+                {slotMachineTypeResult !== null && (
+                  <>
+                    <motion.span
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1.3 }}
+                    >
+                      <FaCaretRight size={30} />
+                    </motion.span>
+                    <SlotMachineDetail
+                      isActive={isSlotMachineDetailActive}
+                      drinkType={slotMachineTypeResult.type}
+                      setSlotMachineResult={setSlotMachineDetailResult}
+                    />
+                  </>
+                )}
+              </motion.div>
               <DialogFooter>
                 <BtnOrbit
                   color="#fff"
-                  className={`${isSlotMachineActive ? "hidden" : ""}`}
-                  onClick={() => setIsSlotMachineActive(true)}
+                  className={`${isSlotMachineTypeActive ? "hidden" : ""}`}
+                  onClick={() => setIsSlotMachineTypeActive(true)}
                 >
                   開抽
                 </BtnOrbit>
-                {slotMachineResult !== null && (
+                {slotMachineTypeResult !== null && (
                   <motion.h2
                     className="text-xl font-semibold"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
                   >
-                    {drinkTypeToString[slotMachineResult.type]}
+                    {/* {drinkTypeToString[slotMachineResult.type]} */}
                   </motion.h2>
                 )}
               </DialogFooter>
