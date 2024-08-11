@@ -1,7 +1,7 @@
 // react
 import React, { useState, useEffect, useMemo } from "react";
 // framer motion
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimate } from "framer-motion";
 // lodash
 import _ from "lodash";
 // assets
@@ -14,10 +14,12 @@ import bubbleGuiji from "@/images/drinks/guiji.png";
 import bubbleElephant from "@/images/drinks/elephant.png";
 import bubbleGoldenFish from "@/images/drinks/goldenFish.png";
 import bubbleKongFo from "@/images/drinks/kongfo.png";
-import bubbleFishPool from "@/images/drinks/fishPool.png";
+import bubbleMachi from "@/images/drinks/machi.png";
+import bubbleWutong from "@/images/drinks/wutong.png";
 import coffeeImg from "@/images/drinks/coffee.png";
 // types
 import type { DrinkType, Drink } from "./SlotMachineDrinkType";
+import { X } from "lucide-react";
 
 type DetailWeight = { detail: string; weight: number };
 
@@ -33,7 +35,8 @@ type BubbleTeaImages = {
   elephant: ImageMetadata;
   goldenFish: ImageMetadata;
   kongFo: ImageMetadata;
-  fishPool: ImageMetadata;
+  machi: ImageMetadata;
+  wutong: ImageMetadata;
 };
 type CoffeeImages = {
   brand1: ImageMetadata;
@@ -59,7 +62,8 @@ const typeToDetailToImgMap: TypeToDetailToImg = {
     elephant: bubbleElephant,
     goldenFish: bubbleGoldenFish,
     kongFo: bubbleKongFo,
-    fishPool: bubbleFishPool,
+    machi: bubbleMachi,
+    wutong: bubbleWutong,
   },
   coffee: {
     brand1: coffeeImg,
@@ -73,13 +77,14 @@ const typeToWeightsMap = {
     { detail: "lg", weight: 0.3 },
   ],
   bubbleTea: [
-    { detail: "arashi", weight: 0.2 },
-    { detail: "fortune", weight: 0.2 },
-    { detail: "guiji", weight: 0.2 },
-    { detail: "elephant", weight: 0.2 },
-    { detail: "goldenFish", weight: 0.2 },
-    { detail: "kongFo", weight: 0.2 },
-    { detail: "fishPool", weight: 0.2 },
+    { detail: "arashi", weight: 1 },
+    { detail: "fortune", weight: 1 },
+    { detail: "guiji", weight: 1 },
+    { detail: "elephant", weight: 1 },
+    { detail: "goldenFish", weight: 1 },
+    { detail: "kongFo", weight: 1 },
+    { detail: "machi", weight: 1 },
+    { detail: "wutong", weight: 1 },
   ],
   coffee: [
     { detail: "brand1", weight: 0.5 },
@@ -142,11 +147,12 @@ const SlotMachineDetail = ({
   const breakIndices = breakCumulatedRatios.map(
     (cumulatedRatio) => cumulatedRatio * numOfRotation
   );
-
   const breakSleepTime = [200, 400, 800];
+  const [scope, animate] = useAnimate();
   useEffect(() => {
     let isCancelled = false;
     const loop = async () => {
+      animate(scope.current, { opacity: 1, y: 0 });
       for (let index = 1; index < drinkDetails.length; index++) {
         if (isCancelled) break;
         setIndex(index);
@@ -159,6 +165,9 @@ const SlotMachineDetail = ({
         }
       }
       setSlotMachineResult(drinkDetails.at(-1) as DrinkDetail);
+      animate(scope.current, {
+        boxShadow: "0 0 20px #ee27df, 0 0 40px #ee27df",
+      });
     };
     if (isActive) loop();
     return () => {
@@ -166,12 +175,10 @@ const SlotMachineDetail = ({
     };
   }, [isActive]);
   return (
-    <motion.div
-      className="relative border-[1px] w-28 h-36 rounded-md overflow-hidden"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1.3 }}
-      layout
+    <div
+      ref={scope}
+      className="relative border-[1px] w-36 h-44 rounded-md overflow-hidden"
+      style={{ opacity: 0, transform: "translateY(-10px)" }}
     >
       {isActive && (
         <AnimatePresence>
@@ -230,7 +237,7 @@ const SlotMachineDetail = ({
           className="h-28 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         />
       )}
-    </motion.div>
+    </div>
   );
 };
 

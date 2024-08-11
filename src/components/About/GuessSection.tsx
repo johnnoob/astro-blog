@@ -8,7 +8,7 @@ import SlotMachineDetail from "./SlotMachineDetail";
 import BtnOrbit from "./BtnOrbit";
 // react icons
 import { RiDrinksFill } from "react-icons/ri";
-import { FaCaretRight } from "react-icons/fa6";
+import { FaCaretRight, FaSpinner } from "react-icons/fa6";
 // framer motion
 import { motion } from "framer-motion";
 // class
@@ -213,7 +213,7 @@ const GuessSection = () => {
           >
             {resultDescription}
           </motion.h1>
-          <Dialog>
+          <Dialog open={isSlotMachineOpen} onOpenChange={setIsSlotMachineOpen}>
             {slotMachineTypeResult === null &&
               numOfCorrect === guessAreasData.length && (
                 <DialogTrigger asChild>
@@ -230,7 +230,7 @@ const GuessSection = () => {
                 </DialogTrigger>
               )}
             {slotMachineTypeResult !== null && (
-              <div className="flex justify-center items-center gap-2">
+              <button className="flex justify-center items-center gap-2">
                 <motion.img
                   style={{ height: 60 }}
                   src={slotMachineTypeResult.img.src}
@@ -256,21 +256,33 @@ const GuessSection = () => {
                     />
                   </>
                 )}
-              </div>
+              </button>
             )}
             <DialogContent className="flex flex-col items-center max-sm:max-w-[320px]">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-center text-xl">
                   抽飲料
                 </DialogTitle>
-                {!isSlotMachineTypeActive && (
-                  <DialogDescription className="text-base">
-                    點擊下方按鈕開抽
-                  </DialogDescription>
-                )}
+                <DialogDescription className="text-base flex justify-center items-center gap-2">
+                  {slotMachineDetailResult !== null ? (
+                    "結果出爐～"
+                  ) : isSlotMachineTypeActive ? (
+                    <>
+                      <FaSpinner className="animate-spin" />
+                      <span>抽選中，請等待～</span>
+                    </>
+                  ) : (
+                    "點擊下方按鈕開抽"
+                  )}
+                </DialogDescription>
               </DialogHeader>
               <motion.div
-                style={{ display: "flex", alignItems: "center", gap: 15 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 15,
+                  marginTop: 20,
+                }}
               >
                 <SlotMachineDrinkType
                   isActive={isSlotMachineTypeActive}

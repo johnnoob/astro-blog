@@ -1,12 +1,12 @@
 // react
 import React, { useState, useEffect, useMemo } from "react";
 // framer motion
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimate } from "framer-motion";
 // lodash
 import _ from "lodash";
 // assets
-import storeDrinkImg from "@/images/drinks/md-1.png";
-import bubbleTeaImg from "@/images/drinks/bubble-1.png";
+import storeDrinkImg from "@/images/drinks/storeDrinks.png";
+import bubbleTeaImg from "@/images/drinks/bubbleTea.png";
 import coffeeImg from "@/images/drinks/coffee.png";
 
 export type DrinkType = "storeDrink" | "bubbleTea" | "coffee";
@@ -20,7 +20,7 @@ const typeToDrinkImgs: { [type: string]: ImageMetadata[] } = {
 const drinkTypeWeights: DrinkTypeWeight[] = [
   { type: "storeDrink", weight: 0.3 },
   { type: "bubbleTea", weight: 0.6 },
-  { type: "coffee", weight: 0.1 },
+  { type: "coffee", weight: 0 },
 ];
 
 function weightedChoice(drinkTypeWeights: DrinkTypeWeight[]) {
@@ -65,14 +65,13 @@ const SlotMachine = ({
     () => Array.from({ length: numOfRotation }, (_, index) => new Drink()),
     []
   );
-
   const [index, setIndex] = useState<number>(1);
   const breakCumulatedRatios: number[] = [0.7, 0.9];
   const breakIndices = breakCumulatedRatios.map(
     (cumulatedRatio) => cumulatedRatio * numOfRotation
   );
-
   const breakSleepTime = [200, 400, 800];
+  const [scope, animate] = useAnimate();
   useEffect(() => {
     let isCancelled = false;
     const loop = async () => {
@@ -88,6 +87,9 @@ const SlotMachine = ({
         }
       }
       setSlotMachineResult(drinks.at(-1) as Drink);
+      animate(scope.current, {
+        boxShadow: "0 0 20px #cfee28, 0 0 40px #cfee28",
+      });
     };
     if (isActive) loop();
     return () => {
@@ -95,7 +97,10 @@ const SlotMachine = ({
     };
   }, [isActive]);
   return (
-    <div className="relative border-[1px] w-28 h-36 rounded-md overflow-hidden">
+    <div
+      ref={scope}
+      className="relative border-[1px] w-36 h-44 rounded-md overflow-hidden"
+    >
       {isActive && (
         <AnimatePresence>
           <motion.img
