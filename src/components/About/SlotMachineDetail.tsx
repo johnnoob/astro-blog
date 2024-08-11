@@ -152,7 +152,6 @@ const SlotMachineDetail = ({
   useEffect(() => {
     let isCancelled = false;
     const loop = async () => {
-      animate(scope.current, { opacity: 1, y: 0 });
       for (let index = 1; index < drinkDetails.length; index++) {
         if (isCancelled) break;
         setIndex(index);
@@ -165,7 +164,7 @@ const SlotMachineDetail = ({
         }
       }
       setSlotMachineResult(drinkDetails.at(-1) as DrinkDetail);
-      animate(scope.current, {
+      await animate(scope.current, {
         boxShadow: "0 0 20px #ee27df, 0 0 40px #ee27df",
       });
     };
@@ -175,10 +174,16 @@ const SlotMachineDetail = ({
     };
   }, [isActive]);
   return (
-    <div
+    <motion.div
       ref={scope}
-      className="relative border-[1px] w-32 h-40 rounded-md overflow-hidden"
-      style={{ opacity: 0, transform: "translateY(-10px)" }}
+      className="relative border-[1px] rounded-md overflow-hidden"
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      style={{
+        width: 128,
+        height: 170,
+      }}
+      transition={{ duration: 1 }}
     >
       {isActive && (
         <AnimatePresence>
@@ -237,7 +242,7 @@ const SlotMachineDetail = ({
           style={{ height: 80 }}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -220,8 +220,17 @@ const GuessSection = () => {
                   <motion.button
                     className="text-lg font-semibold flex items-center justify-center gap-1 px-3 py-1 rounded-lg"
                     initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1 }}
+                    animate={{ opacity: 1, y: 0, rotate: [0, 10, -10, 0] }}
+                    transition={{
+                      duration: 1,
+                      rotate: {
+                        duration: 0.5, // 旋转动画的每次循环持续时间
+                        delay: 1,
+                        ease: "easeInOut", // 旋转动画的缓动效果
+                        repeat: Infinity, // 无限循环
+                        repeatType: "reverse", // 反向往返动画
+                      },
+                    }}
                     onClick={() => setIsSlotMachineOpen(true)}
                   >
                     <RiDrinksFill />
@@ -263,9 +272,9 @@ const GuessSection = () => {
                 <DialogTitle className="text-center text-xl">
                   抽飲料
                 </DialogTitle>
-                <DialogDescription className="text-base flex justify-center items-center gap-1">
+                <DialogDescription className="text-base flex justify-center items-center gap-2">
                   {slotMachineDetailResult !== null ? (
-                    "結果出爐～"
+                    "結果出爐！"
                   ) : isSlotMachineTypeActive ? (
                     <>
                       <FaSpinner className="animate-spin" />
@@ -293,7 +302,7 @@ const GuessSection = () => {
                     <motion.span
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 1.3 }}
+                      transition={{ duration: 1 }}
                     >
                       <FaCaretRight size={30} />
                     </motion.span>
