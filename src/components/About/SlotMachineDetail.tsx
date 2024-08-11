@@ -177,7 +177,7 @@ const SlotMachineDetail = ({
   return (
     <div
       ref={scope}
-      className="relative border-[1px] w-36 h-44 rounded-md overflow-hidden"
+      className="relative border-[1px] w-32 h-40 rounded-md overflow-hidden"
       style={{ opacity: 0, transform: "translateY(-10px)" }}
     >
       {isActive && (
@@ -192,7 +192,6 @@ const SlotMachineDetail = ({
               translateY: "-50%",
               height: 80,
             }}
-            className="h-28"
             src={drinkDetails[index - 1].img.src}
             initial={{ y: 0 }}
             animate={{ y: -300 }}

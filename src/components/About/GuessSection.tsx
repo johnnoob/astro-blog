@@ -258,12 +258,12 @@ const GuessSection = () => {
                 )}
               </button>
             )}
-            <DialogContent className="flex flex-col items-center max-sm:max-w-[320px]">
+            <DialogContent className="flex flex-col items-center max-sm:max-w-[360px]">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-center text-xl">
                   抽飲料
                 </DialogTitle>
-                <DialogDescription className="text-base flex justify-center items-center gap-2">
+                <DialogDescription className="text-base flex justify-center items-center gap-1">
                   {slotMachineDetailResult !== null ? (
                     "結果出爐～"
                   ) : isSlotMachineTypeActive ? (

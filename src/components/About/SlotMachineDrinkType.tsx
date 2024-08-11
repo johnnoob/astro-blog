@@ -99,7 +99,7 @@ const SlotMachine = ({
   return (
     <div
       ref={scope}
-      className="relative border-[1px] w-36 h-44 rounded-md overflow-hidden"
+      className="relative border-[1px] w-32 h-40 rounded-md overflow-hidden"
     >
       {isActive && (
         <AnimatePresence>
@@ -111,9 +111,8 @@ const SlotMachine = ({
               left: "50%",
               translateX: "-50%",
               translateY: "-50%",
-              height: 112,
+              height: 95,
             }}
-            className="h-28"
             src={drinks[index - 1].img.src}
             initial={{ y: 0 }}
             animate={{ y: -300 }}
@@ -135,7 +134,7 @@ const SlotMachine = ({
               left: "50%",
               translateX: "-50%",
               translateY: "-50%",
-              height: 112,
+              height: 95,
             }}
             src={drinks[index].img.src}
             initial={{ y: 300 }}
