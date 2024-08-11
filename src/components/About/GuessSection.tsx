@@ -258,7 +258,7 @@ const GuessSection = () => {
                 )}
               </button>
             )}
-            <DialogContent className="flex flex-col items-center max-sm:max-w-[360px]">
+            <DialogContent className="flex flex-col items-center max-sm:max-w-[380px]">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-center text-xl">
                   抽飲料
