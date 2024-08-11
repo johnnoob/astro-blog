@@ -154,7 +154,8 @@ const SlotMachine = ({
       {!isActive && (
         <img
           src={drinks[0].img.src}
-          className="h-28 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{ height: 95 }}
         />
       )}
     </div>
