@@ -144,7 +144,7 @@ const Approach = () => {
         <p
           className={`text-xl text-center ${status !== "initial" && "hidden"}`}
         >
-          想與妳約喝個咖啡，OK嗎？
+          願意加個Line認識嗎？
         </p>
         <div className={`${status !== "initial" && "hidden"}`}>
           --- 拖曳愛心到選擇區域 ---
