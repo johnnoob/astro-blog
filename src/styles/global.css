@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -58,7 +57,7 @@
       @apply border-border;
     }
     body {
-      @apply bg-background text-foreground font-Noto box-border; 
+      @apply bg-background text-foreground font-Noto box-border !min-w-full; 
     }
   }
 

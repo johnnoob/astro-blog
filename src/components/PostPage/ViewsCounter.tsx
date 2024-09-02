@@ -22,7 +22,7 @@ const ViewsCounter = ({ slug, title, category }: Props) => {
 
   useEffect(() => {
     const fetchViews = async () => {
-      const { data, error } = await actions.views.safe({
+      const { data, error } = await actions.views({
         slug,
         title,
         category,

@@ -72,8 +72,5 @@ export default defineConfig({
     },
   },
   output: "server",
-  experimental: {
-    actions: true,
-  },
   adapter: vercel(),
 });

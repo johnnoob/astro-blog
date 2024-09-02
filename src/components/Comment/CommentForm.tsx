@@ -82,12 +82,15 @@ const CommentForm = ({
           )}
           <Textarea
             className="resize-none h-full"
-            autoFocus
             name="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
-          <Button className="h-full" type="submit" disabled={isLoading}>
+          <Button
+            className="h-full"
+            type="submit"
+            disabled={isLoading || content === ""}
+          >
             {isLoading ? (
               <FaSpinner className="animate-spin" size={20} />
             ) : (

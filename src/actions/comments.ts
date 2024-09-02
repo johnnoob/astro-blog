@@ -1,5 +1,6 @@
 // astro actions
-import { defineAction, z } from "astro:actions";
+import { defineAction } from "astro:actions";
+import { z } from "astro/zod";
 // astro db
 import { db, PostComment, eq } from "astro:db";
 
@@ -21,10 +22,10 @@ export const createComment = defineAction({
       content,
       parentId,
     });
-
-    return new Response(JSON.stringify({ msg: "create success" }), {
-      status: 200,
-    });
+    return { msg: "成功留言" };
+    // return new Response(JSON.stringify({ msg: "create success" }), {
+    //   status: 200,
+    // });
   },
 });
 
@@ -40,8 +41,8 @@ export const updateComment = defineAction({
       .set({ content })
       .where(eq(PostComment.id, commentId));
 
-    return new Response(JSON.stringify({ msg: "update success" }), {
-      status: 200,
-    });
+    // return new Response(JSON.stringify({ msg: "update success" }), {
+    //   status: 200,
+    // });
   },
 });

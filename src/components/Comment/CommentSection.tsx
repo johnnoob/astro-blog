@@ -76,6 +76,16 @@ const CommentSection = ({ userId, slug, title }: Props) => {
   return (
     <section className="grid gap-3">
       <div>
+        <CommentList
+          userId={userId}
+          slug={slug}
+          title={title}
+          comments={rootComments}
+          parentIdtoCommentsMap={parentIdtoCommentsMap}
+          getComments={getComments}
+        />
+      </div>
+      <div>
         <CommentForm
           userId={userId}
           slug={slug}
@@ -84,16 +94,6 @@ const CommentSection = ({ userId, slug, title }: Props) => {
           commentId={null}
           initialContent=""
           mode="post"
-          getComments={getComments}
-        />
-      </div>
-      <div>
-        <CommentList
-          userId={userId}
-          slug={slug}
-          title={title}
-          comments={rootComments}
-          parentIdtoCommentsMap={parentIdtoCommentsMap}
           getComments={getComments}
         />
       </div>

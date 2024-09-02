@@ -1,7 +1,5 @@
 // react
 import { useEffect, useState } from "react";
-// shadCN
-import { Skeleton } from "../ui/skeleton";
 // react icons
 import { FaRegStar, FaRegStarHalfStroke, FaStar } from "react-icons/fa6";
 import { FaSpinner } from "react-icons/fa6";

@@ -1,4 +1,7 @@
-import { defineAction, z } from "astro:actions";
+// action
+import { defineAction } from "astro:actions";
+import { z } from "astro/zod";
+// astro db
 import { db, PostViews, and, eq, sum } from "astro:db";
 
 export const views = defineAction({
