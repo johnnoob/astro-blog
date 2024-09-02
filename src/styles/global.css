@@ -57,7 +57,7 @@
       @apply border-border;
     }
     body {
-      @apply bg-background text-foreground font-Noto box-border !min-w-full; 
+      @apply bg-background text-foreground font-Noto box-border w-screen overflow-x-hidden; 
     }
   }
 
