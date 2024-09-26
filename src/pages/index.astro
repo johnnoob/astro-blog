@@ -45,13 +45,6 @@ const postIdToMinutesMap = await processPostsMinutes();
 ---
 
 <BaseLayout pageTitle="首頁">
-  <section class="flex flex-col justify-center items-center">
-    <img src={selfPortrait.src} alt="self-portrait" width={200} height={200} />
-    <h1 class="text-xl font-bold w-fit mx-auto mb-2">John's Script</h1>
-    <p class="text-muted-foreground text-center">
-      這是一個分享程式設計筆記、讀書心得及吃喝玩樂等雜七雜八內容的Blog
-    </p>
-  </section>
   <div class="py-6 flex gap-4">
     <div class="flex flex-col gap-3 max-lg:w-full">
       {
