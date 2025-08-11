@@ -137,7 +137,7 @@ const Approach = () => {
       </div>
       <div className={`w-fit flex flex-col items-center mx-auto gap-5`}>
         <NeonTitle />
-        <h2 className={`text-3xl font-semibold`}>
+        <h2 className={`text-2xl font-semibold`}>
           <span id="typewriter">{text}</span>
           <span id="typewritter-cursor">|</span>
         </h2>
