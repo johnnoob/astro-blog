@@ -33,7 +33,7 @@ const NeonTitle = () => {
   }, []);
 
   return (
-    <h1 className="text-2xl tracking-wider neon-text font-medium">
+    <h1 className="text-3xl tracking-wider neon-text font-medium">
       {title.split("").map((word, index) => (
         <span
           key={index}
