@@ -6,7 +6,7 @@ import _ from "lodash";
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
-const title = "哈囉~毓庭";
+const title = "哈囉~我叫John";
 const getNumOfIndices = () => Math.ceil(Math.random() * 3);
 const getSleepTime = () => 1500 + Math.ceil(Math.random() * 4000);
 
